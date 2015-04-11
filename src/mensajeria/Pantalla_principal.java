@@ -84,6 +84,7 @@ public class Pantalla_principal extends javax.swing.JFrame {
 
         consolaText.setBackground(new java.awt.Color(0, 0, 0));
         consolaText.setForeground(new java.awt.Color(0, 255, 51));
+        consolaText.setText(">>> ");
         consolaText.setToolTipText("Aquí puede escribir las funciones permitidas por el sistema.");
         consolaText.setAlignmentX(0.0F);
         consolaText.setCaretColor(new java.awt.Color(0, 255, 0));
@@ -156,15 +157,17 @@ public class Pantalla_principal extends javax.swing.JFrame {
         //Escuchar la entrada del usuario
         String entrada = new String();
         try {
-            entrada = consolaText.getText();
-            System.out.println("Entrada del usuario: " + entrada);
+            //Obtener la entrada del usuario quitandole los >>> 
+            entrada = consolaText.getText().substring(4);
+            //System.out.println("Entrada del usuario: " + entrada);
             
             //Limpiar el texto en consolaText
-            consolaText.setText("");
+            consolaText.setText(">>> ");
             //Mover el texto a consolaOldText y scrollear hasta abajo
-            consolaOldText.append("\n" + entrada);
+            consolaOldText.append("\n>>> " + entrada);
             consolaOldText.setCaretPosition(consolaOldText.getDocument().getLength());
             
+            //Si la entrada del usuario no está dentro de los comandos permitidos entonces:
             if (!(Arrays.asList(Globales.ComandosSimplesPermitidos).contains(entrada))){
                 //Mostrar el mensaje de error en outputText
                 outputText.setText("Error: La acción digitada no es válida para el sistema.");
