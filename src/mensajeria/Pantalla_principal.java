@@ -5,6 +5,8 @@
  */
 package mensajeria;
 
+import java.util.Arrays;
+
 /**
  *
  * @author Jespi_000
@@ -27,102 +29,84 @@ public class Pantalla_principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jInternalFrame1 = new javax.swing.JInternalFrame();
-        textArea1 = new java.awt.TextArea();
-        textArea2 = new java.awt.TextArea();
-        label1 = new java.awt.Label();
-        label2 = new java.awt.Label();
-        jPanel2 = new javax.swing.JPanel();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        PanelViewDinamico = new javax.swing.JPanel();
+        visualizacionLabel = new javax.swing.JLabel();
+        consolaLabel = new java.awt.Label();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        consolaOldText = new javax.swing.JTextArea();
+        consolaText = new javax.swing.JTextField();
+        outputLabel = new java.awt.Label();
+        outputText = new java.awt.TextArea();
+        menu = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Sistema de Mensajería");
+        setAlwaysOnTop(true);
+        setName("VentanaPrincipal"); // NOI18N
+        setResizable(false);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 407, Short.MAX_VALUE)
+        PanelViewDinamico.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        visualizacionLabel.setText("Visualización de Estados y Logs");
+
+        javax.swing.GroupLayout PanelViewDinamicoLayout = new javax.swing.GroupLayout(PanelViewDinamico);
+        PanelViewDinamico.setLayout(PanelViewDinamicoLayout);
+        PanelViewDinamicoLayout.setHorizontalGroup(
+            PanelViewDinamicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelViewDinamicoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(visualizacionLabel)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 212, Short.MAX_VALUE)
+        PanelViewDinamicoLayout.setVerticalGroup(
+            PanelViewDinamicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelViewDinamicoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(visualizacionLabel)
+                .addContainerGap(209, Short.MAX_VALUE))
         );
 
-        jInternalFrame1.setVisible(true);
+        consolaLabel.setText("Consola");
 
-        textArea2.setBackground(new java.awt.Color(0, 0, 0));
-        textArea2.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        textArea2.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
-        textArea2.setForeground(new java.awt.Color(0, 255, 51));
-        textArea2.setName("Consola"); // NOI18N
-        textArea2.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                Enter(evt);
+        consolaOldText.setEditable(false);
+        consolaOldText.setBackground(new java.awt.Color(0, 0, 0));
+        consolaOldText.setColumns(20);
+        consolaOldText.setForeground(new java.awt.Color(0, 153, 255));
+        consolaOldText.setLineWrap(true);
+        consolaOldText.setRows(5);
+        consolaOldText.setText("¡Bienvenido al sistema!");
+        consolaOldText.setWrapStyleWord(true);
+        consolaOldText.setCaretColor(new java.awt.Color(51, 153, 255));
+        consolaOldText.setDisabledTextColor(new java.awt.Color(51, 153, 255));
+        jScrollPane1.setViewportView(consolaOldText);
+
+        consolaText.setBackground(new java.awt.Color(0, 0, 0));
+        consolaText.setForeground(new java.awt.Color(0, 255, 51));
+        consolaText.setToolTipText("Aquí puede escribir las funciones permitidas por el sistema.");
+        consolaText.setAlignmentX(0.0F);
+        consolaText.setCaretColor(new java.awt.Color(0, 255, 0));
+        consolaText.setName(""); // NOI18N
+        consolaText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                consolaTextActionPerformed(evt);
             }
         });
 
-        label1.setText("Consola");
+        outputLabel.setText("Evaluación de la información ");
 
-        label2.setText("Evaluación de la información ");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 285, Short.MAX_VALUE)
-        );
+        outputText.setEditable(false);
+        outputText.setMinimumSize(new java.awt.Dimension(100, 50));
+        outputText.setPreferredSize(new java.awt.Dimension(100, 50));
 
         jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
+        menu.add(jMenu1);
 
         jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
+        menu.add(jMenu2);
 
-        jInternalFrame1.setJMenuBar(jMenuBar1);
-
-        javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
-        jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
-        jInternalFrame1Layout.setHorizontalGroup(
-            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jInternalFrame1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(textArea1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(textArea2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jInternalFrame1Layout.createSequentialGroup()
-                        .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 241, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        jInternalFrame1Layout.setVerticalGroup(
-            jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jInternalFrame1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(label1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(19, 19, 19)
-                .addComponent(textArea2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(label2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textArea1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        textArea2.getAccessibleContext().setAccessibleName("Consola");
-        label1.getAccessibleContext().setAccessibleName("ConsolaLabel");
-        label2.getAccessibleContext().setAccessibleName("Output");
+        setJMenuBar(menu);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -130,25 +114,69 @@ public class Pantalla_principal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(PanelViewDinamico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(outputText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addGap(0, 0, 0))
+                    .addComponent(consolaText)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(consolaLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(outputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 239, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addComponent(jInternalFrame1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(PanelViewDinamico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(consolaLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(consolaText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(outputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(outputText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        consolaLabel.getAccessibleContext().setAccessibleName("ConsolaLabel");
+        outputLabel.getAccessibleContext().setAccessibleName("Output");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void Enter(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_Enter
-        // TODO add your handling code here:
-    }//GEN-LAST:event_Enter
+    private void consolaTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consolaTextActionPerformed
+        //Escuchar la entrada del usuario
+        String entrada = new String();
+        try {
+            entrada = consolaText.getText();
+            System.out.println("Entrada del usuario: " + entrada);
+            
+            //Limpiar el texto en consolaText
+            consolaText.setText("");
+            //Mover el texto a consolaOldText y scrollear hasta abajo
+            consolaOldText.append("\n" + entrada);
+            consolaOldText.setCaretPosition(consolaOldText.getDocument().getLength());
+            
+            if (!(Arrays.asList(Globales.ComandosSimplesPermitidos).contains(entrada))){
+                //Mostrar el mensaje de error en outputText
+                outputText.setText("Error: La acción digitada no es válida para el sistema.");
+            }
+            else {
+                outputText.setText("Realizado con éxito.");
+            }
+        }
+        catch(Exception e){
+            System.out.println("Excepción.");
+        }
+    }//GEN-LAST:event_consolaTextActionPerformed
 
     /**
      * @param args the command line arguments
@@ -186,15 +214,16 @@ public class Pantalla_principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JInternalFrame jInternalFrame1;
+    private javax.swing.JPanel PanelViewDinamico;
+    private java.awt.Label consolaLabel;
+    private javax.swing.JTextArea consolaOldText;
+    private javax.swing.JTextField consolaText;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private java.awt.Label label1;
-    private java.awt.Label label2;
-    private java.awt.TextArea textArea1;
-    private java.awt.TextArea textArea2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JMenuBar menu;
+    private java.awt.Label outputLabel;
+    private java.awt.TextArea outputText;
+    private javax.swing.JLabel visualizacionLabel;
     // End of variables declaration//GEN-END:variables
 }

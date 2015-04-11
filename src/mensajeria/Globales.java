@@ -9,10 +9,6 @@ package mensajeria;
  *
  * @author Jespi_000
  */
-public class Mensajeria {
-    public static void main(String[] args) {
-        Pantalla_principal Pantalla_Principal = new Pantalla_principal();
-        Pantalla_Principal.setVisible(true);
-    }
-    
+public class Globales {
+    public static String[] ComandosSimplesPermitidos = new String[] {"view()","reset()"};
 }
