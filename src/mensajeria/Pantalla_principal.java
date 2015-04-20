@@ -210,6 +210,7 @@ public class Pantalla_principal extends javax.swing.JFrame {
                 outputText.setText("Error: La acción digitada no es válida para el sistema.");
             }
             else {
+                //Obtener el nombre de la función y sus parámetros, validarlos y llamar a la función respectiva directamente.
                 outputText.setText("Realizado con éxito.");
             }
         }
