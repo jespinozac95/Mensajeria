@@ -16,9 +16,9 @@ public class Globales {
     public static boolean SendBlocking = true;
     public static String Receive = "Blocking"; //Blocking, Nonblocking o PruebaDeLlegada
     public static boolean ReceiveExplicito = true;
-    public static boolean DireccionamientoDirecto = true;
+    public static boolean DireccionamientoDirecto = false;
     public static boolean IndirectoEstatico = false;
     public static boolean LargoMsjFijo = true;
-    public static int LargoVariable = 0;
-    public static boolean FIFO = true;
+    public static int LargoMsj = 0;
+    public static boolean FIFO = false;
 }

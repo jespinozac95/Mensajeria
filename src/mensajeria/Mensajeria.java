@@ -24,11 +24,11 @@ public class Mensajeria {
                 Texto += ": Envía un mensaje a un proceso con cierta prioridad (1,2 o 3, con 1 la más alta).";
             }
             if (Globales.ReceiveExplicito){
-                Texto += "\n - receive(NombreDelProceso,Mensaje)";
-                Texto += ": Recibir un mensaje a un proceso.";
+                Texto += "\n - receive(NombreDelProceso)";
+                Texto += ": Recibir un mensaje de un proceso.";
             }
             else{
-                Texto += "\n - receive(Mensaje)";
+                Texto += "\n - receive()";
                 Texto += ": Recibir un mensaje del proceso que le envió previamente.";
             }
         }
@@ -41,11 +41,11 @@ public class Mensajeria {
                 Texto += "\n - send(NombreDelBuzón,Mensaje,NúmeroDePrioridad)";
                 Texto += ": Envía un mensaje a un buzón con cierta prioridad (1,2 o 3, con 1 la más alta).";
             }
-            Texto += "\n - receive(Mensaje)";
+            Texto += "\n - receive()";
             Texto += ": Recibe un mensaje del buzón suscrito.";
             if (Globales.IndirectoEstatico){
                 Texto += "\n - create_mailbox(NombreDelBuzón)";
-                Texto += ": Crea un buzón.";
+                Texto += ": Crea un buzón. Una ventana emergente aparecerá para que pueda configurar el buzón (definir los procesos que serán vinculados)";
             }
             else{ //Se puede create_mailbox aquí tambien?
                 Texto += "\n - connect_mailbox(NombreDelBuzón)";

@@ -6,6 +6,8 @@
 package mensajeria;
 
 import java.util.Arrays;
+import javax.swing.JDialog;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -253,20 +255,20 @@ public class Pantalla_principal extends javax.swing.JFrame {
                                 outputText.setText("send(NombreDelBuzón,Mensaje,NúmeroDePrioridad). Envía un mensaje a un buzón con cierta prioridad (1,2 o 3, con 1 la más alta).");
                             }
                         }
-                        if (!(Globales.LargoMsjFijo)){
-                            outputText.append("\nEl mensaje debe tener como máximo "+Globales.LargoVariable+" caracteres.");
+                        if (Globales.LargoMsjFijo){
+                            outputText.append("\nEl mensaje debe tener como máximo "+Globales.LargoMsj+" caracteres.");
                         }
                         break;
                     case "receive":
                         if (Globales.ReceiveExplicito){
-                            outputText.setText("receive(NombreDelProceso,Mensaje). Recibir un mensaje a un proceso.");
+                            outputText.setText("receive(NombreDelProceso). Recibir un mensaje a un proceso.");
                             }
                         else{
                             if (Globales.DireccionamientoDirecto){
-                                outputText.setText("receive(Mensaje). Recibir un mensaje del proceso que le envió previamente.");
+                                outputText.setText("receive(). Recibir un mensaje del proceso que le envió previamente.");
                             }
                             else{
-                                outputText.setText("receive(Mensaje). Recibir un mensaje del buzón suscrito.");
+                                outputText.setText("receive(). Recibir un mensaje del buzón suscrito.");
                             }
                         }
                         break;
@@ -322,7 +324,15 @@ public class Pantalla_principal extends javax.swing.JFrame {
     }//GEN-LAST:event_AyudaActionPerformed
 
     private void AyudaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AyudaMousePressed
-        Pantalla_ayuda Help = new Pantalla_ayuda();
+        //Pantalla_ayuda Help = new Pantalla_ayuda();
+        //Help.setVisible(true);
+        JDialog Help = new JDialog();
+        JTextArea HelpTextArea = new JTextArea();
+        HelpTextArea.setText(Globales.TextoAyuda);
+        HelpTextArea.setLineWrap(true);
+        Help.setSize(500, 300);
+        Help.add(HelpTextArea);
+        Help.setTitle("Ayuda");
         Help.setVisible(true);
     }//GEN-LAST:event_AyudaMousePressed
 
