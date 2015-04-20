@@ -5,6 +5,9 @@
  */
 package mensajeria;
 
+import javax.swing.JDialog;
+import javax.swing.JTextArea;
+
 /**
  *
  * @author Andres
@@ -136,6 +139,11 @@ public class VentanaInicio extends javax.swing.JFrame {
         LSeleccionCantProcesos.setText("Seleccione la cantidad de procesos por utilizar:");
 
         TCantProcesos.setToolTipText("Debe ingresar el númerro de procesos que desea utillizar en la ejecución.");
+        TCantProcesos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TCantProcesosActionPerformed(evt);
+            }
+        });
 
         CLargo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Fijo", "Variable" }));
         CLargo.setToolTipText("Formato de colas que se desee.");
@@ -243,7 +251,58 @@ public class VentanaInicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BContinuarActionPerformed
-        // TODO add your handling code here:
+        //GET CANT PROCESOS
+        try{
+            int numProcesos = Integer.parseInt(TCantProcesos.getText());
+            if ((1 < numProcesos)&& (numProcesos < 7)){
+                Globales.Procesos = numProcesos;
+            }
+            else{
+                JDialog Error = new JDialog(); JTextArea ErrorText = new JTextArea(); ErrorText.setText("Debe ingresar un número entre 2 y 6 en el campo del número de procesos.");
+                ErrorText.setLineWrap(true);Error.setSize(100, 100);Error.add(ErrorText);Error.setTitle("Error");Error.setVisible(true);
+            }
+        }
+        catch(Exception e){
+            JDialog Error = new JDialog(); JTextArea ErrorText = new JTextArea(); ErrorText.setText("Debe ingresar un número entre 2 y 6 en el campo del número de procesos.");
+            ErrorText.setLineWrap(true);Error.setSize(100, 100);Error.add(ErrorText);Error.setTitle("Error");Error.setVisible(true);
+        }
+        //GET RECEIVE
+        try{
+            Globales.Receive = CReceive.getSelectedItem().toString();
+        }
+        catch(Exception e){
+            JDialog Error = new JDialog(); JTextArea ErrorText = new JTextArea(); ErrorText.setText("Debe configurar la sincronización Receive.");
+            ErrorText.setLineWrap(true);Error.setSize(100, 100);Error.add(ErrorText);Error.setTitle("Error");Error.setVisible(true);            
+        }
+        //GET SEND
+        try{
+            switch (CSend.getSelectedItem().toString()){
+                case "Blocking":
+                    Globales.SendBlocking = true;
+                    break;
+                case "Non-Blocking":
+                    Globales.SendBlocking = false;
+                    break;
+            }
+        }
+        catch(Exception e){
+            JDialog Error = new JDialog(); JTextArea ErrorText = new JTextArea(); ErrorText.setText("Debe configurar la sincronización Send.");
+            ErrorText.setLineWrap(true);Error.setSize(100, 100);Error.add(ErrorText);Error.setTitle("Error");Error.setVisible(true);            
+        }
+        //GET DIRECCIONAMIENTO
+        try{
+            if (CDireccionamiento.getSelectedItem().toString().equals("Directo")){
+                Globales.DireccionamientoDirecto = true;
+                
+            }
+            else{
+                Globales.DireccionamientoDirecto = false;
+            }            
+        }
+        catch(Exception e){
+            JDialog Error = new JDialog(); JTextArea ErrorText = new JTextArea(); ErrorText.setText("Debe configurar la sincronización de Direccionamiento.");
+            ErrorText.setLineWrap(true);Error.setSize(100, 100);Error.add(ErrorText);Error.setTitle("Error");Error.setVisible(true);            
+        }
     }//GEN-LAST:event_BContinuarActionPerformed
 
     private void CSincronizacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CSincronizacionActionPerformed
@@ -291,6 +350,9 @@ public class VentanaInicio extends javax.swing.JFrame {
         if (valorCDirecto.equals("Receive")){
         CDirecReceive.setVisible(true);
         }
+        else{
+            CDirecReceive.setVisible(false);
+        }
     }//GEN-LAST:event_CDirectoActionPerformed
 
     private void CSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CSendActionPerformed
@@ -310,6 +372,10 @@ public class VentanaInicio extends javax.swing.JFrame {
                 break;
         }
     }//GEN-LAST:event_CLargoActionPerformed
+
+    private void TCantProcesosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TCantProcesosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TCantProcesosActionPerformed
 
     /**
      * @param args the command line arguments

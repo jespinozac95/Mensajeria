@@ -14,11 +14,12 @@ public class Globales {
     public static String TextoAyuda = "";
     //Datos (reseteables) de configuración
     public static boolean SendBlocking = true;
-    public static String Receive = "Blocking"; //Blocking, Nonblocking o PruebaDeLlegada
+    public static String Receive = "Blocking"; //Blocking, Non-Blocking o Prueba de llegada
     public static boolean ReceiveExplicito = true;
     public static boolean DireccionamientoDirecto = false;
     public static boolean IndirectoEstatico = false;
     public static boolean LargoMsjFijo = true;
     public static int LargoMsj = 0;
     public static boolean FIFO = false;
+    public static int Procesos = 0;
 }

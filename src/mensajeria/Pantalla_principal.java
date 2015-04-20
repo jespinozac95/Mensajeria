@@ -324,8 +324,6 @@ public class Pantalla_principal extends javax.swing.JFrame {
     }//GEN-LAST:event_AyudaActionPerformed
 
     private void AyudaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AyudaMousePressed
-        //Pantalla_ayuda Help = new Pantalla_ayuda();
-        //Help.setVisible(true);
         JDialog Help = new JDialog();
         JTextArea HelpTextArea = new JTextArea();
         HelpTextArea.setText(Globales.TextoAyuda);
