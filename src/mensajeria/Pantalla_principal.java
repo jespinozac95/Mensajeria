@@ -190,7 +190,9 @@ public class Pantalla_principal extends javax.swing.JFrame {
         String entrada = new String();
         try {
             //Obtener la entrada del usuario quitandole los >>> 
-            entrada = consolaText.getText().substring(4);
+            entrada = consolaText.getText();
+            entrada = entrada.replace(">", "");
+            entrada = entrada.replace(" ", "");
             //System.out.println("Entrada del usuario: " + entrada);
             
             //Limpiar el texto en consolaText
@@ -199,8 +201,11 @@ public class Pantalla_principal extends javax.swing.JFrame {
             consolaOldText.append("\n>>> " + entrada);
             consolaOldText.setCaretPosition(consolaOldText.getDocument().getLength());
             
+            String[] lineaEntrada = entrada.split("\\(");
+            String nombreFuncion = lineaEntrada[0];
+            
             //Si la función entrada del usuario no está dentro de los comandos permitidos entonces:
-            if (!(Arrays.asList(Globales.FuncionesPermitidas).contains(entrada))){
+            if ((!(Arrays.asList(Globales.FuncionesPermitidas).contains(nombreFuncion))) || (!(entrada.endsWith(")")))){
                 //Mostrar el mensaje de error en outputText
                 outputText.setText("Error: La acción digitada no es válida para el sistema.");
             }
@@ -217,7 +222,9 @@ public class Pantalla_principal extends javax.swing.JFrame {
         //Función para mostrar ayuda sensitiva cuando el usuario ingrese una función.
         char tecla = evt.getKeyChar();
         if (tecla == '('){
-            String entradaPorLinea = consolaText.getText().substring(4);
+            String entradaPorLinea = consolaText.getText();
+            entradaPorLinea = entradaPorLinea.replace(">", "");
+            entradaPorLinea = entradaPorLinea.replace(" ", "");
             String[] entradaPorLineaSeccionada = entradaPorLinea.split("\\(");
             String nombreFuncion = entradaPorLineaSeccionada[0];
             if(Arrays.asList(Globales.FuncionesPermitidas).contains(nombreFuncion)){
@@ -234,7 +241,7 @@ public class Pantalla_principal extends javax.swing.JFrame {
                                 outputText.setText("send(NombreDelProceso,Mensaje). Envía un mensaje a un proceso.");
                             }
                             else{
-                                outputText.setText("send(NombreDelProceso,Mensaje,NumeroDePrioridad). Envía un mensaje con cierta prioridad a un proceso.");
+                                outputText.setText("send(NombreDelProceso,Mensaje,NumeroDePrioridad). Envía un mensaje con cierta prioridad a un proceso (1,2 o 3, con 1 la más alta).");
                             }
                         }
                         else{
@@ -242,8 +249,11 @@ public class Pantalla_principal extends javax.swing.JFrame {
                                 outputText.setText("send(NombreDelBuzón,Mensaje). Envía un mensaje a un buzón.");
                             }
                             else{
-                                outputText.setText("send(NombreDelBuzón,Mensaje,NúmeroDePrioridad). Envía un mensaje a un buzón con cierta prioridad.");
+                                outputText.setText("send(NombreDelBuzón,Mensaje,NúmeroDePrioridad). Envía un mensaje a un buzón con cierta prioridad (1,2 o 3, con 1 la más alta).");
                             }
+                        }
+                        if (!(Globales.LargoMsjFijo)){
+                            outputText.append("\nEl mensaje debe tener como máximo "+Globales.LargoVariable+" caracteres.");
                         }
                         break;
                     case "receive":

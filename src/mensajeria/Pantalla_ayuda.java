@@ -19,50 +19,7 @@ public class Pantalla_ayuda extends javax.swing.JFrame {
     
     public Pantalla_ayuda() {
         initComponents();
-        //Adaptar el texto de ayuda de acuerdo con las variables de configuración al momento
-        String Texto = "Bienvenido a la Sección de Ayuda \nLista de comandos que puede ejecutar:\n - view(): Permite observar todo lo que está ocurriendo en el sistema mediante la sección de Visualización de Estados y Logs.\n - reset(): Reinicia el sistema y permite reconfigurarlo.";
-        if (Globales.DireccionamientoDirecto){
-            if (Globales.FIFO){
-                Texto += "\n - send(NombreDelProceso,Mensaje)";
-                Texto += ": Envía un mensaje a un proceso.";
-            }
-            else{
-                Texto += "\n - send(NombreDelProceso,Mensaje,NúmeroDePrioridad)";
-                Texto += ": Envía un mensaje a un proceso con cierta prioridad.";
-            }
-            if (Globales.ReceiveExplicito){
-                Texto += "\n - receive(NombreDelProceso,Mensaje)";
-                Texto += ": Recibir un mensaje a un proceso.";
-            }
-            else{
-                Texto += "\n - receive(Mensaje)";
-                Texto += ": Recibir un mensaje del proceso que le envió previamente.";
-            }
-        }
-        else{
-            if (Globales.FIFO){
-                Texto += "\n - send(NombreDelBuzón,Mensaje)";
-                Texto += ": Envía un mensaje a un buzón.";
-            }
-            else{
-                Texto += "\n - send(NombreDelBuzón,Mensaje,NúmeroDePrioridad)";
-                Texto += ": Envía un mensaje a un buzón con cierta prioridad.";
-            }
-            Texto += "\n - receive(Mensaje)";
-            Texto += ": Recibe un mensaje del buzón suscrito.";
-            if (Globales.IndirectoEstatico){
-                Texto += "\n - create_mailbox(NombreDelBuzón)";
-                Texto += ": Crea un buzón.";
-            }
-            else{ //Se puede create_mailbox aquí tambien?
-                Texto += "\n - connect_mailbox(NombreDelBuzón)";
-                Texto += ": Conectar el proceso en referencia a cierto buzón.";
-                Texto += "\n - disconnect_mailbox(NombreDelBuzón)";
-                Texto += ": Desonectar el proceso en referencia de cierto buzón.";
-            }
-        }
-        AyudaTextArea.setText(Texto);
-        Globales.TextoAyuda = Texto;
+        AyudaTextArea.setText(Globales.TextoAyuda);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -82,6 +39,7 @@ public class Pantalla_ayuda extends javax.swing.JFrame {
 
         AyudaLabel.setText("Ayuda");
 
+        AyudaTextArea.setEditable(false);
         AyudaTextArea.setColumns(20);
         AyudaTextArea.setLineWrap(true);
         AyudaTextArea.setRows(5);
