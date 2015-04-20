@@ -36,18 +36,19 @@ public class Pantalla_principal extends javax.swing.JFrame {
         consolaOldText = new javax.swing.JTextArea();
         consolaText = new javax.swing.JTextField();
         outputLabel = new java.awt.Label();
-        outputText = new java.awt.TextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        outputText = new javax.swing.JTextArea();
         menu = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
+        File = new javax.swing.JMenu();
+        Ayuda = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de Mensajería");
-        setAlwaysOnTop(true);
         setName("VentanaPrincipal"); // NOI18N
         setResizable(false);
 
         PanelViewDinamico.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        PanelViewDinamico.setToolTipText("Aquí podrá visualizar el estado de cada elemento del sistema al ejecutar la función view().");
 
         visualizacionLabel.setText("Visualización de Estados y Logs");
 
@@ -58,7 +59,7 @@ public class Pantalla_principal extends javax.swing.JFrame {
             .addGroup(PanelViewDinamicoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(visualizacionLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(241, Short.MAX_VALUE))
         );
         PanelViewDinamicoLayout.setVerticalGroup(
             PanelViewDinamicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -77,6 +78,7 @@ public class Pantalla_principal extends javax.swing.JFrame {
         consolaOldText.setLineWrap(true);
         consolaOldText.setRows(5);
         consolaOldText.setText("¡Bienvenido al sistema!");
+        consolaOldText.setToolTipText("Aquí se muestran sus entradas anteriores en la consola.");
         consolaOldText.setWrapStyleWord(true);
         consolaOldText.setCaretColor(new java.awt.Color(51, 153, 255));
         consolaOldText.setDisabledTextColor(new java.awt.Color(51, 153, 255));
@@ -94,18 +96,50 @@ public class Pantalla_principal extends javax.swing.JFrame {
                 consolaTextActionPerformed(evt);
             }
         });
+        consolaText.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                consolaTextKeyTyped(evt);
+            }
+        });
 
         outputLabel.setText("Evaluación de la información ");
 
         outputText.setEditable(false);
-        outputText.setMinimumSize(new java.awt.Dimension(100, 50));
-        outputText.setPreferredSize(new java.awt.Dimension(100, 50));
+        outputText.setColumns(20);
+        outputText.setLineWrap(true);
+        outputText.setRows(5);
+        outputText.setText(Globales.TextoAyuda);
+        outputText.setToolTipText("Aquí se muestran los mensajes de error, advertencia, ayuda o éxito de sus acciones.");
+        outputText.setWrapStyleWord(true);
+        jScrollPane2.setViewportView(outputText);
 
-        jMenu1.setText("File");
-        menu.add(jMenu1);
+        File.setText("File");
+        menu.add(File);
 
-        jMenu2.setText("Edit");
-        menu.add(jMenu2);
+        Ayuda.setText("Ayuda");
+        Ayuda.addMenuListener(new javax.swing.event.MenuListener() {
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuDeselected(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                AyudaMenuSelected(evt);
+            }
+        });
+        Ayuda.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AyudaMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                AyudaMousePressed(evt);
+            }
+        });
+        Ayuda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AyudaActionPerformed(evt);
+            }
+        });
+        menu.add(Ayuda);
 
         setJMenuBar(menu);
 
@@ -117,16 +151,14 @@ public class Pantalla_principal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(PanelViewDinamico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(outputText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addGap(0, 0, 0))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(consolaText)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(consolaLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(outputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 239, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -143,7 +175,7 @@ public class Pantalla_principal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(outputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(outputText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -167,8 +199,8 @@ public class Pantalla_principal extends javax.swing.JFrame {
             consolaOldText.append("\n>>> " + entrada);
             consolaOldText.setCaretPosition(consolaOldText.getDocument().getLength());
             
-            //Si la entrada del usuario no está dentro de los comandos permitidos entonces:
-            if (!(Arrays.asList(Globales.ComandosSimplesPermitidos).contains(entrada))){
+            //Si la función entrada del usuario no está dentro de los comandos permitidos entonces:
+            if (!(Arrays.asList(Globales.FuncionesPermitidas).contains(entrada))){
                 //Mostrar el mensaje de error en outputText
                 outputText.setText("Error: La acción digitada no es válida para el sistema.");
             }
@@ -180,6 +212,116 @@ public class Pantalla_principal extends javax.swing.JFrame {
             System.out.println("Excepción.");
         }
     }//GEN-LAST:event_consolaTextActionPerformed
+
+    private void consolaTextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_consolaTextKeyTyped
+        //Función para mostrar ayuda sensitiva cuando el usuario ingrese una función.
+        char tecla = evt.getKeyChar();
+        if (tecla == '('){
+            String entradaPorLinea = consolaText.getText().substring(4);
+            String[] entradaPorLineaSeccionada = entradaPorLinea.split("\\(");
+            String nombreFuncion = entradaPorLineaSeccionada[0];
+            if(Arrays.asList(Globales.FuncionesPermitidas).contains(nombreFuncion)){
+                switch(nombreFuncion){
+                    case "view":
+                        outputText.setText("view(). Sin parámetros. Permite observar todo lo que está pasando en el sistema.");
+                        break;
+                    case "reset":
+                        outputText.setText("reset(). Sin parámetros. Permite reconfigurar el sistema, borrando los estados al momento.");
+                        break;
+                    case "send":
+                        if (Globales.DireccionamientoDirecto){
+                            if (Globales.FIFO){
+                                outputText.setText("send(NombreDelProceso,Mensaje). Envía un mensaje a un proceso.");
+                            }
+                            else{
+                                outputText.setText("send(NombreDelProceso,Mensaje,NumeroDePrioridad). Envía un mensaje con cierta prioridad a un proceso.");
+                            }
+                        }
+                        else{
+                            if (Globales.FIFO){
+                                outputText.setText("send(NombreDelBuzón,Mensaje). Envía un mensaje a un buzón.");
+                            }
+                            else{
+                                outputText.setText("send(NombreDelBuzón,Mensaje,NúmeroDePrioridad). Envía un mensaje a un buzón con cierta prioridad.");
+                            }
+                        }
+                        break;
+                    case "receive":
+                        if (Globales.ReceiveExplicito){
+                            outputText.setText("receive(NombreDelProceso,Mensaje). Recibir un mensaje a un proceso.");
+                            }
+                        else{
+                            if (Globales.DireccionamientoDirecto){
+                                outputText.setText("receive(Mensaje). Recibir un mensaje del proceso que le envió previamente.");
+                            }
+                            else{
+                                outputText.setText("receive(Mensaje). Recibir un mensaje del buzón suscrito.");
+                            }
+                        }
+                        break;
+                    case "create_mailbox":
+                        if (!(Globales.DireccionamientoDirecto)){
+                            if (Globales.IndirectoEstatico){
+                                outputText.setText("create_mailbox(NombreDelBuzón). Crea un buzón.");
+                            }
+                            else{
+                                outputText.setText("Advertencia: No puede ejecutar este comando en el direccionamiento indirecto dinámico.");
+                            }
+                        }
+                        else{
+                            outputText.setText("Advertencia: No se puede ejecutar este comando en el direccionamiento directo.");
+                        }
+                        break;
+                    case "connect_mailbox":
+                        if (!(Globales.DireccionamientoDirecto)){
+                            if (!(Globales.IndirectoEstatico)){
+                                outputText.setText("connect_mailbox(NombreDelBuzón). Conectar el proceso en referencia a cierto buzón.");
+                            }
+                            else{
+                                outputText.setText("Advertencia: No se puede ejecutar este comando en el direccionamiento indirecto estático.");
+                            }
+                        }
+                        else{
+                            outputText.setText("Advertencia: No se puede ejecutar este comando en el direccionamiento directo.");
+                        }
+                        break;
+                    case "disconnect_mailbox":
+                        if (!(Globales.DireccionamientoDirecto)){
+                            if (!(Globales.IndirectoEstatico)){
+                                outputText.setText("disconnect_mailbox(NombreDelBuzón). Desconectar el proceso en referencia de cierto buzón.");
+                            }
+                            else{
+                                outputText.setText("Advertencia: No se puede ejecutar este comando en el direccionamiento indirecto estático.");
+                            }
+                        }
+                        else{
+                            outputText.setText("Advertencia: No se puede ejecutar este comando en el direccionamiento directo.");
+                        }
+                        break;
+                }
+            }
+            else{
+                outputText.setText("Advertencia: El nombre de la función que acaba de ingresar no es válido, dirígase al menú de ayuda para observar las funciones permitidas.");
+            }
+        }
+    }//GEN-LAST:event_consolaTextKeyTyped
+
+    private void AyudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AyudaActionPerformed
+
+    }//GEN-LAST:event_AyudaActionPerformed
+
+    private void AyudaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AyudaMousePressed
+        Pantalla_ayuda Help = new Pantalla_ayuda();
+        Help.setVisible(true);
+    }//GEN-LAST:event_AyudaMousePressed
+
+    private void AyudaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AyudaMouseClicked
+
+    }//GEN-LAST:event_AyudaMouseClicked
+
+    private void AyudaMenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_AyudaMenuSelected
+
+    }//GEN-LAST:event_AyudaMenuSelected
 
     /**
      * @param args the command line arguments
@@ -217,16 +359,17 @@ public class Pantalla_principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu Ayuda;
+    private javax.swing.JMenu File;
     private javax.swing.JPanel PanelViewDinamico;
     private java.awt.Label consolaLabel;
     private javax.swing.JTextArea consolaOldText;
     private javax.swing.JTextField consolaText;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JMenuBar menu;
     private java.awt.Label outputLabel;
-    private java.awt.TextArea outputText;
+    private javax.swing.JTextArea outputText;
     private javax.swing.JLabel visualizacionLabel;
     // End of variables declaration//GEN-END:variables
 }

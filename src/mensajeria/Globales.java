@@ -10,5 +10,15 @@ package mensajeria;
  * @author Jespi_000
  */
 public class Globales {
-    public static String[] ComandosSimplesPermitidos = new String[] {"view()","reset()"};
+    public static String[] FuncionesPermitidas = new String[] {"view","reset","send","receive","connect_mailbox","disconnect_mailbox","create_mailbox"};
+    public static String TextoAyuda = "";
+    //Datos (reseteables) de configuración
+    public static boolean SendBlocking = true;
+    public static String Receive = "Blocking"; //Blocking, Nonblocking o PruebaDeLlegada
+    public static boolean ReceiveExplicito = true;
+    public static boolean DireccionamientoDirecto = true;
+    public static boolean IndirectoEstatico = false;
+    public static boolean LargoMsjFijo = true;
+    public static int LargoVariable = 0;
+    public static boolean FIFO = true;
 }
