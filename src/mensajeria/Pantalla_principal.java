@@ -79,7 +79,7 @@ public class Pantalla_principal extends javax.swing.JFrame {
         consolaOldText.setForeground(new java.awt.Color(0, 153, 255));
         consolaOldText.setLineWrap(true);
         consolaOldText.setRows(5);
-        consolaOldText.setText("¡Bienvenido al sistema!");
+        consolaOldText.setText("¡Bienvenido al sistema! \nPara activar las configuraciones ejecute create() en la consola de letras verdes abajo.");
         consolaOldText.setToolTipText("Aquí se muestran sus entradas anteriores en la consola.");
         consolaOldText.setWrapStyleWord(true);
         consolaOldText.setCaretColor(new java.awt.Color(51, 153, 255));
@@ -232,6 +232,9 @@ public class Pantalla_principal extends javax.swing.JFrame {
             String nombreFuncion = entradaPorLineaSeccionada[0];
             if(Arrays.asList(Globales.FuncionesPermitidas).contains(nombreFuncion)){
                 switch(nombreFuncion){
+                    case "create":
+                        outputText.setText("create(). Sin parámetros. Activa las configuraciones especificadas anteriormente. Los demás comandos no funcionan sin haber ejecutado este comando.");
+                        break;
                     case "view":
                         outputText.setText("view(). Sin parámetros. Permite observar todo lo que está pasando en el sistema.");
                         break;

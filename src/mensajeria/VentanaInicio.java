@@ -293,14 +293,19 @@ public class VentanaInicio extends javax.swing.JFrame {
         try{
             if (CDireccionamiento.getSelectedItem().toString().equals("Directo")){
                 Globales.DireccionamientoDirecto = true;
-                
+                if (CDirecReceive.getSelectedItem().toString().equals("Receive Explícito")){
+                    Globales.ReceiveExplicito = true;
+                }
+                else{
+                    Globales.ReceiveExplicito = false;
+                }
             }
             else{
                 Globales.DireccionamientoDirecto = false;
             }            
         }
         catch(Exception e){
-            JDialog Error = new JDialog(); JTextArea ErrorText = new JTextArea(); ErrorText.setText("Debe configurar la sincronización de Direccionamiento.");
+            JDialog Error = new JDialog(); JTextArea ErrorText = new JTextArea(); ErrorText.setText("Debe configurar la sincronización de Direccionamiento completamente.");
             ErrorText.setLineWrap(true);Error.setSize(100, 100);Error.add(ErrorText);Error.setTitle("Error");Error.setVisible(true);            
         }
     }//GEN-LAST:event_BContinuarActionPerformed

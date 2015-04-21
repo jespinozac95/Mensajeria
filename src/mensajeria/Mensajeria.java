@@ -16,7 +16,7 @@ public class Mensajeria {
         ventanaInicio.setVisible(true);
         
         //Adaptar el texto de ayuda de acuerdo con las variables de configuración al momento
-        String Texto = "Bienvenido a la Sección de Ayuda \nRecuerde escribir sin espacios.\nLista de comandos que puede ejecutar:\n - view(): Permite observar todo lo que está ocurriendo en el sistema mediante la sección de Visualización de Estados y Logs.\n - reset(): Reinicia el sistema y permite reconfigurarlo.";
+        String Texto = "Bienvenido a la Sección de Ayuda \nRecuerde escribir sin espacios.\nLista de comandos que puede ejecutar:\n- create(): Ejecuta las configuraciones especificadas. Se debe ejecutar antes de cualquiera de todas las siguientes operaciones.\n - view(): Permite observar todo lo que está ocurriendo en el sistema mediante la sección de Visualización de Estados y Logs.\n - reset(): Reinicia el sistema y permite reconfigurarlo.";
         if (Globales.DireccionamientoDirecto){
             if (Globales.FIFO){
                 Texto += "\n - send(NombreDelProceso,Mensaje)";

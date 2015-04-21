@@ -10,7 +10,7 @@ package mensajeria;
  * @author Jespi_000
  */
 public class Globales {
-    public static String[] FuncionesPermitidas = new String[] {"view","reset","send","receive","connect_mailbox","disconnect_mailbox","create_mailbox"};
+    public static String[] FuncionesPermitidas = new String[] {"view","create","reset","send","receive","connect_mailbox","disconnect_mailbox","create_mailbox"};
     public static String TextoAyuda = "";
     //Datos (reseteables) de configuración
     public static boolean SendBlocking = true;
