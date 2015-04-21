@@ -20,11 +20,11 @@ public class VentanaInicio extends javax.swing.JFrame {
     public VentanaInicio() {
         initComponents();
         CSend.setVisible(false);
-        CReceive.setVisible(false);
-        CDirecto.setVisible(false);
+        CReceive.setVisible(false);        
         CIndirecto.setVisible(false);
         CDirecReceive.setVisible(false);        
         TCantFijo.setEditable(false);
+        LFijo.setVisible(false);
     }
 
     /**
@@ -47,13 +47,15 @@ public class VentanaInicio extends javax.swing.JFrame {
         CDisciplina = new javax.swing.JComboBox();
         CSend = new javax.swing.JComboBox();
         CReceive = new javax.swing.JComboBox();
-        CDirecto = new javax.swing.JComboBox();
         CIndirecto = new javax.swing.JComboBox();
         CDirecReceive = new javax.swing.JComboBox();
         LSeleccionCantProcesos = new javax.swing.JLabel();
         TCantProcesos = new javax.swing.JTextField();
         CLargo = new javax.swing.JComboBox();
         TCantFijo = new javax.swing.JTextField();
+        LCola = new javax.swing.JLabel();
+        TCola = new javax.swing.JTextField();
+        LFijo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -117,18 +119,10 @@ public class VentanaInicio extends javax.swing.JFrame {
         CReceive.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Blocking", "Non-Blocking", "Prueba de llegada" }));
         CReceive.setToolTipText("Debe seleccionar la modalidad de de recibo de mensajes deseada.");
 
-        CDirecto.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Send", "Receive" }));
-        CDirecto.setToolTipText("Modalidad de direccionamiento directo deseada.");
-        CDirecto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CDirectoActionPerformed(evt);
-            }
-        });
-
         CIndirecto.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Estático", "Dinámico" }));
         CIndirecto.setToolTipText("Modalidad de direccionamieno indrecto deseada.");
 
-        CDirecReceive.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Explícito", "Implícito" }));
+        CDirecReceive.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Receive Explícito", "Receive Implícito" }));
         CDirecReceive.setToolTipText("Tipo de emisor deseado.");
         CDirecReceive.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -155,16 +149,20 @@ public class VentanaInicio extends javax.swing.JFrame {
 
         TCantFijo.setToolTipText("Cantidad de elementos en la cola fija seleccionada.");
 
+        LCola.setText("Tamaño de la cola:");
+
+        TCola.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TColaActionPerformed(evt);
+            }
+        });
+
+        LFijo.setText("Tamaño fijo de mensaje:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(CDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(BContinuar)
-                .addGap(33, 33, 33))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -179,31 +177,48 @@ public class VentanaInicio extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(LSeleccionDirecc)
-                            .addComponent(LSeleccionFormato, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(CDireccionamiento, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(CSincronizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(CLargo, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(84, 84, 84)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(CDireccionamiento, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(CSincronizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(CLargo, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGap(84, 84, 84))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                            .addComponent(CDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(140, 140, 140)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(LSeleccionFormato, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(65, 65, 65)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(CSend, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(75, 75, 75)
-                                        .addComponent(CReceive, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(CReceive, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(CSend, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(CIndirecto, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(CDirecReceive, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(CDirecto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(CDirecReceive, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(TCantFijo, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(LSeleccionFormato1, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(CIndirecto, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                                .addComponent(BContinuar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(LSeleccionDirecc)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(LSeleccionFormato1, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(82, 82, 82)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(TCola, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(LCola)
+                                            .addComponent(TCantFijo, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(LFijo))))
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(TCantProcesos, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,24 +242,25 @@ public class VentanaInicio extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(CDireccionamiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(CIndirecto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CDirecto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(CDirecReceive, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(LSeleccionFormato)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(BContinuar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(CLargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(TCantFijo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(LSeleccionFormato1)
-                        .addGap(18, 18, 18)
-                        .addComponent(CDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 20, Short.MAX_VALUE))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LSeleccionFormato)
+                    .addComponent(LFijo))
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(CLargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TCantFijo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LSeleccionFormato1)
+                    .addComponent(LCola))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(CDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TCola, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BContinuar))
+                .addGap(0, 17, Short.MAX_VALUE))
         );
 
         pack();
@@ -328,12 +344,11 @@ public class VentanaInicio extends javax.swing.JFrame {
         // TODO add your handling code here:
         String valor=CDireccionamiento.getSelectedItem().toString();
         switch (valor) {
-            case "Directo":
-                CDirecto.setVisible(true);
+            case "Directo": 
+                CDirecReceive.setVisible(true);
                 CIndirecto.setVisible(false);
                 break;
             case "Indirecto":
-                CDirecto.setVisible(false);
                 CIndirecto.setVisible(true);
                 CDirecReceive.setVisible(false);
                 break;
@@ -350,14 +365,7 @@ public class VentanaInicio extends javax.swing.JFrame {
     }//GEN-LAST:event_CDirecReceiveActionPerformed
 
     private void CDirectoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CDirectoActionPerformed
-        // TODO add your handling code here:
-        String valorCDirecto=CDirecto.getSelectedItem().toString();
-        if (valorCDirecto.equals("Receive")){
-        CDirecReceive.setVisible(true);
-        }
-        else{
-            CDirecReceive.setVisible(false);
-        }
+       
     }//GEN-LAST:event_CDirectoActionPerformed
 
     private void CSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CSendActionPerformed
@@ -371,9 +379,11 @@ public class VentanaInicio extends javax.swing.JFrame {
             case "Fijo":
                 TCantFijo.setEditable(true);
                 TCantFijo.setVisible(true);
+                LFijo.setVisible(true);
                 break;
             case "Variable":
                 TCantFijo.setVisible(false);
+                LFijo.setVisible(false);
                 break;
         }
     }//GEN-LAST:event_CLargoActionPerformed
@@ -381,6 +391,10 @@ public class VentanaInicio extends javax.swing.JFrame {
     private void TCantProcesosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TCantProcesosActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TCantProcesosActionPerformed
+
+    private void TColaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TColaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TColaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -421,7 +435,6 @@ public class VentanaInicio extends javax.swing.JFrame {
     private javax.swing.JButton BContinuar;
     private javax.swing.JComboBox CDirecReceive;
     private javax.swing.JComboBox CDireccionamiento;
-    private javax.swing.JComboBox CDirecto;
     private javax.swing.JComboBox CDisciplina;
     private javax.swing.JComboBox CIndirecto;
     private javax.swing.JComboBox CLargo;
@@ -429,6 +442,8 @@ public class VentanaInicio extends javax.swing.JFrame {
     private javax.swing.JComboBox CSend;
     private javax.swing.JComboBox CSincronizacion;
     private javax.swing.JLabel LBienvenido;
+    private javax.swing.JLabel LCola;
+    private javax.swing.JLabel LFijo;
     private javax.swing.JLabel LSeleccionCantProcesos;
     private javax.swing.JLabel LSeleccionDirecc;
     private javax.swing.JLabel LSeleccionFormato;
@@ -436,5 +451,6 @@ public class VentanaInicio extends javax.swing.JFrame {
     private javax.swing.JLabel LSeleccionSinc;
     private javax.swing.JTextField TCantFijo;
     private javax.swing.JTextField TCantProcesos;
+    private javax.swing.JTextField TCola;
     // End of variables declaration//GEN-END:variables
 }

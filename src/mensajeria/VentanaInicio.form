@@ -40,36 +40,57 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="LSeleccionDirecc" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="LSeleccionFormato" alignment="0" min="-2" pref="228" max="-2" attributes="0"/>
-                          <Component id="LSeleccionFormato1" alignment="0" min="-2" pref="337" max="-2" attributes="0"/>
-                          <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="CDisciplina" min="-2" pref="153" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="273" max="-2" attributes="0"/>
-                                  <Component id="BContinuar" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="CDireccionamiento" alignment="0" min="-2" pref="153" max="-2" attributes="0"/>
-                                      <Component id="CSincronizacion" alignment="0" min="-2" pref="153" max="-2" attributes="0"/>
-                                      <Component id="CLargo" alignment="0" min="-2" pref="131" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" alignment="0" groupAlignment="0" attributes="0">
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="CDireccionamiento" alignment="0" min="-2" pref="153" max="-2" attributes="0"/>
+                                              <Component id="CSincronizacion" alignment="0" min="-2" pref="153" max="-2" attributes="0"/>
+                                              <Component id="CLargo" alignment="0" min="-2" pref="131" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <Component id="CDisciplina" min="-2" pref="153" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="140" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
-                                  <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" attributes="0">
-                                          <Component id="CReceive" min="-2" pref="131" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="CSend" min="-2" pref="131" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="CDirecReceive" min="-2" pref="131" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="CIndirecto" min="-2" pref="131" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Component id="TCantFijo" min="-2" pref="69" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="LSeleccionFormato" min="-2" pref="228" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="CReceive" min="-2" pref="131" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="CSend" min="-2" pref="131" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="CDirecReceive" min="-2" pref="131" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="CIndirecto" min="-2" pref="131" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace pref="23" max="32767" attributes="0"/>
+                              <Component id="BContinuar" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="LSeleccionDirecc" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="LSeleccionFormato1" min="-2" pref="272" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="TCola" min="-2" pref="69" max="-2" attributes="0"/>
+                                          <Component id="LCola" min="-2" max="-2" attributes="0"/>
+                                          <Component id="TCantFijo" alignment="0" min="-2" pref="69" max="-2" attributes="0"/>
+                                          <Component id="LFijo" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -78,7 +99,7 @@
                       <Component id="TCantProcesos" min="-2" pref="67" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="28" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -107,27 +128,28 @@
                   <Component id="CIndirecto" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="CDirecReceive" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="LSeleccionFormato" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="CLargo" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="TCantFijo" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="LSeleccionFormato1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="CDisciplina" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="20" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="BContinuar" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="LSeleccionFormato" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="LFijo" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
+              <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="CLargo" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="TCantFijo" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="LSeleccionFormato1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="LCola" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="CDisciplina" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="TCola" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="BContinuar" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="0" pref="17" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -305,6 +327,21 @@
     <Component class="javax.swing.JTextField" name="TCantFijo">
       <Properties>
         <Property name="toolTipText" type="java.lang.String" value="Cantidad de elementos en la cola fija seleccionada."/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="LCola">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Tama&#xf1;o de la cola:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="TCola">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TColaActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="LFijo">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Tama&#xf1;o fijo de mensaje:"/>
       </Properties>
     </Component>
   </SubComponents>
