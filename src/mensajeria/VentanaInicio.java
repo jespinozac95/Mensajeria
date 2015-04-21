@@ -305,7 +305,7 @@ public class VentanaInicio extends javax.swing.JFrame {
             JDialog Error = new JDialog(); JTextArea ErrorText = new JTextArea(); ErrorText.setText("Debe configurar la sincronización Send.");
             ErrorText.setLineWrap(true);Error.setSize(100, 100);Error.add(ErrorText);Error.setTitle("Error");Error.setVisible(true);            
         }
-        //GET DIRECCIONAMIENTO
+        //GET DIRECCIONAMIENTO FALTA EL INDIRECTO
         try{
             if (CDireccionamiento.getSelectedItem().toString().equals("Directo")){
                 Globales.DireccionamientoDirecto = true;
@@ -324,6 +324,9 @@ public class VentanaInicio extends javax.swing.JFrame {
             JDialog Error = new JDialog(); JTextArea ErrorText = new JTextArea(); ErrorText.setText("Debe configurar la sincronización de Direccionamiento completamente.");
             ErrorText.setLineWrap(true);Error.setSize(100, 100);Error.add(ErrorText);Error.setTitle("Error");Error.setVisible(true);            
         }
+        //GET FORMATO VALIDAR LARGO 10-140 num entero
+        //GET DISCIPLINA 
+        //GET TAMANO COLA 1-20 num entero
     }//GEN-LAST:event_BContinuarActionPerformed
 
     private void CSincronizacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CSincronizacionActionPerformed

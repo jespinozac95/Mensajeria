@@ -22,4 +22,5 @@ public class Globales {
     public static int LargoMsj = 0;
     public static boolean FIFO = false;
     public static int Procesos = 0;
+    public static int TamanoCola = 0;
 }
