@@ -19,7 +19,6 @@ public class Cola {
     
     void agregar_final(Mensaje ms1){
         lista.add(ms1);
-       
     }
     
     void eliminar_inicio(){
@@ -29,6 +28,25 @@ public class Cola {
     public int tamano(){
         return lista.size(); 
     }
+    
+    //Obtiene en primer mensaje de la cola. FIFO. 
+    public String obtener_mensaje(){ 
+        List<Mensaje> ListaMSN= this.lista; 
+        int tamano_lista= ListaMSN.size();
+        if (tamano_lista>0){
+            Mensaje primero= lista.get(0); 
+            this.eliminar_inicio();
+            System.out.println(primero.contenido); 
+            return primero.contenido; 
+        }
+        else{
+            return null; 
+        }
+        
+    }
+    
+    
+    
     
     public Mensaje devolver_mayor_prioridad(){ //Mayor Prioridad Fifo Implícito
         List<Mensaje> ListaMSN= this.lista; 
@@ -73,7 +91,7 @@ public class Cola {
         res= ListaMSN.get(0);
         if (tamano_lista>1){
         while (contador<tamano_lista){
-            if ((ListaMSN.get(contador).prioridad<res.prioridad)&&(ListaMSN.get(contador).origen.nombre.equals(proceso))){
+            if ((ListaMSN.get(contador).prioridad<res.prioridad)&&(ListaMSN.get(contador).origen.nombre.equalsIgnoreCase(proceso))){
                 res=ListaMSN.get(contador);
             }
             else{
@@ -81,7 +99,7 @@ public class Cola {
             }
         }
         
-        if (res.origen.nombre.equals(proceso)){
+        if (res.origen.nombre.equalsIgnoreCase(proceso)){
             System.out.println(res.contenido);
             return res; 
         }
@@ -93,7 +111,7 @@ public class Cola {
         else{
             if (tamano_lista==1){
                 
-                if (res.origen.nombre.equals(proceso)){
+                if (res.origen.nombre.equalsIgnoreCase(proceso)){
                 System.out.println(res.contenido);
                 return res; 
                 }
@@ -142,7 +160,8 @@ public class Cola {
         
         x.devolver_mayor_prioridad(); 
         System.out.println("Mayor Prioridad Explícito FIFO");
-        x.devolver_mayor_prioridad_explícito("Proceso1"); 
+        x.devolver_mayor_prioridad_explícito("Proceso3"); 
+        x.obtener_mensaje(); 
     }
     
 }
