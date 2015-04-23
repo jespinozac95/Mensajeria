@@ -282,6 +282,9 @@
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="Modalidad de direccionamieno indrecto deseada."/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CIndirectoActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JComboBox" name="CDirecReceive">
       <Properties>
@@ -304,7 +307,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="TCantProcesos">
       <Properties>
-        <Property name="toolTipText" type="java.lang.String" value="Debe ingresar el n&#xfa;merro de procesos que desea utillizar en la ejecuci&#xf3;n."/>
+        <Property name="toolTipText" type="java.lang.String" value="Debe ingresar el n&#xfa;merro (2 a 6) de procesos que desea utillizar en la ejecuci&#xf3;n."/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TCantProcesosActionPerformed"/>
@@ -314,8 +317,8 @@
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="2">
-            <StringItem index="0" value="Fijo"/>
-            <StringItem index="1" value="Variable"/>
+            <StringItem index="0" value="Variable"/>
+            <StringItem index="1" value="Fijo"/>
           </StringArray>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="Formato de colas que se desee."/>
@@ -326,7 +329,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="TCantFijo">
       <Properties>
-        <Property name="toolTipText" type="java.lang.String" value="Cantidad de elementos en la cola fija seleccionada."/>
+        <Property name="toolTipText" type="java.lang.String" value="Cantidad de caracteres del largo de cada mensaje."/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="LCola">
@@ -335,6 +338,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="TCola">
+      <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="Cantidad de elementos en la cola de mensajes."/>
+      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TColaActionPerformed"/>
       </Events>

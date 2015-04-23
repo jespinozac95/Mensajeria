@@ -121,6 +121,11 @@ public class VentanaInicio extends javax.swing.JFrame {
 
         CIndirecto.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Estático", "Dinámico" }));
         CIndirecto.setToolTipText("Modalidad de direccionamieno indrecto deseada.");
+        CIndirecto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CIndirectoActionPerformed(evt);
+            }
+        });
 
         CDirecReceive.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Receive Explícito", "Receive Implícito" }));
         CDirecReceive.setToolTipText("Tipo de emisor deseado.");
@@ -132,14 +137,14 @@ public class VentanaInicio extends javax.swing.JFrame {
 
         LSeleccionCantProcesos.setText("Seleccione la cantidad de procesos por utilizar:");
 
-        TCantProcesos.setToolTipText("Debe ingresar el númerro de procesos que desea utillizar en la ejecución.");
+        TCantProcesos.setToolTipText("Debe ingresar el númerro (2 a 6) de procesos que desea utillizar en la ejecución.");
         TCantProcesos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TCantProcesosActionPerformed(evt);
             }
         });
 
-        CLargo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Fijo", "Variable" }));
+        CLargo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Variable", "Fijo" }));
         CLargo.setToolTipText("Formato de colas que se desee.");
         CLargo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -147,10 +152,11 @@ public class VentanaInicio extends javax.swing.JFrame {
             }
         });
 
-        TCantFijo.setToolTipText("Cantidad de elementos en la cola fija seleccionada.");
+        TCantFijo.setToolTipText("Cantidad de caracteres del largo de cada mensaje.");
 
         LCola.setText("Tamaño de la cola:");
 
+        TCola.setToolTipText("Cantidad de elementos en la cola de mensajes.");
         TCola.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TColaActionPerformed(evt);
@@ -267,6 +273,7 @@ public class VentanaInicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BContinuarActionPerformed
+        boolean PuedeContinuar = true;
         //GET CANT PROCESOS
         try{
             int numProcesos = Integer.parseInt(TCantProcesos.getText());
@@ -274,21 +281,21 @@ public class VentanaInicio extends javax.swing.JFrame {
                 Globales.Procesos = numProcesos;
             }
             else{
-                JDialog Error = new JDialog(); JTextArea ErrorText = new JTextArea(); ErrorText.setText("Debe ingresar un número entre 2 y 6 en el campo del número de procesos.");
-                ErrorText.setLineWrap(true);Error.setSize(100, 100);Error.add(ErrorText);Error.setTitle("Error");Error.setVisible(true);
+                PantallaError Error = new PantallaError("Debe ingresar un número entre 2 y 6 en el campo del número de procesos.");
+                PuedeContinuar = false;
             }
         }
         catch(Exception e){
-            JDialog Error = new JDialog(); JTextArea ErrorText = new JTextArea(); ErrorText.setText("Debe ingresar un número entre 2 y 6 en el campo del número de procesos.");
-            ErrorText.setLineWrap(true);Error.setSize(100, 100);Error.add(ErrorText);Error.setTitle("Error");Error.setVisible(true);
+            PantallaError Error = new PantallaError("Debe ingresar un número entre 2 y 6 en el campo del número de procesos  para continuar.");
+            PuedeContinuar = false;
         }
         //GET RECEIVE
         try{
             Globales.Receive = CReceive.getSelectedItem().toString();
         }
         catch(Exception e){
-            JDialog Error = new JDialog(); JTextArea ErrorText = new JTextArea(); ErrorText.setText("Debe configurar la sincronización Receive.");
-            ErrorText.setLineWrap(true);Error.setSize(100, 100);Error.add(ErrorText);Error.setTitle("Error");Error.setVisible(true);            
+            PantallaError Error = new PantallaError("Debe configurar la sincronización Receive para continuar.");            
+            PuedeContinuar = false;
         }
         //GET SEND
         try{
@@ -302,8 +309,8 @@ public class VentanaInicio extends javax.swing.JFrame {
             }
         }
         catch(Exception e){
-            JDialog Error = new JDialog(); JTextArea ErrorText = new JTextArea(); ErrorText.setText("Debe configurar la sincronización Send.");
-            ErrorText.setLineWrap(true);Error.setSize(100, 100);Error.add(ErrorText);Error.setTitle("Error");Error.setVisible(true);            
+            PantallaError Error = new PantallaError("Debe configurar la sincronización Send para continuar.");            
+            PuedeContinuar = false;
         }
         //GET DIRECCIONAMIENTO FALTA EL INDIRECTO
         try{
@@ -318,15 +325,81 @@ public class VentanaInicio extends javax.swing.JFrame {
             }
             else{
                 Globales.DireccionamientoDirecto = false;
+                if (CIndirecto.getSelectedItem().toString().equals("Estático")){
+                    Globales.IndirectoEstatico = true;
+                }
+                else{
+                    Globales.IndirectoEstatico = false;
+                }
             }            
         }
         catch(Exception e){
-            JDialog Error = new JDialog(); JTextArea ErrorText = new JTextArea(); ErrorText.setText("Debe configurar la sincronización de Direccionamiento completamente.");
-            ErrorText.setLineWrap(true);Error.setSize(100, 100);Error.add(ErrorText);Error.setTitle("Error");Error.setVisible(true);            
+            PantallaError Error = new PantallaError("Debe configurar la sincronización de Direccionamiento completamente para continuar.");
+            PuedeContinuar = false;
         }
         //GET FORMATO VALIDAR LARGO 10-140 num entero
+        try{
+            if (CLargo.getSelectedItem().toString().equals("Fijo")){
+                Globales.LargoMsjFijo = true;
+                if ((Integer.parseInt(TCantFijo.getText()) < 10) || (Integer.parseInt(TCantFijo.getText()) > 140)){
+                    PantallaError Error = new PantallaError("El largo del formato de los mensajes debe ser entre 10 y 140 caracteres.");
+                    PuedeContinuar = false;
+                }
+                else{
+                    Globales.LargoMsj = Integer.parseInt(TCantFijo.getText());
+                }
+            }
+            else{
+                Globales.LargoMsjFijo = false;
+            }
+        }
+        catch (Exception e){
+            PantallaError Error = new PantallaError("Debe configurar el Formato (largo) de los mensajes completamente para continuar.");
+            PuedeContinuar = false;
+        }
         //GET DISCIPLINA 
+        try{
+            if (CLargo.getSelectedItem().toString().equals("Prioridad")){
+                Globales.FIFO = false;
+            }
+            else{
+                Globales.FIFO = true;
+            }
+        }
+        catch (Exception e){
+            PantallaError Error = new PantallaError("Debe especificar la disciplina (FIFO o Prioridad) de la cola para continuar.");
+            PuedeContinuar = false;
+        }
         //GET TAMANO COLA 1-20 num entero
+        try{
+            if ((Integer.parseInt(TCola.getText()) < 1) || (Integer.parseInt(TCola.getText().toString()) > 20)){
+                PantallaError Error = new PantallaError("El largo de la cola debe ser de 1-20.");
+                PuedeContinuar = false;
+            }
+            else{
+                Globales.TamanoCola = Integer.parseInt(TCola.getText());
+            }
+        }
+        catch (Exception e){
+            PantallaError Error = new PantallaError("Debe especificar el largo de la cola para continuar, y esta debe ser de largo 1-20.");
+            PuedeContinuar = false;
+        }
+        if (PuedeContinuar == true){
+            //Tire MSJ de exito
+            PantallaExito exito = new PantallaExito("Configuraciones cargadas con éxito.");
+            
+            //Pida los nombres de los procesos
+            
+            
+            //Tire pantalla de exito con: create() fue realizado
+            PantallaExito exitoCreate = new PantallaExito("Create() realizado con éxito.\nLos procesos y elementos que especificó fueron creados con sus configuraciones.");
+            
+            //Cerrar esta ventana y tirar ventana de consola
+            this.setVisible(false);
+            Pantalla_principal Pantalla_Principal = new Pantalla_principal();
+            Pantalla_Principal.setVisible(true);
+            this.setEnabled(false);
+        }
     }//GEN-LAST:event_BContinuarActionPerformed
 
     private void CSincronizacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CSincronizacionActionPerformed
@@ -398,6 +471,10 @@ public class VentanaInicio extends javax.swing.JFrame {
     private void TColaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TColaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TColaActionPerformed
+
+    private void CIndirectoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CIndirectoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CIndirectoActionPerformed
 
     /**
      * @param args the command line arguments

@@ -7,6 +7,8 @@ package mensajeria;
 
 import java.util.Arrays;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 
 /**
@@ -327,14 +329,7 @@ public class Pantalla_principal extends javax.swing.JFrame {
     }//GEN-LAST:event_AyudaActionPerformed
 
     private void AyudaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AyudaMousePressed
-        JDialog Help = new JDialog();
-        JTextArea HelpTextArea = new JTextArea();
-        HelpTextArea.setText(Globales.TextoAyuda);
-        HelpTextArea.setLineWrap(true);
-        Help.setSize(500, 300);
-        Help.add(HelpTextArea);
-        Help.setTitle("Ayuda");
-        Help.setVisible(true);
+        JOptionPane.showMessageDialog(new JFrame(),Globales.TextoAyuda,"Ayuda",JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_AyudaMousePressed
 
     private void AyudaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AyudaMouseClicked
