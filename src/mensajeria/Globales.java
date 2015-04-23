@@ -22,8 +22,9 @@ public class Globales {
     public static int LargoMsj = 0;
     public static boolean FIFO = false;
     public static int Procesos = 0;
-    public static Mailbox[] mails;
-    public static Proceso[] procs;
+    public static Mailbox[] mails = new Mailbox[10];
+    public static Proceso[] procs = new Proceso[6];
+    public static String [] NombresProcesos = new String[6]; 
     public static int TamanoCola = 0;
     
     public static Mailbox buscarMB(String MB){

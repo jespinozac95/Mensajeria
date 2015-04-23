@@ -5,7 +5,10 @@
  */
 package mensajeria;
 
+import java.util.Arrays;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 
 /**
@@ -387,9 +390,10 @@ public class VentanaInicio extends javax.swing.JFrame {
         if (PuedeContinuar == true){
             //Tire MSJ de exito
             PantallaExito exito = new PantallaExito("Configuraciones cargadas con éxito.");
-            
+            //Set texto de ayuda dinámico
+            SetTextoAyuda();
             //Pida los nombres de los procesos
-            
+            SetNombresDeProcesos();
             
             //Tire pantalla de exito con: create() fue realizado
             PantallaExito exitoCreate = new PantallaExito("Create() realizado con éxito.\nLos procesos y elementos que especificó fueron creados con sus configuraciones.");
@@ -448,6 +452,66 @@ public class VentanaInicio extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_CSendActionPerformed
 
+    public void SetTextoAyuda(){
+        //Adaptar el texto de ayuda de acuerdo con las variables de configuración al momento
+        String Texto = "Bienvenido a la Sección de Ayuda \nRecuerde escribir sin espacios.\nLista de comandos que puede ejecutar:\n - view(): Permite observar todo lo que está ocurriendo en el sistema mediante la sección de Visualización de Estados y Logs.\n - reset(): Reinicia el sistema y permite reconfigurarlo.";
+        if (Globales.DireccionamientoDirecto){
+            if (Globales.FIFO){
+                Texto += "\n - send(NombreDelProcesoEmisor,NombreDelProcesoReceptor,Mensaje)";
+                Texto += ": Envía un mensaje a un proceso.";
+                if (Globales.LargoMsjFijo){
+                    Texto += "El mensaje no debe sobrepasar los "+Globales.LargoMsj+" caracteres.";
+                }
+            }
+            else{
+                Texto += "\n - send(NombreDelProcesoEmisor,NombreDelProceso,Mensaje,NúmeroDePrioridad)";
+                Texto += ": Envía un mensaje a un proceso con cierta prioridad (1,2 o 3, con 1 la más alta).";
+                if (Globales.LargoMsjFijo){
+                    Texto += "El mensaje no debe sobrepasar los "+Globales.LargoMsj+" caracteres.";
+                }
+            }
+            if (Globales.ReceiveExplicito){
+                Texto += "\n - receive(NombreDelProcesoReceptor,NombreDelProcesoEmisor)";
+                Texto += ": Recibir un mensaje de un proceso.";
+            }
+            else{
+                Texto += "\n - receive(NombreDelProcesoReceptor)";
+                Texto += ": Recibir un mensaje del proceso que le envió previamente.";
+            }
+        }
+        else{
+            if (Globales.FIFO){
+                Texto += "\n - send(NombreDelProcesoEmisor,NombreDelBuzón,Mensaje)";
+                Texto += ": Envía un mensaje a un buzón.";
+                if (Globales.LargoMsjFijo){
+                    Texto += "El mensaje no debe sobrepasar los "+Globales.LargoMsj+" caracteres.";
+                }
+            }
+            else{
+                Texto += "\n - send(NombreDelProcesoEmisor,NombreDelBuzón,Mensaje,NúmeroDePrioridad)";
+                Texto += ": Envía un mensaje a un buzón con cierta prioridad (1,2 o 3, con 1 la más alta).";
+                if (Globales.LargoMsjFijo){
+                    Texto += "El mensaje no debe sobrepasar los "+Globales.LargoMsj+" caracteres.";
+                }
+            }
+            Texto += "\n - receive(NombreDelProcesoReceptor)";
+            Texto += ": Recibe un mensaje del buzón suscrito.";
+            if (Globales.IndirectoEstatico){
+                Texto += "\n - create_mailbox(NombreDelProcesoCreador,NombreDelBuzón)";
+                Texto += ": Crea un buzón.";
+            }
+            else{ 
+                Texto += "\n - create_mailbox(NombreDelBuzón)";
+                Texto += ": Crea un buzón.";
+                Texto += "\n - connect_mailbox(NombreDelBuzón,NombreDelProcesoAConectar)";
+                Texto += ": Conectar el proceso en referencia a cierto buzón.";
+                Texto += "\n - disconnect_mailbox(NombreDelBuzón,NombreDelProcesoADesconectar)";
+                Texto += ": Desonectar el proceso en referencia de cierto buzón.";
+            }
+        }
+        Globales.TextoAyuda = Texto;
+    }
+    
     private void CLargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CLargoActionPerformed
         // TODO add your handling code here:        
         String valorCLargo=CLargo.getSelectedItem().toString();
@@ -533,4 +597,17 @@ public class VentanaInicio extends javax.swing.JFrame {
     private javax.swing.JTextField TCantProcesos;
     private javax.swing.JTextField TCola;
     // End of variables declaration//GEN-END:variables
+
+    public void SetNombresDeProcesos() {
+        for (int i=0;i<Globales.Procesos;i++){
+            int numeroDeProcesoEnCuestion = i+1;
+            String nombre = (String)JOptionPane.showInputDialog(new JFrame(),"Escriba el nombre del proceso #"+numeroDeProcesoEnCuestion,"Nombrar Procesos",JOptionPane.PLAIN_MESSAGE);
+            //System.out.println("Proceso #"+numeroDeProcesoEnCuestion+" = "+nombre);
+            while (!(Arrays.asList(Globales.NombresProcesos).contains(nombre))){
+                nombre = (String)JOptionPane.showInputDialog(new JFrame(),"Escriba el nombre del proceso #"+numeroDeProcesoEnCuestion,"Nombrar Procesos",JOptionPane.PLAIN_MESSAGE);    
+            }
+            Proceso p = new Proceso(nombre);
+            Globales.procs[i]=p;
+        }
+    }
 }

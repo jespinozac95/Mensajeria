@@ -63,7 +63,7 @@ public class Pantalla_principal extends javax.swing.JFrame {
             .addGroup(PanelViewDinamicoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(visualizacionLabel)
-                .addContainerGap(241, Short.MAX_VALUE))
+                .addContainerGap(364, Short.MAX_VALUE))
         );
         PanelViewDinamicoLayout.setVerticalGroup(
             PanelViewDinamicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -81,7 +81,7 @@ public class Pantalla_principal extends javax.swing.JFrame {
         consolaOldText.setForeground(new java.awt.Color(0, 153, 255));
         consolaOldText.setLineWrap(true);
         consolaOldText.setRows(5);
-        consolaOldText.setText("¡Bienvenido al sistema! \nPara activar las configuraciones ejecute create() en la consola de letras verdes abajo.");
+        consolaOldText.setText("¡Bienvenido al sistema!");
         consolaOldText.setToolTipText("Aquí se muestran sus entradas anteriores en la consola.");
         consolaOldText.setWrapStyleWord(true);
         consolaOldText.setCaretColor(new java.awt.Color(51, 153, 255));
@@ -179,8 +179,8 @@ public class Pantalla_principal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(outputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         consolaLabel.getAccessibleContext().setAccessibleName("ConsolaLabel");
@@ -233,58 +233,59 @@ public class Pantalla_principal extends javax.swing.JFrame {
             String[] entradaPorLineaSeccionada = entradaPorLinea.split("\\(");
             String nombreFuncion = entradaPorLineaSeccionada[0];
             if(Arrays.asList(Globales.FuncionesPermitidas).contains(nombreFuncion)){
+                String Texto = "";
                 switch(nombreFuncion){
-                    case "create":
-                        outputText.setText("create(). Sin parámetros. Activa las configuraciones especificadas anteriormente. Los demás comandos no funcionan sin haber ejecutado este comando.");
-                        break;
                     case "view":
                         outputText.setText("view(). Sin parámetros. Permite observar todo lo que está pasando en el sistema.");
                         break;
                     case "reset":
-                        outputText.setText("reset(). Sin parámetros. Permite reconfigurar el sistema, borrando los estados al momento.");
+                        outputText.setText("reset(). Sin parámetros. Permite reconfigurar el sistema, borrando los estados al momento pero manteniendo los procesos.");
                         break;
                     case "send":
                         if (Globales.DireccionamientoDirecto){
                             if (Globales.FIFO){
-                                outputText.setText("send(NombreDelProceso,Mensaje). Envía un mensaje a un proceso.");
+                                Texto += "- send(NombreDelProcesoEmisor,NombreDelProcesoReceptor,Mensaje)";
+                                Texto += ": Envía un mensaje a un proceso.";
                             }
                             else{
-                                outputText.setText("send(NombreDelProceso,Mensaje,NumeroDePrioridad). Envía un mensaje con cierta prioridad a un proceso (1,2 o 3, con 1 la más alta).");
+                                Texto += "- send(NombreDelProcesoEmisor,NombreDelProceso,Mensaje,NúmeroDePrioridad)";
+                                Texto += ": Envía un mensaje a un proceso con cierta prioridad (1,2 o 3, con 1 la más alta).";
                             }
                         }
                         else{
                             if (Globales.FIFO){
-                                outputText.setText("send(NombreDelBuzón,Mensaje). Envía un mensaje a un buzón.");
-                            }
+                                Texto += "- send(NombreDelProcesoEmisor,NombreDelBuzón,Mensaje)";
+                                Texto += ": Envía un mensaje a un buzón.";}
                             else{
-                                outputText.setText("send(NombreDelBuzón,Mensaje,NúmeroDePrioridad). Envía un mensaje a un buzón con cierta prioridad (1,2 o 3, con 1 la más alta).");
+                                Texto += "- send(NombreDelProcesoEmisor,NombreDelBuzón,Mensaje,NúmeroDePrioridad)";
+                                Texto += ": Envía un mensaje a un buzón con cierta prioridad (1,2 o 3, con 1 la más alta).";
                             }
                         }
                         if (Globales.LargoMsjFijo){
-                            outputText.append("\nEl mensaje debe tener como máximo "+Globales.LargoMsj+" caracteres.");
+                            Texto += "El mensaje no debe sobrepasar los "+Globales.LargoMsj+" caracteres.";
                         }
+                        outputText.setText(Texto);
                         break;
                     case "receive":
-                        if (Globales.ReceiveExplicito){
-                            outputText.setText("receive(NombreDelProceso). Recibir un mensaje a un proceso.");
-                            }
-                        else{
-                            if (Globales.DireccionamientoDirecto){
-                                outputText.setText("receive(). Recibir un mensaje del proceso que le envió previamente.");
+                        if (Globales.DireccionamientoDirecto){
+                            if (Globales.ReceiveExplicito){
+                                Texto += "- receive(NombreDelProcesoReceptor,NombreDelProcesoEmisor)";
+                                Texto += ": Recibir un mensaje de un proceso.";
                             }
                             else{
-                                outputText.setText("receive(). Recibir un mensaje del buzón suscrito.");
+                                Texto += "- receive(NombreDelProcesoReceptor)";
+                                Texto += ": Recibir un mensaje del proceso que le envió previamente.";
                             }
                         }
+                        else{
+                            Texto += "- receive(NombreDelProcesoReceptor)";
+                            Texto += ": Recibe un mensaje del buzón suscrito.";
+                        }
+                        outputText.setText(Texto);
                         break;
                     case "create_mailbox":
                         if (!(Globales.DireccionamientoDirecto)){
-                            if (Globales.IndirectoEstatico){
-                                outputText.setText("create_mailbox(NombreDelBuzón). Crea un buzón.");
-                            }
-                            else{
-                                outputText.setText("Advertencia: No puede ejecutar este comando en el direccionamiento indirecto dinámico.");
-                            }
+                            outputText.setText("create_mailbox(NombreDelBuzón). Crea un buzón.");
                         }
                         else{
                             outputText.setText("Advertencia: No se puede ejecutar este comando en el direccionamiento directo.");
@@ -293,7 +294,7 @@ public class Pantalla_principal extends javax.swing.JFrame {
                     case "connect_mailbox":
                         if (!(Globales.DireccionamientoDirecto)){
                             if (!(Globales.IndirectoEstatico)){
-                                outputText.setText("connect_mailbox(NombreDelBuzón). Conectar el proceso en referencia a cierto buzón.");
+                                outputText.setText("connect_mailbox(NombreDelProcesoAConectar,NombreDelBuzón). Conectar el proceso en referencia a cierto buzón.");
                             }
                             else{
                                 outputText.setText("Advertencia: No se puede ejecutar este comando en el direccionamiento indirecto estático.");
@@ -306,7 +307,7 @@ public class Pantalla_principal extends javax.swing.JFrame {
                     case "disconnect_mailbox":
                         if (!(Globales.DireccionamientoDirecto)){
                             if (!(Globales.IndirectoEstatico)){
-                                outputText.setText("disconnect_mailbox(NombreDelBuzón). Desconectar el proceso en referencia de cierto buzón.");
+                                outputText.setText("disconnect_mailbox(NombreDelBuzón,NombreDelProcesoADesconectar). Desconectar el proceso en referencia de cierto buzón.");
                             }
                             else{
                                 outputText.setText("Advertencia: No se puede ejecutar este comando en el direccionamiento indirecto estático.");
