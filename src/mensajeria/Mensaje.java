@@ -22,7 +22,7 @@ public class Mensaje {
     public String contenido;
     
 
-    public Mensaje(Proceso P1,Proceso P2, int priori,String conte){
+    public Mensaje(Proceso P1,Proceso P2,String conte, int priori){
         this.id=idX;
         idX++;
         this.origen = P1;

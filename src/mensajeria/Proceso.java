@@ -1,12 +1,15 @@
 
 package mensajeria;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class Proceso {
     public String nombre;
     public boolean conectado;
     public String mailbox_conectado;
     public String log = "C:\\Users\\Adrian\\Desktop\\Mensajeria\\app\\log\\log"; // path
-    public ListaSimple cola; //para direccionamiento directo
+    public Cola cola; //para direccionamiento directo
     public boolean Bloqueado;
    
     
@@ -14,7 +17,7 @@ public class Proceso {
         if (Globales.DireccionamientoDirecto==true){
             this.nombre = name;
             this.log= this.log+this.nombre+".txt";  
-            cola = new ListaSimple();
+            cola = new Cola();
             this.Bloqueado = false;
         }
         else{
@@ -68,10 +71,26 @@ public class Proceso {
     
     void bloquear(){
         this.Bloqueado=true;
+        System.out.println("me desbloquee, estoy bloqueado");
     }
     
     void desbloquear(){
         this.Bloqueado=false;
+        System.out.println("me desbloquee, estoy running");
+    }
+    
+    void sendDirecto(String NombreProcesoDestino, String msg){
+        this.bloquear();
+        Mensaje NewMsj = new Mensaje(this,Globales.buscarPro(NombreProcesoDestino),msg);
+        Globales.buscarPro(NombreProcesoDestino).cola.agregar_final(NewMsj);
+        this.desbloquear();
+    }
+    
+    void sendDirecto(String NombreProcesoDestino, String msg, int Prioridad){
+        this.bloquear();
+        Mensaje NewMsj = new Mensaje(this,Globales.buscarPro(NombreProcesoDestino),msg,Prioridad);
+        Globales.buscarPro(NombreProcesoDestino).cola.agregar_final(NewMsj);
+        this.desbloquear();
     }
     
     void send(String nombre, String msg, int Prioridad){
@@ -82,14 +101,12 @@ public class Proceso {
         else{
             if (Globales.DireccionamientoDirecto==true){
                 Mensaje msj = new Mensaje(this,Globales.buscarPro(nombre),Prioridad,msg);
-                Globales.buscarPro(nombre).cola.InsertaFinal(msj.id);
-                Globales.buscarPro(nombre).cola.UltimoNodo.msj.contenido=msj.contenido;
+                Globales.buscarPro(nombre).cola.agregar_final(msj);
             }
             else{ // si es indirecto
                 if (this.conectado==true){
                     Mensaje msj = new Mensaje(this,Globales.buscarPro(nombre),Prioridad,msg);   
-                    Globales.buscarMB(this.mailbox_conectado).contenido.InsertaFinal(msj.id);
-                    Globales.buscarMB(this.mailbox_conectado).contenido.UltimoNodo.msj.contenido=msj.contenido;
+                    Globales.buscarMB(this.mailbox_conectado).contenido.agregar_final(msj);
                     }
                 else{
                     //ERROR NO ESTOY CONECTADO EN NINGUN MAILBOX 
@@ -106,14 +123,12 @@ public class Proceso {
         else{
             if (Globales.DireccionamientoDirecto==true){
                 Mensaje msj = new Mensaje(this,Globales.buscarPro(nombre),msg);
-                Globales.buscarPro(nombre).cola.InsertaFinal(msj.id);
-                Globales.buscarPro(nombre).cola.UltimoNodo.msj=msj;
+                Globales.buscarPro(nombre).cola.agregar_final(msj);
             }
             else{ // si es indirecto
                 if (this.conectado==true){
                     Mensaje msj = new Mensaje(this,Globales.buscarPro(nombre),msg);    
-                    Globales.buscarMB(this.mailbox_conectado).contenido.InsertaFinal(msj.id);
-                    Globales.buscarMB(this.mailbox_conectado).contenido.UltimoNodo.msj=msj;
+                    Globales.buscarMB(this.mailbox_conectado).contenido.agregar_final(msj);
                     }
                 else{
                     //ERROR NO ESTOY CONECTADO EN NINGUN MAILBOX 
@@ -121,6 +136,8 @@ public class Proceso {
             }
         }
     }
+    
+    
     
     
     void receiveI(Proceso Origen, String msg){

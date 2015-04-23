@@ -16,13 +16,13 @@ public class Mailbox {
     public String nombre;
     public int largo;
     public ArrayList<Proceso> conectados = new ArrayList();
-    public ListaSimple contenido;
+    public Cola contenido;
     
     
     public Mailbox(String nomb){
         this.nombre = nomb;
         this.largo = Globales.TamanoCola;
-        this.contenido = new ListaSimple();
+        this.contenido = new Cola();
     }
     
     public void conectar(Proceso Px){
@@ -35,7 +35,7 @@ public class Mailbox {
     
     public void eliminar(){
        if (Globales.FIFO==true){
-           this.contenido.EliminaInicio();
+           this.contenido.eliminar_inicio();
        }
        else{
            //this.contenido.e
