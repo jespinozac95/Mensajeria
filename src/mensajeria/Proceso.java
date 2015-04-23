@@ -49,26 +49,7 @@ public class Proceso {
         this.mailbox_conectado = "";
         this.conectado = false;
     }
-    
-    
-    /*public Mailbox buscarMB(String MB){
-        int j = Globales.mails.length;
-        for (int i=0; i<j;i++){
-            if (Globales.mails[i].nombre.equals(MB)) // buscarlo ********
-            {return Globales.mails[i]; }
-        }
-        return Globales.mails[0]; 
-    }
-    
-    public Proceso buscarPro(String name){
-        int j = Globales.procs.length;
-        for (int i=0; i<j;i++){
-            if (Globales.procs[i].nombre.equals(name)) // buscarlo ********
-            {return Globales.procs[i]; }
-        }
-        return Globales.procs[0]; 
-    }*/
-    
+        
     void bloquear(){
         this.Bloqueado=true;
         System.out.println("me desbloquee, estoy bloqueado");
@@ -76,22 +57,57 @@ public class Proceso {
     
     void desbloquear(){
         this.Bloqueado=false;
-        System.out.println("me desbloquee, estoy running");
+        System.out.println("me desbloquee, estoy desbloqueado");
+    }
+    
+    void running(){
+        System.out.println("estoy running");
     }
     
     void sendDirecto(String NombreProcesoDestino, String msg){
-        this.bloquear();
+        this.running();
+        if (Globales.SendBlocking==true){
+            this.bloquear();
+            this.desbloquear();
+        }
         Mensaje NewMsj = new Mensaje(this,Globales.buscarPro(NombreProcesoDestino),msg);
         Globales.buscarPro(NombreProcesoDestino).cola.agregar_final(NewMsj);
-        this.desbloquear();
+        this.running();
     }
     
     void sendDirecto(String NombreProcesoDestino, String msg, int Prioridad){
-        this.bloquear();
+        this.running();
+        if (Globales.SendBlocking==true){
+            this.bloquear();
+            this.desbloquear();
+        }
         Mensaje NewMsj = new Mensaje(this,Globales.buscarPro(NombreProcesoDestino),msg,Prioridad);
         Globales.buscarPro(NombreProcesoDestino).cola.agregar_final(NewMsj);
-        this.desbloquear();
+        this.running();
     }
+    
+    void sendIndirecto(String NombreMailboxDestino, String msg){
+        this.running();
+        if (Globales.SendBlocking==true){
+            this.bloquear();
+            this.desbloquear();
+        }
+        Mensaje NewMsj = new Mensaje(this,Globales.buscarPro(NombreMailboxDestino),msg);
+        Globales.buscarPro(NombreMailboxDestino).cola.agregar_final(NewMsj);
+        this.running();
+    }
+    
+    void sendDirecto1(String NombreProcesoDestino, String msg, int Prioridad){
+        this.running();
+        if (Globales.SendBlocking==true){
+            this.bloquear();
+            this.desbloquear();
+        }
+        Mensaje NewMsj = new Mensaje(this,Globales.buscarPro(NombreProcesoDestino),msg,Prioridad);
+        Globales.buscarPro(NombreProcesoDestino).cola.agregar_final(NewMsj);
+        this.running();
+    }
+    
     
     void send(String nombre, String msg, int Prioridad){
         //if ((Globales.SendBlocking==true) && (this.Bloqueado==true)){
@@ -100,12 +116,12 @@ public class Proceso {
         }
         else{
             if (Globales.DireccionamientoDirecto==true){
-                Mensaje msj = new Mensaje(this,Globales.buscarPro(nombre),Prioridad,msg);
+                Mensaje msj = new Mensaje(this,Globales.buscarPro(nombre),msg,Prioridad);
                 Globales.buscarPro(nombre).cola.agregar_final(msj);
             }
             else{ // si es indirecto
                 if (this.conectado==true){
-                    Mensaje msj = new Mensaje(this,Globales.buscarPro(nombre),Prioridad,msg);   
+                    Mensaje msj = new Mensaje(this,Globales.buscarPro(nombre),msg,Prioridad);   
                     Globales.buscarMB(this.mailbox_conectado).contenido.agregar_final(msj);
                     }
                 else{
