@@ -22,5 +22,26 @@ public class Globales {
     public static int LargoMsj = 0;
     public static boolean FIFO = false;
     public static int Procesos = 0;
+    public static Mailbox[] mails;
+    public static Proceso[] procs;
     public static int TamanoCola = 0;
+    
+    public static Mailbox buscarMB(String MB){
+        int j = Globales.mails.length;
+        for (int i=0; i<j;i++){
+            if (Globales.mails[i].nombre.equals(MB)) // buscarlo ********
+            {return Globales.mails[i]; }
+        }
+        return Globales.mails[0]; 
+    }
+    
+    public static Proceso buscarPro(String name){
+        int j = Globales.procs.length;
+        for (int i=0; i<j;i++){
+            if (Globales.procs[i].nombre.equals(name)) // buscarlo ********
+            {return Globales.procs[i]; }
+        }
+        return Globales.procs[0]; 
+    }
+    
 }

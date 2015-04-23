@@ -1,8 +1,11 @@
 // Clase NodosLista
+package mensajeria;
+
 class NodosLista {
  // datos amigables para que la Clase Lista Tenga un acceso directo
      int datos;
      NodosLista siguiente;
+     Mensaje msj;
 
 //Construtor  Crea un nodo del tipo Object
  NodosLista (int  valor)
