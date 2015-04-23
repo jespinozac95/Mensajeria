@@ -11,7 +11,6 @@ public class Proceso {
     public String log = "C:\\Users\\Adrian\\Desktop\\Mensajeria\\app\\log\\log"; // path
     public Cola cola; //para direccionamiento directo
     public boolean Bloqueado;
-   
     
     public Proceso(String name){
         if (Globales.DireccionamientoDirecto==true){
@@ -64,10 +63,15 @@ public class Proceso {
         System.out.println("estoy running");
     }
     
+    void sending(String destino, String contenido){
+        System.out.println("enviando el mensaje "+contenido+ "; a "+destino);
+    }
+    
     void sendDirecto(String NombreProcesoDestino, String msg){
         this.running();
         if (Globales.SendBlocking==true){
             this.bloquear();
+            this.sending(NombreProcesoDestino, msg);
             this.desbloquear();
         }
         Mensaje NewMsj = new Mensaje(this,Globales.buscarPro(NombreProcesoDestino),msg);
@@ -79,6 +83,7 @@ public class Proceso {
         this.running();
         if (Globales.SendBlocking==true){
             this.bloquear();
+            this.sending(NombreProcesoDestino, msg);
             this.desbloquear();
         }
         Mensaje NewMsj = new Mensaje(this,Globales.buscarPro(NombreProcesoDestino),msg,Prioridad);
@@ -90,21 +95,23 @@ public class Proceso {
         this.running();
         if (Globales.SendBlocking==true){
             this.bloquear();
+            this.sending(NombreMailboxDestino, msg);
             this.desbloquear();
         }
-        Mensaje NewMsj = new Mensaje(this,Globales.buscarPro(NombreMailboxDestino),msg);
-        Globales.buscarPro(NombreMailboxDestino).cola.agregar_final(NewMsj);
+        Mensaje NewMsj = new Mensaje(this,null,msg);
+        Globales.buscarMB(NombreMailboxDestino).contenido.agregar_final(NewMsj);
         this.running();
     }
     
-    void sendDirecto1(String NombreProcesoDestino, String msg, int Prioridad){
+    void sendIndirecto(String NombreMailboxDestino, String msg, int Prioridad){
         this.running();
         if (Globales.SendBlocking==true){
             this.bloquear();
+            this.sending(NombreMailboxDestino, msg);
             this.desbloquear();
         }
-        Mensaje NewMsj = new Mensaje(this,Globales.buscarPro(NombreProcesoDestino),msg,Prioridad);
-        Globales.buscarPro(NombreProcesoDestino).cola.agregar_final(NewMsj);
+        Mensaje NewMsj = new Mensaje(this,null,msg,Prioridad);
+        Globales.buscarMB(NombreMailboxDestino).contenido.agregar_final(NewMsj);
         this.running();
     }
     
