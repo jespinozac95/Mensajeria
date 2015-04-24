@@ -22,7 +22,12 @@ public class Cola {
             return true;
         }
         else{
-            return false;
+            if (this.lista==null){
+                return true;
+            }
+            else{
+                return false;
+            }
         }
     }
     

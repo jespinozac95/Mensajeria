@@ -77,6 +77,10 @@ public class Proceso {
         System.out.println("recibiendo mensaje");
     }
     
+    void error(){
+        System.out.println("ERROR. no estoy conectado en ningun lugar, no puedo recibir mensaje");
+    }
+    
     void sendDirecto(String NombreProcesoDestino, String msg){
         this.running();
         if (Globales.SendBlocking==true){
@@ -294,134 +298,212 @@ public class Proceso {
         }
     
     void receiveI(){
-        if(Globales.DireccionamientoDirecto == true){
-            
-        }
-        else{
-            
-        }
-    }
-    
-    void receiveI(Proceso Origen, String msg){
-        if(Globales.DireccionamientoDirecto == true){
-            
-        }
-        else{
-            
-        }
-    }
-    
-    
-    /*void receiveDDI(){
-        if (Globales.FIFO==true){
-            if (Globales.Receive.equals("Blocking")){
+        this.running();
+        Mensaje msj;
+        if (Globales.Receive=="Blocking"){
+            if (this.conectado==true){
+                Mailbox MB =Globales.buscarMB(this.mailbox_conectado);
                 this.bloquear();
-                if (this.cola.VaciaLista()==false){
-                    this.cola.PrimerNodo.MsjContenido.recibir();
-                    //this.cola.PrimerNodo.MsjContenido.origen.nombre.equals("asd");
-                    this.desbloquear();
-                    this.cola.PrimerNodo.MsjContenido.origen.desbloquear();
-                    this.cola.EliminaInicio();
-                    // modificar log //si se desea devolver algo a la consola de R/ hacerlo aca *******
+                if (MB.contenido.estoyVacio()==false){
+                    if (Globales.FIFO==true){
+                        msj= MB.contenido.obtener_mensaje();
+                    }
+                    else{
+                        msj= MB.contenido.devolver_mayor_prioridad();
+                    }
+                    if (msj==null){
+                        this.bloquear("no me han llegado msj");
+                    }
+                    else{
+                        msj.recibir();
+                        msj.leer();
+                        this.receiving();
+                        this.desbloquear();
+                        this.running();
+                    }
                 }
                 else{
-                    //si se desea devolver msj de error que no recibio nada y que se encuentra bloqueado en la consolad R/ hacerlo aca *******
+                    this.bloquear("no me han llegado msj");                    
                 }
             }
             else{
-                if (Globales.Receive.equals("Nonblocking")){
-                    if (this.cola.VaciaLista()==false){
-                        this.cola.PrimerNodo.MsjContenido.recibir();      
-                        this.cola.PrimerNodo.MsjContenido.origen.desbloquear();
-                        this.cola.EliminaInicio();
-                        // modificar log //si se desea devolver algo a la consola de R/ hacerlo aca *******
-                    }
-                    else{
-                        //si se desea devolver msj de error que no recibio nada y que se encuentra bloqueado en la consolad R/ hacerlo aca *******
-                    }
-                }
-                else{
-                    // caso de PRUEBA DE LLEGADA
-                }
+                this.error();
             }
         }
         else{
-            if (Globales.Receive.equals("Blocking")){
-                this.bloquear();
-                if (this.cola.VaciaLista()==false){
-                    this.cola.NODO[X].MsjContenido.recibir();
-                    this.desbloquear();
-                    this.cola.NODO[X].MsjContenido.origen.desbloquear();
-                    this.cola.EliminaInicio();
-                    // modificar log //si se desea devolver algo a la consola de R/ hacerlo aca *******
+            if (Globales.Receive=="NonBlocking"){
+                if (this.conectado==true){
+                    Mailbox MB =Globales.buscarMB(this.mailbox_conectado);
+                    if (MB.contenido.estoyVacio()==false){
+                        if (Globales.FIFO==true){
+                            msj= MB.contenido.obtener_mensaje();
+                        }
+                        else{
+                            msj= MB.contenido.devolver_mayor_prioridad();
+                        }
+                        if (msj==null){
+                            this.bloquear("no me han llegado msj");
+                            this.running();
+                        }
+                        else{
+                            msj.recibir();
+                            msj.leer();
+                            this.receiving();
+                            this.running();
+                        }
+                    }
+                    else{
+                        this.bloquear("no me han llegado msj");       
+                        this.running();
+                    }
                 }
                 else{
-                    //si se desea devolver msj de error que no recibio nada y que se encuentra bloqueado en la consolad R/ hacerlo aca *******
+                    this.error();
                 }
             }
             else{
-                if (Globales.Receive.equals("Nonblocking")){
-                    if (this.cola.VaciaLista()==false){
-                        this.cola.NODO[X].MsjContenido.recibir();      
-                        this.cola.NODO[X].MsjContenido.origen.desbloquear();
-                        this.cola.EliminaMedio(NODO[X]);
-                        // modificar log //si se desea devolver algo a la consola de R/ hacerlo aca *******
+                if (Globales.Receive=="Prueba de llegada"){
+                    if (this.conectado==true){
+                        Mailbox MB =Globales.buscarMB(this.mailbox_conectado);
+                        this.bloquear();
+                        if (MB.contenido.estoyVacio()==false){
+                            if (Globales.FIFO==true){
+                                msj= MB.contenido.obtener_mensaje();
+                            }
+                            else{
+                                msj= MB.contenido.devolver_mayor_prioridad();
+                            }
+                            if (msj==null){
+                                this.bloquear("no me han llegado msj");
+                                this.running();
+                                this.receiveD();
+                            }
+                            else{
+                                msj.recibir();
+                                msj.leer();
+                                this.receiving();
+                                this.running();
+                            }
+                        }
+                        else{
+                            this.bloquear("no me han llegado msj");       
+                            this.running();
+                            this.receiveD();
+                        }
                     }
                     else{
-                        //si se desea devolver msj de error que no recibio nada y que se encuentra bloqueado en la consolad R/ hacerlo aca *******
+                        this.error();
                     }
-                }
-                else{
-                    // caso de PRUEBA DE LLEGADA
                 }
             }
         }
-        }*/
+    }
     
+    void receiveI(String NombreProcesoOrigen){
+        this.running();
+        Mensaje msj;
+        if (Globales.Receive=="Blocking"){
+            if (this.conectado==true){
+                Mailbox MB =Globales.buscarMB(this.mailbox_conectado);
+                this.bloquear();
+                if (MB.contenido.estoyVacio()==false){
+                    if (Globales.FIFO==true){
+                        msj= MB.contenido.obtener_mensaje_explicito(NombreProcesoOrigen);
+                    }
+                    else{
+                        msj= MB.contenido.devolver_mayor_prioridad_explícito(NombreProcesoOrigen);
+                    }
+                    if (msj==null){
+                        this.bloquear("no me han llegado msj");
+                    }
+                    else{
+                        msj.recibir();
+                        msj.leer();
+                        this.receiving();
+                        this.desbloquear();
+                        this.running();
+                    }
+                }
+                else{
+                    this.bloquear("no me han llegado msj");                    
+                }
+            }
+            else{
+                this.error();
+            }
+        }
+        else{
+            if (Globales.Receive=="NonBlocking"){
+                if (this.conectado==true){
+                    Mailbox MB =Globales.buscarMB(this.mailbox_conectado);
+                    if (MB.contenido.estoyVacio()==false){
+                        if (Globales.FIFO==true){
+                            msj= MB.contenido.obtener_mensaje_explicito(NombreProcesoOrigen);
+                        }
+                        else{
+                            msj= MB.contenido.devolver_mayor_prioridad_explícito(NombreProcesoOrigen);
+                        }
+                        if (msj==null){
+                            this.bloquear("no me han llegado msj");
+                            this.running();
+                        }
+                        else{
+                            msj.recibir();
+                            msj.leer();
+                            this.receiving();
+                            this.running();
+                        }
+                    }
+                    else{
+                        this.bloquear("no me han llegado msj");       
+                        this.running();
+                    }
+                }
+                else{
+                    this.error();
+                }
+            }
+            else{
+                if (Globales.Receive=="Prueba de llegada"){
+                    if (this.conectado==true){
+                        Mailbox MB =Globales.buscarMB(this.mailbox_conectado);
+                        this.bloquear();
+                        if (MB.contenido.estoyVacio()==false){
+                            if (Globales.FIFO==true){
+                                msj= MB.contenido.obtener_mensaje_explicito(NombreProcesoOrigen);
+                            }
+                            else{
+                                msj= MB.contenido.devolver_mayor_prioridad_explícito(NombreProcesoOrigen);
+                            }
+                            if (msj==null){
+                                this.bloquear("no me han llegado msj");
+                                this.running();
+                                this.receiveD();
+                            }
+                            else{
+                                msj.recibir();
+                                msj.leer();
+                                this.receiving();
+                                this.running();
+                            }
+                        }
+                        else{
+                            this.bloquear("no me han llegado msj");       
+                            this.running();
+                            this.receiveD();
+                        }
+                    }
+                    else{
+                        this.error();
+                    }
+                }
+            }
+        }
+    }
     
-               
-    
-    /*void receiveDDE(){
-        
-        this.cola
-        
-    }*/
-    
+       
     void create_MB(){
-        
+        /* ro do */
     }
-    /*
-    void receiveDDI(){
-        if (this.cola.VaciaLista()==false){
-            if (Globales.FIFO==true){
-                if (Globales.Receive.equals("Blocking")){
-                    this.bloquear();                
-                    this.cola.PrimerNodo.MsjContenido.recibir();
-                    this.desbloquear();
-                    this.cola.PrimerNodo.MsjContenido.origen.desbloquear();
-                    this.cola.EliminaInicio();
-                    // modificar log //si se desea devolver algo a la consola de R/ hacerlo aca *******
-                }
-                else{
-                    if (Globales.Receive.equals("Nonblocking")){
-                        if (this.cola.VaciaLista()==false){
-                            this.cola.PrimerNodo.MsjContenido.recibir();      
-                            this.cola.PrimerNodo.MsjContenido.origen.desbloquear();
-                            this.cola.EliminaInicio();
-                            // modificar log //si se desea devolver algo a la consola de R/ hacerlo aca *******
-                        }
-                    else{
-                        // caso de PRUEBA DE LLEGADA
-                        }
-                    }
-                }        
-            }
-            else{//prioridad
-                
-            }
-        }
-        else{
-            //si se desea devolver ALGUN ERROR POR QUE LA LISTA ESTA VACIA a la consola de R/ hacerlo aca *******
-        }
-    }*/
+
 }
