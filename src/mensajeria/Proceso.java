@@ -41,12 +41,14 @@ public class Proceso {
         Globales.buscarMB(nameMBox).conectar(this);
         this.mailbox_conectado = Globales.buscarMB(nameMBox).nombre;
         this.conectado = true;
+        System.out.println("me conecte");
     }
     
     void desconectar(){
         Globales.buscarMB(this.mailbox_conectado).desconectar(this);
         this.mailbox_conectado = "";
         this.conectado = false;
+        System.out.println("me desconecte");
     }
         
     void bloquear(){
