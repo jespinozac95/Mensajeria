@@ -17,6 +17,15 @@ public class Cola {
         this.lista=lista; 
     }
     
+    public boolean estoyVacio(){
+        if (this.lista.size()==0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
     void agregar_final(Mensaje ms1){
         lista.add(ms1);
     }
@@ -45,7 +54,7 @@ public class Cola {
         
     }
     
-    //Obtiene Fifo de forma explícita
+    //Obtiene Fifo de forma explícita7
     public Mensaje obtener_mensaje_explicito(String Proceso){ 
         List<Mensaje> ListaMSN= this.lista; 
         int tamano_lista= ListaMSN.size();

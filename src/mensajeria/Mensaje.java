@@ -49,6 +49,10 @@ public class Mensaje {
         this.recibido=true;
     }
     
+    public void leer(){
+        System.out.println(this.contenido);
+    }
+    
     
     
     

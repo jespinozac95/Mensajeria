@@ -53,7 +53,11 @@ public class Proceso {
         
     void bloquear(){
         this.Bloqueado=true;
-        System.out.println("me desbloquee, estoy bloqueado");
+        System.out.println("me bloquee, estoy bloqueado");
+    }
+    
+    void bloquear(String algo){
+        System.out.println(algo);
     }
     
     void desbloquear(){
@@ -67,6 +71,10 @@ public class Proceso {
     
     void sending(String destino, String contenido){
         System.out.println("enviando el mensaje "+contenido+ "; a "+destino);
+    }
+    
+    void receiving(){
+        System.out.println("recibiendo mensaje");
     }
     
     void sendDirecto(String NombreProcesoDestino, String msg){
@@ -116,17 +124,193 @@ public class Proceso {
         Globales.buscarMB(NombreMailboxDestino).contenido.agregar_final(NewMsj);
         this.running();
     }  
+        
+    void receiveD(){
+        this.running();
+        Mensaje msj;
+        if (Globales.Receive=="Blocking"){
+            this.bloquear();
+            if (this.cola.estoyVacio()==false){
+                if (Globales.FIFO==true){
+                    msj= this.cola.obtener_mensaje();
+                }
+                else{
+                    msj= this.cola.devolver_mayor_prioridad();
+                }
+                if (msj==null){
+                    this.bloquear("no me han llegado msj");
+                }
+                else{
+                    msj.recibir();
+                    msj.leer();
+                    this.receiving();
+                    this.desbloquear();
+                    this.running();
+                }
+            }
+            else{
+                this.bloquear("no me han llegado msj");                    
+            }
+        }
+        else{
+            if (Globales.Receive=="NonBlocking"){
+                if (this.cola.estoyVacio()==false){
+                    if (Globales.FIFO==true){
+                        msj= this.cola.obtener_mensaje();
+                    }
+                    else{
+                        msj= this.cola.devolver_mayor_prioridad();
+                    }
+                    if (msj==null){
+                        this.bloquear("no me han llegado msj");
+                        this.running();
+                    }
+                    else{
+                        msj.recibir();
+                        msj.leer();
+                        this.receiving();
+                        this.running();
+                    }
+                }
+                else{
+                    this.bloquear("no me han llegado msj");       
+                    this.running();
+                }
+            }
+            else{
+                if (Globales.Receive=="Prueba de llegada"){
+                    this.bloquear();
+                    if (this.cola.estoyVacio()==false){
+                        if (Globales.FIFO==true){
+                             msj= this.cola.obtener_mensaje();
+                        }
+                    else{
+                        msj= this.cola.devolver_mayor_prioridad();
+                    }
+                    if (msj==null){
+                        this.bloquear("no me han llegado msj");
+                        this.running();
+                        this.receiveD();
+                    }
+                    else{
+                        msj.recibir();
+                        msj.leer();
+                        this.receiving();
+                        this.running();
+                    }
+                }
+                else{
+                    this.bloquear("no me han llegado msj");       
+                    this.running();
+                    this.receiveD();
+                }
+                }
+            }
+            }
+    }
     
+    void receiveD(String NombreProcesoOrigen){
+        this.running();
+        Mensaje msj;
+        if (Globales.Receive=="Blocking"){
+            this.bloquear();
+            if (this.cola.estoyVacio()==false){
+                if (Globales.FIFO==true){
+                    msj= this.cola.obtener_mensaje_explicito(NombreProcesoOrigen);
+                }
+                else{
+                    msj= this.cola.devolver_mayor_prioridad_explícito(NombreProcesoOrigen);
+                }
+                if (msj==null){
+                    this.bloquear("no me han llegado msj");
+                }
+                else{
+                    msj.recibir();
+                    msj.leer();
+                    this.receiving();
+                    this.desbloquear();
+                    this.running();
+                }
+            }
+            else{
+                this.bloquear("no me han llegado msj");                    
+            }
+        }
+        else{
+            if (Globales.Receive=="NonBlocking"){
+                if (this.cola.estoyVacio()==false){
+                    if (Globales.FIFO==true){
+                        msj= this.cola.obtener_mensaje_explicito(NombreProcesoOrigen);
+                    }
+                    else{
+                        msj= this.cola.devolver_mayor_prioridad_explícito(NombreProcesoOrigen);
+                    }
+                    if (msj==null){
+                        this.bloquear("no me han llegado msj");
+                        this.running();
+                    }
+                    else{
+                        msj.recibir();
+                        msj.leer();
+                        this.receiving();
+                        this.running();
+                    }
+                }
+                else{
+                    this.bloquear("no me han llegado msj");       
+                    this.running();
+                }
+            }
+            else{
+                if (Globales.Receive=="Prueba de llegada"){
+                    this.bloquear();
+                    if (this.cola.estoyVacio()==false){
+                        if (Globales.FIFO==true){
+                             msj= this.cola.obtener_mensaje_explicito(NombreProcesoOrigen);
+                        }
+                    else{
+                        msj= this.cola.devolver_mayor_prioridad_explícito(NombreProcesoOrigen);
+                    }
+                    if (msj==null){
+                        this.bloquear("no me han llegado msj");
+                        this.running();
+                        this.receiveD(NombreProcesoOrigen);
+                    }
+                    else{
+                        msj.recibir();
+                        msj.leer();
+                        this.receiving();
+                        this.running();
+                    }
+                }
+                else{
+                    this.bloquear("no me han llegado msj");       
+                    this.running();
+                    this.receiveD(NombreProcesoOrigen);
+                }
+                }
+            }
+            }
+        }
     
-    void receiveI(Proceso Origen, String msg){
+    void receiveI(){
         if(Globales.DireccionamientoDirecto == true){
-            
             
         }
         else{
             
         }
     }
+    
+    void receiveI(Proceso Origen, String msg){
+        if(Globales.DireccionamientoDirecto == true){
+            
+        }
+        else{
+            
+        }
+    }
+    
     
     /*void receiveDDI(){
         if (Globales.FIFO==true){
