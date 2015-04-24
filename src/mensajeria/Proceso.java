@@ -113,54 +113,7 @@ public class Proceso {
         Mensaje NewMsj = new Mensaje(this,null,msg,Prioridad);
         Globales.buscarMB(NombreMailboxDestino).contenido.agregar_final(NewMsj);
         this.running();
-    }
-    
-    
-    void send(String nombre, String msg, int Prioridad){
-        //if ((Globales.SendBlocking==true) && (this.Bloqueado==true)){
-        if (this.Bloqueado==true){
-            //MENSAJE DE ERROR; ESTOY BLOQUEADO
-        }
-        else{
-            if (Globales.DireccionamientoDirecto==true){
-                Mensaje msj = new Mensaje(this,Globales.buscarPro(nombre),msg,Prioridad);
-                Globales.buscarPro(nombre).cola.agregar_final(msj);
-            }
-            else{ // si es indirecto
-                if (this.conectado==true){
-                    Mensaje msj = new Mensaje(this,Globales.buscarPro(nombre),msg,Prioridad);   
-                    Globales.buscarMB(this.mailbox_conectado).contenido.agregar_final(msj);
-                    }
-                else{
-                    //ERROR NO ESTOY CONECTADO EN NINGUN MAILBOX 
-                }     
-            }
-        }
-    }
-    
-    void send(Proceso Destino, String msg){
-        //if ((Globales.SendBlocking==true) && (this.Bloqueado==true)){
-        if (this.Bloqueado==true){
-            //MENSAJE DE ERROR; ESTOY BLOQUEADO
-        }
-        else{
-            if (Globales.DireccionamientoDirecto==true){
-                Mensaje msj = new Mensaje(this,Globales.buscarPro(nombre),msg);
-                Globales.buscarPro(nombre).cola.agregar_final(msj);
-            }
-            else{ // si es indirecto
-                if (this.conectado==true){
-                    Mensaje msj = new Mensaje(this,Globales.buscarPro(nombre),msg);    
-                    Globales.buscarMB(this.mailbox_conectado).contenido.agregar_final(msj);
-                    }
-                else{
-                    //ERROR NO ESTOY CONECTADO EN NINGUN MAILBOX 
-                }     
-            }
-        }
-    }
-    
-    
+    }  
     
     
     void receiveI(Proceso Origen, String msg){
