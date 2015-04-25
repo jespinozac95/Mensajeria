@@ -26,33 +26,37 @@ public class Globales {
     public static Mailbox[] mails = new Mailbox[10];
     public static Proceso[] procs = new Proceso[6];
     public static int TamanoCola = 0;
+    public static int UltimoIndiceMailbox = 0;
     
     public static Mailbox buscarMB(String MB){
-        if (MapeadorFunciones.IsMailbox(MB)){
-            int j = Globales.mails.length;
-            for (int i=0; i<j;i++){
+        int j = Globales.mails.length; 
+        for (int i=0; i<j;i++){
+            try{
                 if (Globales.mails[i].nombre.equals(MB)) // buscarlo ********
                 {return Globales.mails[i]; }
             }
-            return Globales.mails[0];
+            catch(Exception e){
+                    break;
+            }
         }
-        else{
-            return null;
-        }
+        return null;
+        //return Globales.mails[0];
     }
     
     public static Proceso buscarPro(String name){
-        if (MapeadorFunciones.IsProceso(name)){
-            int j = Globales.procs.length;
-            for (int i=0; i<j;i++){
+        int j = Globales.Procesos;
+        for (int i=0; i<j;i++){
+            try{
                 if (Globales.procs[i].nombre.equals(name)) // buscarlo ********
-                {return Globales.procs[i]; }
+                {
+                return Globales.procs[i]; }
             }
-            return Globales.procs[0]; 
+            catch(Exception exe){
+                break;
+            }
         }
-        else{
-            return null;
-        }
+        return null;
+        //return Globales.procs[0];
     }
     
 }

@@ -4,6 +4,7 @@ package mensajeria;
 import java.util.LinkedList;
 import java.util.List;
 
+
 public class Proceso {
     public String nombre;
     public boolean conectado;
@@ -16,7 +17,8 @@ public class Proceso {
         if (Globales.DireccionamientoDirecto==true){
             this.nombre = name;
             this.log= this.log+this.nombre+".txt";  
-            cola = new Cola();
+            List <Mensaje> m = new LinkedList<Mensaje>();
+            cola = new Cola(m);
             this.Bloqueado = false;
         }
         else{
@@ -24,6 +26,9 @@ public class Proceso {
                 this.nombre = name;
                 this.log= this.log+this.nombre+".txt";
                 Mailbox mb = new Mailbox("MB"+this.nombre);
+                Globales.mails[Globales.UltimoIndiceMailbox]=mb;
+                //System.out.println("Globales.mails["+Globales.UltimoIndiceMailbox+"] = "+Globales.mails[Globales.UltimoIndiceMailbox].nombre);
+                Globales.UltimoIndiceMailbox++;
                 this.conectar(mb.nombre);
                 this.Bloqueado = false;
             }
@@ -37,7 +42,7 @@ public class Proceso {
         }
     }
 
-    private void conectar(String nameMBox){
+    void conectar(String nameMBox){
         Globales.buscarMB(nameMBox).conectar(this);
         this.mailbox_conectado = Globales.buscarMB(nameMBox).nombre;
         this.conectado = true;
@@ -88,8 +93,11 @@ public class Proceso {
             this.sending(NombreProcesoDestino, msg);
             this.desbloquear();
         }
-        Mensaje NewMsj = new Mensaje(this,Globales.buscarPro(NombreProcesoDestino),msg);
-        Globales.buscarPro(NombreProcesoDestino).cola.agregar_final(NewMsj);
+        Proceso procesoDestino = Globales.buscarPro(NombreProcesoDestino);
+        Mensaje NewMsj = new Mensaje(this,procesoDestino,msg);
+        System.out.println("Creó mensaje");
+        procesoDestino.cola.agregar_final(NewMsj);
+        System.out.println("Agregó msj al origen");
         this.running();
     }
     
@@ -502,8 +510,18 @@ public class Proceso {
     }
     
        
-    void create_MB(){
-        /* ro do */
+    void create_MB(String nombre){
+        //maximo son 6 MB
+        if (Globales.UltimoIndiceMailbox == 5){
+            PantallaError pe = new PantallaError("Ya hay 6 buzones (mailbox) en ejecución, no puede crear más.");
+        }
+        else{
+            Mailbox mb = new Mailbox("MB"+nombre);
+            Globales.mails[Globales.UltimoIndiceMailbox]=mb;
+            //System.out.println("Globales.mails["+Globales.UltimoIndiceMailbox+"] = "+Globales.mails[Globales.UltimoIndiceMailbox].nombre);
+            Globales.UltimoIndiceMailbox++;
+            //System.out.println("creó el mb: "+mb.nombre+" y lo insertó el el arreglo global de mb");
+        }
     }
 
 }
