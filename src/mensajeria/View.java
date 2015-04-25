@@ -136,7 +136,7 @@ public class View extends javax.swing.JFrame {
                (JTable jtable, Object objeto, boolean estaSeleccionado, boolean tieneElFoco,int fila,
                 int columna) -> (Component) objeto);
        
-       
+      //dolor 
        
        
        
