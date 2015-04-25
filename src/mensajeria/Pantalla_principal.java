@@ -240,6 +240,7 @@ public class Pantalla_principal extends javax.swing.JFrame {
             "Nombre",
             "Bitacora"};
     final Class[] tiposColumnas = new Class[]{
+         //Variable que especifica el tipo de dato de cada columna.
             java.lang.String.class,            
             JButton.class 
         };
@@ -268,7 +269,7 @@ public class Pantalla_principal extends javax.swing.JFrame {
             }
             @Override
             public boolean isCellEditable(int row, int column) {               
-                return !(this.getColumnClass(column).equals(JButton.class));
+                return !(this.getColumnClass(column)!=null);
             }
         });
    
@@ -282,10 +283,13 @@ public class Pantalla_principal extends javax.swing.JFrame {
       
        TLogs.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mouseClicked(MouseEvent e) {  
+                View view = new View();
+                view.viewPorProceso();
+                view.setVisible(true);
                 int fila = TLogs.rowAtPoint(e.getPoint());
                 int columna = TLogs.columnAtPoint(e.getPoint());
-                viewPorProceso();
+                
                 
 
                 if (TLogs.getModel().getColumnClass(columna).equals(JButton.class)) {                                                            
@@ -307,11 +311,9 @@ public class Pantalla_principal extends javax.swing.JFrame {
      
     }
    
-   public void viewPorProceso(){       
-       View view = new View();
-       view.setVisible(true);
    
-   }
+   
+   /************************/
     private void consolaTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consolaTextActionPerformed
         //Escuchar la entrada del usuario
         String entrada = new String();
