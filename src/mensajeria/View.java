@@ -5,6 +5,10 @@
  */
 package mensajeria;
 
+import java.awt.Component;
+import javax.swing.JButton;
+import javax.swing.JTable;
+
 /**
  *
  * @author Andres
@@ -59,8 +63,8 @@ public class View extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 531, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(47, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -107,6 +111,38 @@ public class View extends javax.swing.JFrame {
             }
         });
     }
+    
+    public void viewPorProceso(){              
+       Object[][] infoProceso = new Object[Globales.TamanoCola][5];
+       String[] columnas = new String[]{"Fecha","Origen","Estado","Destino","Mensaje"};
+    
+       final Class[] tiposColumnas = new Class[]{java.lang.String.class,java.lang.String.class,java.lang.String.class,java.lang.String.class,java.lang.String.class,java.lang.String.class}; //Variable que especifica el tipo de dato de cada columna.
+       
+       infoProceso[0][0] ="Hoy es Sabado";
+       infoProceso[0][1] ="word";
+       infoProceso[0][2] ="Running";
+       infoProceso[0][3] ="excel";
+       infoProceso[0][4] ="Te tengo una sorpresa";
+       
+       TView.setModel(new javax.swing.table.DefaultTableModel
+        (infoProceso,columnas) {Class[] tipos = tiposColumnas;
+            @Override
+            public Class getColumnClass(int columnIndex) {
+                return tipos[columnIndex];}
+            @Override
+            public boolean isCellEditable(int row, int column) {                
+                return !(this.getColumnClass(column)!=null);}});    
+       TView.setDefaultRenderer(JButton.class, 
+               (JTable jtable, Object objeto, boolean estaSeleccionado, boolean tieneElFoco,int fila,
+                int columna) -> (Component) objeto);
+       
+       
+       
+       
+       
+       
+       
+   }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TView;
