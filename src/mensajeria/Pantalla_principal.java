@@ -289,7 +289,7 @@ public class Pantalla_principal extends javax.swing.JFrame {
                 view.setVisible(true);
                 int fila = TLogs.rowAtPoint(e.getPoint());
                 int columna = TLogs.columnAtPoint(e.getPoint());
-                
+               //Esto es un comentario 
                 
 
                 if (TLogs.getModel().getColumnClass(columna).equals(JButton.class)) {                                                            
