@@ -515,7 +515,7 @@ public class Proceso {
        
     void create_MB(String nombre){
         //maximo son 6 MB
-        if (Globales.UltimoIndiceMailbox == 5){
+        if (Globales.UltimoIndiceMailbox == 6){
             PantallaError pe = new PantallaError("Ya hay 6 buzones (mailbox) en ejecución, no puede crear más.");
         }
         else{

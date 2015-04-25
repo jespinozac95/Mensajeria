@@ -27,6 +27,7 @@ public class Globales {
     public static Proceso[] procs = new Proceso[6];
     public static int TamanoCola = 0;
     public static int UltimoIndiceMailbox = 0;
+    public static Pantalla_principal PantPrincipal;
     
     public static Mailbox buscarMB(String MB){
         int j = Globales.mails.length; 

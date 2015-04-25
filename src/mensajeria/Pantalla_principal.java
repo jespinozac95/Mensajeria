@@ -30,7 +30,7 @@ public class Pantalla_principal extends javax.swing.JFrame {
      */
     public Pantalla_principal() {
         initComponents();
-        CreaTabla();
+        Globales.PantPrincipal = this;
     }
 
     /**
@@ -44,6 +44,8 @@ public class Pantalla_principal extends javax.swing.JFrame {
 
         PanelViewDinamico = new javax.swing.JPanel();
         visualizacionLabel = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        TLogs = new javax.swing.JTable();
         consolaLabel = new java.awt.Label();
         consolaText = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -67,21 +69,40 @@ public class Pantalla_principal extends javax.swing.JFrame {
 
         visualizacionLabel.setText("Visualización de Estados y Logs");
 
+        TLogs.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(TLogs);
+
         javax.swing.GroupLayout PanelViewDinamicoLayout = new javax.swing.GroupLayout(PanelViewDinamico);
         PanelViewDinamico.setLayout(PanelViewDinamicoLayout);
         PanelViewDinamicoLayout.setHorizontalGroup(
             PanelViewDinamicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelViewDinamicoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(visualizacionLabel)
-                .addContainerGap(364, Short.MAX_VALUE))
+                .addGroup(PanelViewDinamicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelViewDinamicoLayout.createSequentialGroup()
+                        .addComponent(visualizacionLabel)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE))
+                .addContainerGap())
         );
         PanelViewDinamicoLayout.setVerticalGroup(
             PanelViewDinamicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelViewDinamicoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(visualizacionLabel)
-                .addContainerGap(209, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         consolaLabel.setText("Consola");
@@ -213,7 +234,7 @@ public class Pantalla_principal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(PanelViewDinamico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addComponent(consolaLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -222,8 +243,7 @@ public class Pantalla_principal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(outputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE))
         );
 
         consolaLabel.getAccessibleContext().setAccessibleName("ConsolaLabel");
@@ -235,7 +255,7 @@ public class Pantalla_principal extends javax.swing.JFrame {
     public void CreaTabla (){ 
     int lenProcs = Globales.procs.length;    
     int lenMails = Globales.mails.length;    
-    Object[][] datos = new Object[6][2];    
+    Object[][] datos = new Object[12][2];    
     String[] columnas = new String[]{            
             "Nombre",
             "Bitacora"};
@@ -244,20 +264,21 @@ public class Pantalla_principal extends javax.swing.JFrame {
             java.lang.String.class,            
             JButton.class 
         };
-    
-     for (int i=0;i<lenProcs;i++){
-        if (Globales.procs[i]==null){
+     int numerofilas = 0;
+     for (numerofilas=0;numerofilas<lenProcs;numerofilas++){
+        if (Globales.procs[numerofilas]==null){
             break;}
         else{
-            datos[i][0]= Globales.procs[i].nombre;
-            datos[i][1]= new JButton("Ver Proceso");}
+            datos[numerofilas][0]= Globales.procs[numerofilas].nombre;
+            datos[numerofilas][1]= new JButton("Ver Proceso");}
         }
      for (int i=0;i<lenMails;i++){
         if (Globales.mails[i]==null){
             break;}
         else{
-            datos[i][0]= Globales.mails[i].nombre;
-            datos[i][1]= new JButton("Ver Mailbox");}
+            datos[numerofilas][0]= Globales.mails[i].nombre;
+            datos[numerofilas][1]= new JButton("Ver Mailbox");}
+            numerofilas++;
         }
      
      TLogs.setModel(new javax.swing.table.DefaultTableModel(datos,columnas) {
@@ -608,19 +629,19 @@ public class Pantalla_principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem ElementosSistema;
     private javax.swing.JMenuItem General;
     private javax.swing.JPanel PanelViewDinamico;
+    private javax.swing.JTable TLogs;
     private java.awt.Label consolaLabel;
     private javax.swing.JTextArea consolaOldText;
     private javax.swing.JTextField consolaText;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JMenuBar menu;
     private java.awt.Label outputLabel;
     private javax.swing.JTextArea outputText;
     private javax.swing.JLabel visualizacionLabel;
     // End of variables declaration//GEN-END:variables
-    private javax.swing.JTable TLogs;
-    private javax.swing.JScrollPane jScrollPane3;
-    
+
     private void JButton(String clic_Aquí) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

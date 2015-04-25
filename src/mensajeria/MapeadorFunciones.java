@@ -47,7 +47,7 @@ public class MapeadorFunciones {
                 case "view":
                     if (parametros[0].equals("")){
                         //mappear la funcion
-                        
+                        Globales.PantPrincipal.CreaTabla();
                         exito = true;
                     }
                     break;

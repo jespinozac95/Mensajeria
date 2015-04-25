@@ -407,7 +407,7 @@ public class VentanaInicio extends javax.swing.JFrame {
             }
             this.setVisible(false);
             //Cerrar esta ventana y tirar ventana de consola
-            if ((!(Globales.DireccionamientoDirecto)) && (Globales.IndirectoEstatico)){
+            if ((Globales.reset) && (!(Globales.DireccionamientoDirecto)) && (Globales.IndirectoEstatico)){
                 for (int i = 0;i<Globales.Procesos;i++){
                     Mailbox mb = new Mailbox("MB"+Globales.procs[i].nombre);
                     Globales.mails[Globales.UltimoIndiceMailbox]=mb;
