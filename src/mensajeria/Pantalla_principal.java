@@ -240,7 +240,7 @@ public class Pantalla_principal extends javax.swing.JFrame {
             "Nombre",
             "Bitacora"};
     final Class[] tiposColumnas = new Class[]{
-         //Variable que especifica el tipo de dato de cada columna.
+         //Variable que especifica el tipo de dato de cada columna
             java.lang.String.class,            
             JButton.class 
         };
