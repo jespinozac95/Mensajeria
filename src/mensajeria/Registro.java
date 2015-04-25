@@ -18,8 +18,8 @@ public class Registro {
     String mensaje; 
     
     
-    public Registro(String fecha, String accion,String origen, String estado, String destino, String mensaje){
-        this.fecha=fecha; 
+    public Registro(String accion,String origen, String estado, String destino, String mensaje){
+        this.fecha= fecha_actual(); 
         this.accion=accion; 
         this.origen=origen; 
         this.estado_origen=estado; 
