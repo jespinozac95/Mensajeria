@@ -368,7 +368,7 @@ public class VentanaInicio extends javax.swing.JFrame {
         }
         //GET DISCIPLINA 
         try{
-            if (CLargo.getSelectedItem().toString().equals("Prioridad")){
+            if (CDisciplina.getSelectedItem().toString().equals("Prioridad")){
                 Globales.FIFO = false;
             }
             else{
@@ -407,6 +407,14 @@ public class VentanaInicio extends javax.swing.JFrame {
             }
             this.setVisible(false);
             //Cerrar esta ventana y tirar ventana de consola
+            if ((!(Globales.DireccionamientoDirecto)) && (Globales.IndirectoEstatico)){
+                for (int i = 0;i<Globales.Procesos;i++){
+                    Mailbox mb = new Mailbox("MB"+Globales.procs[i].nombre);
+                    Globales.mails[Globales.UltimoIndiceMailbox]=mb;
+                    Globales.UltimoIndiceMailbox++;
+                    Globales.procs[i].conectar(mb.nombre);
+                }
+            }
             Pantalla_principal Pantalla_Principal = new Pantalla_principal();
             Pantalla_Principal.setVisible(true);
             this.setEnabled(false);
@@ -501,20 +509,22 @@ public class VentanaInicio extends javax.swing.JFrame {
                     Texto += "El mensaje no debe sobrepasar los "+Globales.LargoMsj+" caracteres.";
                 }
             }
-            Texto += "\n - receive(NombreDelProcesoReceptor)";
-            Texto += ": Recibe un mensaje del buzón suscrito.";
-            if (Globales.IndirectoEstatico){
-                Texto += "\n - create_mailbox(NombreDelProcesoCreador,NombreDelBuzón)";
-                Texto += ": Crea un buzón.";
+            if (Globales.ReceiveExplicito){
+                Texto += "\n - receive(NombreDelProcesoReceptor,NombreDelProcesoDeOrigen)";
+                Texto += ": Recibe un mensaje del buzón suscrito del proceso de origen especificado.";
             }
-            else{ 
+            else{
+                Texto += "\n - receive(NombreDelProcesoReceptor)";
+                Texto += ": Recibe un mensaje del buzón suscrito.";
+            }
+            if (!(Globales.IndirectoEstatico)){
                 Texto += "\n - create_mailbox(NombreDelBuzón)";
                 Texto += ": Crea un buzón.";
-                Texto += "\n - connect_mailbox(NombreDelBuzón,NombreDelProcesoAConectar)";
-                Texto += ": Conectar el proceso en referencia a cierto buzón.";
-                Texto += "\n - disconnect_mailbox(NombreDelBuzón,NombreDelProcesoADesconectar)";
-                Texto += ": Desonectar el proceso en referencia de cierto buzón.";
             }
+            Texto += "\n - connect_mailbox(NombreDelBuzón,NombreDelProcesoAConectar)";
+            Texto += ": Conectar el proceso en referencia a cierto buzón.";
+            Texto += "\n - disconnect_mailbox(NombreDelBuzón,NombreDelProcesoADesconectar)";
+            Texto += ": Desonectar el proceso en referencia de cierto buzón.";
         }
         Globales.TextoAyuda = Texto;
     }
@@ -610,8 +620,8 @@ public class VentanaInicio extends javax.swing.JFrame {
             int numeroDeProcesoEnCuestion = i+1;
             String nombre = (String)JOptionPane.showInputDialog(new JFrame(),"Escriba el nombre del proceso #"+numeroDeProcesoEnCuestion,"Nombrar Procesos",JOptionPane.PLAIN_MESSAGE);
             //System.out.println("Proceso #"+numeroDeProcesoEnCuestion+" = "+nombre);
-            while (MapeadorFunciones.IsProceso(nombre)){
-                nombre = (String)JOptionPane.showInputDialog(new JFrame(),"El nombre que escribió ya está asignado a un proceso.\nEscriba otro nombre para el proceso #"+numeroDeProcesoEnCuestion,"Nombrar Procesos",JOptionPane.PLAIN_MESSAGE);    
+            while ((nombre==null) || (nombre.equals("")) || (MapeadorFunciones.IsProceso(nombre))){
+                nombre = (String)JOptionPane.showInputDialog(new JFrame(),"El nombre que escribió ya está asignado a un proceso o no tenía caracteres.\nEscriba otro nombre para el proceso #"+numeroDeProcesoEnCuestion,"Nombrar Procesos",JOptionPane.PLAIN_MESSAGE);    
             }
             Proceso p = new Proceso(nombre);
             Globales.procs[i]=p;
