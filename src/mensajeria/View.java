@@ -112,37 +112,27 @@ public class View extends javax.swing.JFrame {
         });
     }
     
-    public void viewPorProceso(){              
-       Object[][] infoProceso = new Object[Globales.TamanoCola][5];
-       String[] columnas = new String[]{"Fecha","Origen","Estado","Destino","Mensaje"};
+    public void viewPorProceso(){ 
+       
+       int lenProcs = Globales.Procesos;  
+       Object[][] infoProceso = new Object[8][5];
+       String[] columnas = new String[]{"Fecha","Origen","Estado Blocked","Destino","Mensaje"};
     
        final Class[] tiposColumnas = new Class[]{java.lang.String.class,java.lang.String.class,java.lang.String.class,java.lang.String.class,java.lang.String.class,java.lang.String.class}; //Variable que especifica el tipo de dato de cada columna.
        
-       infoProceso[0][0] ="Hoy es Sabado";
-       infoProceso[0][1] ="word";
-       infoProceso[0][2] ="Running";
-       infoProceso[0][3] ="excel";
-       infoProceso[0][4] ="Te tengo una sorpresa";
-       
-       TView.setModel(new javax.swing.table.DefaultTableModel
-        (infoProceso,columnas) {Class[] tipos = tiposColumnas;
-            @Override
-            public Class getColumnClass(int columnIndex) {
-                return tipos[columnIndex];}
-            @Override
-            public boolean isCellEditable(int row, int column) {                
-                return !(this.getColumnClass(column)!=null);}});    
-       TView.setDefaultRenderer(JButton.class, 
-               (JTable jtable, Object objeto, boolean estaSeleccionado, boolean tieneElFoco,int fila,
-                int columna) -> (Component) objeto);
-       
-      //dolor 
-       
-       
-       
-       
-       
-   }
+        for (int i=0;i<lenProcs;i++){           
+        if ((Globales.procs[i]==null)||(Globales.procs[i].bitacora==null)){            
+            break;}
+        else{
+            System.out.println("else de view por proceso");
+            infoProceso[i][0] = Globales.procs[i].bitacora.listaR.get(i).fecha;
+            infoProceso[i][1] = Globales.procs[i].bitacora.listaR.get(i).origen;
+            infoProceso[i][2] = Globales.procs[i].bitacora.listaR.get(i).estado_origen;
+            infoProceso[i][3] = Globales.procs[i].bitacora.listaR.get(i).destino;
+            infoProceso[i][4] = Globales.procs[i].bitacora.listaR.get(i).mensaje;
+        }
+       }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TView;

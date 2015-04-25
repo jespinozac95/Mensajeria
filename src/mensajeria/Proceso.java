@@ -1,4 +1,3 @@
-
 package mensajeria;
 
 import java.util.LinkedList;
@@ -98,8 +97,12 @@ public class Proceso {
         }
         Proceso procesoDestino = Globales.buscarPro(NombreProcesoDestino);
         Mensaje NewMsj = new Mensaje(this,procesoDestino,msg);
+        Registro NewReg = new Registro("send()",this.nombre,Boolean.toString(this.Bloqueado),procesoDestino.nombre,msg); 
+        Registro NewReg2 = new Registro("Mensaje Recibido",procesoDestino.nombre,Boolean.toString(procesoDestino.Bloqueado),this.nombre,msg); 
         System.out.println("Creó mensaje");
         procesoDestino.cola.agregar_final(NewMsj);
+        this.bitacora.agregar_final(NewReg);
+        procesoDestino.bitacora.agregar_final(NewReg2);
         System.out.println("Agregó msj al origen");
         this.running();
     }
@@ -112,7 +115,11 @@ public class Proceso {
             this.desbloquear();
         }
         Mensaje NewMsj = new Mensaje(this,Globales.buscarPro(NombreProcesoDestino),msg,Prioridad);
+        Registro NewReg = new Registro("send()",this.nombre,Boolean.toString(this.Bloqueado),NombreProcesoDestino,msg); 
+        Registro NewReg2 = new Registro("Mensaje Recibido",NombreProcesoDestino,Boolean.toString(Globales.buscarPro(NombreProcesoDestino).Bloqueado),this.nombre,msg);
+        this.bitacora.agregar_final(NewReg);
         Globales.buscarPro(NombreProcesoDestino).cola.agregar_final(NewMsj);
+        Globales.buscarPro(NombreProcesoDestino).bitacora.agregar_final(NewReg2);
         this.running();
     }
     
@@ -124,7 +131,12 @@ public class Proceso {
             this.desbloquear();
         }
         Mensaje NewMsj = new Mensaje(this,null,msg);
+        Registro NewReg = new Registro("send()",this.nombre,Boolean.toString(this.Bloqueado),NombreMailboxDestino,msg); 
+        Registro NewReg2 = new Registro("Mensaje Recibido",NombreMailboxDestino,"",this.nombre,msg);
         Globales.buscarMB(NombreMailboxDestino).contenido.agregar_final(NewMsj);
+        this.bitacora.agregar_final(NewReg);
+        Globales.buscarMB(NombreMailboxDestino).bitacora.agregar_final(NewReg2);
+        
         this.running();
     }
     
@@ -136,7 +148,11 @@ public class Proceso {
             this.desbloquear();
         }
         Mensaje NewMsj = new Mensaje(this,null,msg,Prioridad);
+        Registro NewReg = new Registro("send()",this.nombre,Boolean.toString(this.Bloqueado),NombreMailboxDestino,msg); 
+        Registro NewReg2 = new Registro("Mensaje Recibido",NombreMailboxDestino,"",this.nombre,msg);
         Globales.buscarMB(NombreMailboxDestino).contenido.agregar_final(NewMsj);
+        Globales.buscarMB(NombreMailboxDestino).bitacora.agregar_final(NewReg2);
+        this.bitacora.agregar_final(NewReg);
         this.running();
     }  
         
@@ -157,6 +173,8 @@ public class Proceso {
                 }
                 else{
                     msj.recibir();
+                    Registro NewReg2 = new Registro("receive()",this.nombre,Boolean.toString(Globales.buscarPro(this.nombre).Bloqueado),msj.origen.nombre,msj.contenido);
+                    this.bitacora.agregar_final(NewReg2);
                     msj.leer();
                     this.receiving();
                     this.desbloquear();
@@ -182,6 +200,8 @@ public class Proceso {
                     }
                     else{
                         msj.recibir();
+                        Registro NewReg2 = new Registro("receive()",this.nombre,Boolean.toString(Globales.buscarPro(this.nombre).Bloqueado),msj.origen.nombre,msj.contenido);
+                        this.bitacora.agregar_final(NewReg2);
                         msj.leer();
                         this.receiving();
                         this.running();
@@ -209,6 +229,8 @@ public class Proceso {
                     }
                     else{
                         msj.recibir();
+                        Registro NewReg2 = new Registro("receive()",this.nombre,Boolean.toString(Globales.buscarPro(this.nombre).Bloqueado),msj.origen.nombre,msj.contenido);
+                        this.bitacora.agregar_final(NewReg2);
                         msj.leer();
                         this.receiving();
                         this.running();
@@ -218,6 +240,7 @@ public class Proceso {
                     this.bloquear("no me han llegado msj");       
                     this.running();
                     this.receiveD();
+                    
                 }
                 }
             }
@@ -241,6 +264,8 @@ public class Proceso {
                 }
                 else{
                     msj.recibir();
+                    Registro NewReg2 = new Registro("receive()",this.nombre,Boolean.toString(Globales.buscarPro(this.nombre).Bloqueado),msj.origen.nombre,msj.contenido);
+                    this.bitacora.agregar_final(NewReg2);
                     msj.leer();
                     this.receiving();
                     this.desbloquear();
@@ -266,6 +291,8 @@ public class Proceso {
                     }
                     else{
                         msj.recibir();
+                        Registro NewReg2 = new Registro("receive()",this.nombre,Boolean.toString(Globales.buscarPro(this.nombre).Bloqueado),msj.origen.nombre,msj.contenido);
+                        this.bitacora.agregar_final(NewReg2);
                         msj.leer();
                         this.receiving();
                         this.running();
@@ -293,6 +320,8 @@ public class Proceso {
                     }
                     else{
                         msj.recibir();
+                        Registro NewReg2 = new Registro("receive()",this.nombre,Boolean.toString(Globales.buscarPro(this.nombre).Bloqueado),msj.origen.nombre,msj.contenido);
+                        this.bitacora.agregar_final(NewReg2);
                         msj.leer();
                         this.receiving();
                         this.running();
@@ -327,6 +356,8 @@ public class Proceso {
                     }
                     else{
                         msj.recibir();
+                        Registro NewReg2 = new Registro("receive()",this.nombre,Boolean.toString(Globales.buscarPro(this.nombre).Bloqueado),msj.origen.nombre,msj.contenido);
+                        this.bitacora.agregar_final(NewReg2);
                         msj.leer();
                         this.receiving();
                         this.desbloquear();
@@ -358,6 +389,8 @@ public class Proceso {
                         }
                         else{
                             msj.recibir();
+                            Registro NewReg2 = new Registro("receive()",this.nombre,Boolean.toString(Globales.buscarPro(this.nombre).Bloqueado),msj.origen.nombre,msj.contenido);
+                            this.bitacora.agregar_final(NewReg2);
                             msj.leer();
                             this.receiving();
                             this.running();
@@ -391,6 +424,8 @@ public class Proceso {
                             }
                             else{
                                 msj.recibir();
+                                Registro NewReg2 = new Registro("receive()",this.nombre,Boolean.toString(Globales.buscarPro(this.nombre).Bloqueado),msj.origen.nombre,msj.contenido);
+                                this.bitacora.agregar_final(NewReg2);
                                 msj.leer();
                                 this.receiving();
                                 this.running();
@@ -429,6 +464,8 @@ public class Proceso {
                     }
                     else{
                         msj.recibir();
+                        Registro NewReg2 = new Registro("receive()",this.nombre,Boolean.toString(Globales.buscarPro(this.nombre).Bloqueado),NombreProcesoOrigen,msj.contenido);
+                        this.bitacora.agregar_final(NewReg2);
                         msj.leer();
                         this.receiving();
                         this.desbloquear();
@@ -460,6 +497,8 @@ public class Proceso {
                         }
                         else{
                             msj.recibir();
+                            Registro NewReg2 = new Registro("receive()",this.nombre,Boolean.toString(Globales.buscarPro(this.nombre).Bloqueado),NombreProcesoOrigen,msj.contenido);
+                            this.bitacora.agregar_final(NewReg2);
                             msj.leer();
                             this.receiving();
                             this.running();
@@ -493,6 +532,8 @@ public class Proceso {
                             }
                             else{
                                 msj.recibir();
+                                Registro NewReg2 = new Registro("receive()",this.nombre,Boolean.toString(Globales.buscarPro(this.nombre).Bloqueado),NombreProcesoOrigen,msj.contenido);
+                                this.bitacora.agregar_final(NewReg2);
                                 msj.leer();
                                 this.receiving();
                                 this.running();

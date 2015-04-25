@@ -304,7 +304,7 @@ public class Pantalla_principal extends javax.swing.JFrame {
       
        TLogs.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {  
+            public void mouseClicked(MouseEvent e) {
                 View view = new View();
                 view.viewPorProceso();
                 view.setVisible(true);
