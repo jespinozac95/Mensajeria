@@ -9,14 +9,17 @@ public class Proceso {
     public String nombre;
     public boolean conectado;
     public String mailbox_conectado;
-    public String log = "C:\\Users\\Adrian\\Desktop\\Mensajeria\\app\\log\\log"; // path
+    //public String log = "C:\\Users\\Adrian\\Desktop\\Mensajeria\\app\\log\\log"; // path
+    public Bitacora bitacora; 
     public Cola cola; //para direccionamiento directo
     public boolean Bloqueado;
     
     public Proceso(String name){
         if (Globales.DireccionamientoDirecto==true){
             this.nombre = name;
-            this.log= this.log+this.nombre+".txt";  
+            //this.log= this.log+this.nombre+".txt";  
+            List <Registro> r= new LinkedList<Registro>(); 
+            bitacora = new Bitacora (r); 
             List <Mensaje> m = new LinkedList<Mensaje>();
             cola = new Cola(m);
             this.Bloqueado = false;
@@ -24,7 +27,7 @@ public class Proceso {
         else{
             if (Globales.IndirectoEstatico==true){
                 this.nombre = name;
-                this.log= this.log+this.nombre+".txt";
+                //this.log= this.log+this.nombre+".txt";
                 Mailbox mb = new Mailbox("MB"+this.nombre);
                 Globales.mails[Globales.UltimoIndiceMailbox]=mb;
                 //System.out.println("Globales.mails["+Globales.UltimoIndiceMailbox+"] = "+Globales.mails[Globales.UltimoIndiceMailbox].nombre);
@@ -34,7 +37,7 @@ public class Proceso {
             }
             else{
                 this.nombre = name;
-                this.log= this.log+this.nombre+".txt";
+                //this.log= this.log+this.nombre+".txt";
                 this.mailbox_conectado = "";
                 this.conectado = false;
                 this.Bloqueado = false;
