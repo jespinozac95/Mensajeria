@@ -5,23 +5,33 @@
  */
 package mensajeria;
 
+import java.awt.Component;
+import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Arrays;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.table.TableCellRenderer;
 
 /**
  *
  * @author Jespi_000
  */
 public class Pantalla_principal extends javax.swing.JFrame {
+    
 
     /**
      * Creates new form Pantalla_principal
      */
     public Pantalla_principal() {
-        initComponents();
+        initComponents(); 
+        CreaTabla();
     }
 
     /**
@@ -35,6 +45,8 @@ public class Pantalla_principal extends javax.swing.JFrame {
 
         PanelViewDinamico = new javax.swing.JPanel();
         visualizacionLabel = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        TLogs = new javax.swing.JTable();
         consolaLabel = new java.awt.Label();
         jScrollPane1 = new javax.swing.JScrollPane();
         consolaOldText = new javax.swing.JTextArea();
@@ -56,21 +68,51 @@ public class Pantalla_principal extends javax.swing.JFrame {
 
         visualizacionLabel.setText("Visualización de Estados y Logs");
 
+        TLogs.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "Nombre", "Bitácora"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Object.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(TLogs);
+
         javax.swing.GroupLayout PanelViewDinamicoLayout = new javax.swing.GroupLayout(PanelViewDinamico);
         PanelViewDinamico.setLayout(PanelViewDinamicoLayout);
         PanelViewDinamicoLayout.setHorizontalGroup(
             PanelViewDinamicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelViewDinamicoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(visualizacionLabel)
-                .addContainerGap(364, Short.MAX_VALUE))
+                .addGroup(PanelViewDinamicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(visualizacionLabel)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 629, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         PanelViewDinamicoLayout.setVerticalGroup(
             PanelViewDinamicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelViewDinamicoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(visualizacionLabel)
-                .addContainerGap(209, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         consolaLabel.setText("Consola");
@@ -157,12 +199,12 @@ public class Pantalla_principal extends javax.swing.JFrame {
                     .addComponent(PanelViewDinamico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(consolaText)
+                    .addComponent(jScrollPane2)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(consolaLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(outputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2))
+                            .addComponent(outputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(consolaLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -170,16 +212,16 @@ public class Pantalla_principal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(PanelViewDinamico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addComponent(consolaLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(consolaText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(outputLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -189,6 +231,87 @@ public class Pantalla_principal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+   public void CreaTabla (){ 
+    int lenProcs = Globales.procs.length;    
+    int lenMails = Globales.mails.length;    
+    Object[][] datos = new Object[6][2];    
+    String[] columnas = new String[]{            
+            "Nombre",
+            "Bitacora"};
+    final Class[] tiposColumnas = new Class[]{
+            java.lang.String.class,            
+            JButton.class 
+        };
+    
+     for (int i=0;i<lenProcs;i++){
+        if (Globales.procs[i]==null){
+            break;}
+        else{
+            datos[i][0]= Globales.procs[i].nombre;
+            datos[i][1]= new JButton("Ver Proceso");}
+        }
+     for (int i=0;i<lenMails;i++){
+        if (Globales.mails[i]==null){
+            break;}
+        else{
+            datos[i][0]= Globales.mails[i].nombre;
+            datos[i][1]= new JButton("Ver Mailbox");}
+        }
+     
+     TLogs.setModel(new javax.swing.table.DefaultTableModel(datos,columnas) {
+            // Se puede saber el tipo  de dato que tiene cada columna.
+            Class[] tipos = tiposColumnas;
+            @Override
+            public Class getColumnClass(int columnIndex) {                
+                return tipos[columnIndex];
+            }
+            @Override
+            public boolean isCellEditable(int row, int column) {               
+                return !(this.getColumnClass(column).equals(JButton.class));
+            }
+        });
+   
+      TLogs.setDefaultRenderer(JButton.class, new TableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable jtable, Object objeto, boolean estaSeleccionado, boolean tieneElFoco, int fila, int columna) {                
+                return (Component) objeto;
+            }
+        });
+     /*****Click del mouse*****/
+      
+       TLogs.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int fila = TLogs.rowAtPoint(e.getPoint());
+                int columna = TLogs.columnAtPoint(e.getPoint());
+                viewPorProceso();
+                
+
+                if (TLogs.getModel().getColumnClass(columna).equals(JButton.class)) {                                                            
+                    StringBuilder sb = new StringBuilder();
+                    for (int i = 0; i < TLogs.getModel().getColumnCount(); i++) {
+                        if (!TLogs.getModel().getColumnClass(i).equals(JButton.class)) {
+                            sb.append("\n").append(TLogs.getModel().getColumnName(i)).append(": ").append(TLogs.getModel().getValueAt(fila, i));
+                        }
+                    }
+                    JOptionPane.showMessageDialog(null, "Seleccionado el proceso" + sb.toString());
+                    
+                    
+                    
+                }
+            }
+        });
+      
+     /************************/ 
+     
+    }
+   
+   public void viewPorProceso(){       
+       View view = new View();
+       view.setVisible(true);
+   
+   }
     private void consolaTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consolaTextActionPerformed
         //Escuchar la entrada del usuario
         String entrada = new String();
@@ -402,14 +525,20 @@ public class Pantalla_principal extends javax.swing.JFrame {
     private javax.swing.JMenu Ayuda;
     private javax.swing.JMenu File;
     private javax.swing.JPanel PanelViewDinamico;
+    private javax.swing.JTable TLogs;
     private java.awt.Label consolaLabel;
     private javax.swing.JTextArea consolaOldText;
     private javax.swing.JTextField consolaText;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JMenuBar menu;
     private java.awt.Label outputLabel;
     private javax.swing.JTextArea outputText;
     private javax.swing.JLabel visualizacionLabel;
     // End of variables declaration//GEN-END:variables
+
+    private void JButton(String clic_Aquí) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
