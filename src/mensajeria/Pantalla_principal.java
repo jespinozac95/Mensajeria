@@ -215,7 +215,24 @@ public class Pantalla_principal extends javax.swing.JFrame {
             }
             else {
                 //Obtener el nombre de la función y sus parámetros, validarlos y llamar a la función respectiva directamente.
-                outputText.setText("Realizado con éxito.");
+                String [] parametros = new String[4];
+                String p = lineaEntrada[1].substring(0, lineaEntrada[1].length()-1);
+                parametros = p.split(",", 4);
+                if (MapeadorFunciones.ValidarFuncion(nombreFuncion)){
+                    boolean exito = MapeadorFunciones.Mapear(nombreFuncion, parametros);
+                    if (exito){
+                        if (nombreFuncion.equals("reset")){
+                            this.setVisible(false);
+                        }
+                        outputText.setText("Realizado con éxito.");
+                    }
+                    else{
+                        outputText.setText("Los parámetros ingresados no pudieron ser enlazados para la ejecución de la función.");
+                    }
+                }
+                else{
+                    outputText.setText("La función ingresada no puede ser ejecutada con las configuraciones especificadas.");
+                }
             }
         }
         catch(Exception e){
@@ -285,7 +302,12 @@ public class Pantalla_principal extends javax.swing.JFrame {
                         break;
                     case "create_mailbox":
                         if (!(Globales.DireccionamientoDirecto)){
-                            outputText.setText("create_mailbox(NombreDelBuzón). Crea un buzón.");
+                            if (Globales.IndirectoEstatico){
+                                outputText.setText("create_mailbox(NombreDelProcesoCreador,NombreDelBuzón). Crea un buzón.");
+                            }
+                            else{
+                                outputText.setText("create_mailbox(NombreDelBuzón). Crea un buzón.");
+                            }
                         }
                         else{
                             outputText.setText("Advertencia: No se puede ejecutar este comando en el direccionamiento directo.");

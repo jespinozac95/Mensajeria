@@ -28,6 +28,10 @@ public class VentanaInicio extends javax.swing.JFrame {
         CDirecReceive.setVisible(false);        
         TCantFijo.setEditable(false);
         LFijo.setVisible(false);
+        if (Globales.reset){
+            LSeleccionCantProcesos.setVisible(false);
+            TCantProcesos.setVisible(false);
+        }
     }
 
     /**
@@ -278,19 +282,21 @@ public class VentanaInicio extends javax.swing.JFrame {
     private void BContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BContinuarActionPerformed
         boolean PuedeContinuar = true;
         //GET CANT PROCESOS
-        try{
-            int numProcesos = Integer.parseInt(TCantProcesos.getText());
-            if ((1 < numProcesos)&& (numProcesos < 7)){
-                Globales.Procesos = numProcesos;
+        if (!(Globales.reset)){
+            try{
+                int numProcesos = Integer.parseInt(TCantProcesos.getText());
+                if ((1 < numProcesos)&& (numProcesos < 7)){
+                    Globales.Procesos = numProcesos;
+                }
+                else{
+                    PantallaError Error = new PantallaError("Debe ingresar un número entre 2 y 6 en el campo del número de procesos.");
+                    PuedeContinuar = false;
+                }
             }
-            else{
-                PantallaError Error = new PantallaError("Debe ingresar un número entre 2 y 6 en el campo del número de procesos.");
+            catch(Exception e){
+                PantallaError Error = new PantallaError("Debe ingresar un número entre 2 y 6 en el campo del número de procesos  para continuar.");
                 PuedeContinuar = false;
             }
-        }
-        catch(Exception e){
-            PantallaError Error = new PantallaError("Debe ingresar un número entre 2 y 6 en el campo del número de procesos  para continuar.");
-            PuedeContinuar = false;
         }
         //GET RECEIVE
         try{
@@ -388,18 +394,19 @@ public class VentanaInicio extends javax.swing.JFrame {
             PuedeContinuar = false;
         }
         if (PuedeContinuar == true){
-            //Tire MSJ de exito
-            PantallaExito exito = new PantallaExito("Configuraciones cargadas con éxito.");
             //Set texto de ayuda dinámico
             SetTextoAyuda();
             //Pida los nombres de los procesos
-            SetNombresDeProcesos();
-            
-            //Tire pantalla de exito con: create() fue realizado
-            PantallaExito exitoCreate = new PantallaExito("Create() realizado con éxito.\nLos procesos y elementos que especificó fueron creados con sus configuraciones.");
-            
-            //Cerrar esta ventana y tirar ventana de consola
+            if (!(Globales.reset)){
+                SetNombresDeProcesos();
+                //Tire pantalla de exito con: create() fue realizado
+                PantallaExito exitoCreate = new PantallaExito("Create() realizado con éxito.\nLos procesos y elementos que especificó fueron creados con sus configuraciones.");
+            }
+            else{
+                PantallaExito exitoCreate = new PantallaExito("Las configuraciones fueron cambiadas exitosamente y los logs reiniciado.");
+            }
             this.setVisible(false);
+            //Cerrar esta ventana y tirar ventana de consola
             Pantalla_principal Pantalla_Principal = new Pantalla_principal();
             Pantalla_Principal.setVisible(true);
             this.setEnabled(false);
@@ -603,8 +610,8 @@ public class VentanaInicio extends javax.swing.JFrame {
             int numeroDeProcesoEnCuestion = i+1;
             String nombre = (String)JOptionPane.showInputDialog(new JFrame(),"Escriba el nombre del proceso #"+numeroDeProcesoEnCuestion,"Nombrar Procesos",JOptionPane.PLAIN_MESSAGE);
             //System.out.println("Proceso #"+numeroDeProcesoEnCuestion+" = "+nombre);
-            while (!(Arrays.asList(Globales.NombresProcesos).contains(nombre))){
-                nombre = (String)JOptionPane.showInputDialog(new JFrame(),"Escriba el nombre del proceso #"+numeroDeProcesoEnCuestion,"Nombrar Procesos",JOptionPane.PLAIN_MESSAGE);    
+            while (MapeadorFunciones.IsProceso(nombre)){
+                nombre = (String)JOptionPane.showInputDialog(new JFrame(),"El nombre que escribió ya está asignado a un proceso.\nEscriba otro nombre para el proceso #"+numeroDeProcesoEnCuestion,"Nombrar Procesos",JOptionPane.PLAIN_MESSAGE);    
             }
             Proceso p = new Proceso(nombre);
             Globales.procs[i]=p;

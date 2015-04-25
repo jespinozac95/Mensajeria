@@ -10,8 +10,9 @@ package mensajeria;
  * @author Jespi_000
  */
 public class Globales {
-    public static String[] FuncionesPermitidas = new String[] {"view","create","reset","send","receive","connect_mailbox","disconnect_mailbox","create_mailbox"};
+    public static String[] FuncionesPermitidas = new String[] {"view","reset","send","receive","connect_mailbox","disconnect_mailbox","create_mailbox"};
     public static String TextoAyuda = "";
+    public static boolean reset = false;
     //Datos (reseteables) de configuración
     public static boolean SendBlocking = true;
     public static String Receive = "Blocking"; //Blocking, Non-Blocking o Prueba de llegada
@@ -24,25 +25,34 @@ public class Globales {
     public static int Procesos = 0;
     public static Mailbox[] mails = new Mailbox[10];
     public static Proceso[] procs = new Proceso[6];
-    public static String [] NombresProcesos = new String[6]; 
     public static int TamanoCola = 0;
     
     public static Mailbox buscarMB(String MB){
-        int j = Globales.mails.length;
-        for (int i=0; i<j;i++){
-            if (Globales.mails[i].nombre.equals(MB)) // buscarlo ********
-            {return Globales.mails[i]; }
+        if (MapeadorFunciones.IsMailbox(MB)){
+            int j = Globales.mails.length;
+            for (int i=0; i<j;i++){
+                if (Globales.mails[i].nombre.equals(MB)) // buscarlo ********
+                {return Globales.mails[i]; }
+            }
+            return Globales.mails[0];
         }
-        return Globales.mails[0]; 
+        else{
+            return null;
+        }
     }
     
     public static Proceso buscarPro(String name){
-        int j = Globales.procs.length;
-        for (int i=0; i<j;i++){
-            if (Globales.procs[i].nombre.equals(name)) // buscarlo ********
-            {return Globales.procs[i]; }
+        if (MapeadorFunciones.IsProceso(name)){
+            int j = Globales.procs.length;
+            for (int i=0; i<j;i++){
+                if (Globales.procs[i].nombre.equals(name)) // buscarlo ********
+                {return Globales.procs[i]; }
+            }
+            return Globales.procs[0]; 
         }
-        return Globales.procs[0]; 
+        else{
+            return null;
+        }
     }
     
 }
