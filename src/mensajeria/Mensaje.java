@@ -20,6 +20,7 @@ public class Mensaje {
     public boolean recibido = false;
     //cuerpo
     public String contenido;
+    private Mailbox destinoMB;
     
 
     public Mensaje(Proceso P1,Proceso P2,String conte, int priori){
@@ -39,6 +40,29 @@ public class Mensaje {
         idX++;
         this.origen = P1;
         this.destino = P2;
+        this.contenido = conte;
+        if (Globales.LargoMsjFijo==true){
+            this.longitud = Globales.LargoMsj;
+        }
+    }
+    
+    public Mensaje(Proceso P1,Mailbox MB,String conte, int priori){
+        this.id=idX;
+        idX++;
+        this.origen = P1;
+        this.destinoMB = MB;
+        this.prioridad = priori;
+        this.contenido = conte;
+        if (Globales.LargoMsjFijo==true){
+            this.longitud = Globales.LargoMsj;
+        }
+    }
+    
+    public Mensaje(Proceso P1,Mailbox MB,String conte){
+        this.id=idX;
+        idX++;
+        this.origen = P1;
+        this.destinoMB = MB;
         this.contenido = conte;
         if (Globales.LargoMsjFijo==true){
             this.longitud = Globales.LargoMsj;

@@ -32,6 +32,7 @@ public class VentanaInicio extends javax.swing.JFrame {
             LSeleccionCantProcesos.setVisible(false);
             TCantProcesos.setVisible(false);
         }
+        this.getRootPane().setDefaultButton(BContinuar);
     }
 
     /**
@@ -46,6 +47,8 @@ public class VentanaInicio extends javax.swing.JFrame {
         LBienvenido = new javax.swing.JLabel();
         LSeleccionSinc = new javax.swing.JLabel();
         LSeleccionDirecc = new javax.swing.JLabel();
+        LCola = new javax.swing.JLabel();
+        TCola = new javax.swing.JTextField();
         BContinuar = new javax.swing.JButton();
         LSeleccionFormato = new javax.swing.JLabel();
         LSeleccionFormato1 = new javax.swing.JLabel();
@@ -60,8 +63,6 @@ public class VentanaInicio extends javax.swing.JFrame {
         TCantProcesos = new javax.swing.JTextField();
         CLargo = new javax.swing.JComboBox();
         TCantFijo = new javax.swing.JTextField();
-        LCola = new javax.swing.JLabel();
-        TCola = new javax.swing.JTextField();
         LFijo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -73,6 +74,15 @@ public class VentanaInicio extends javax.swing.JFrame {
         LSeleccionSinc.setText("Seleccione el tipo de sincronización deseado:");
 
         LSeleccionDirecc.setText("Seleccione el tipo de direccionamiento deseado:");
+
+        LCola.setText("Tamaño de la cola:");
+
+        TCola.setToolTipText("Cantidad de elementos en la cola de mensajes.");
+        TCola.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TColaActionPerformed(evt);
+            }
+        });
 
         BContinuar.setText("Continuar");
         BContinuar.addActionListener(new java.awt.event.ActionListener() {
@@ -161,15 +171,6 @@ public class VentanaInicio extends javax.swing.JFrame {
 
         TCantFijo.setToolTipText("Cantidad de caracteres del largo de cada mensaje.");
 
-        LCola.setText("Tamaño de la cola:");
-
-        TCola.setToolTipText("Cantidad de elementos en la cola de mensajes.");
-        TCola.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TColaActionPerformed(evt);
-            }
-        });
-
         LFijo.setText("Tamaño fijo de mensaje:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -213,7 +214,9 @@ public class VentanaInicio extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(CDirecReceive, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(CIndirecto, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(CIndirecto, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(LCola)
+                                    .addComponent(TCola, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                                 .addComponent(BContinuar))
                             .addGroup(layout.createSequentialGroup()
@@ -223,8 +226,6 @@ public class VentanaInicio extends javax.swing.JFrame {
                                         .addComponent(LSeleccionFormato1, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(82, 82, 82)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(TCola, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(LCola)
                                             .addComponent(TCantFijo, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(LFijo))))
                                 .addGap(0, 0, Short.MAX_VALUE))))
@@ -239,9 +240,13 @@ public class VentanaInicio extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(LBienvenido, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13)
-                .addComponent(LSeleccionCantProcesos)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LSeleccionCantProcesos)
+                    .addComponent(LCola))
                 .addGap(9, 9, 9)
-                .addComponent(TCantProcesos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TCantProcesos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TCola, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(LSeleccionSinc)
                 .addGap(18, 18, 18)
@@ -265,13 +270,10 @@ public class VentanaInicio extends javax.swing.JFrame {
                     .addComponent(CLargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(TCantFijo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(LSeleccionFormato1)
-                    .addComponent(LCola))
+                .addComponent(LSeleccionFormato1)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(CDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TCola, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BContinuar))
                 .addGap(0, 17, Short.MAX_VALUE))
         );
@@ -417,6 +419,7 @@ public class VentanaInicio extends javax.swing.JFrame {
             }
             Pantalla_principal Pantalla_Principal = new Pantalla_principal();
             Pantalla_Principal.setVisible(true);
+            Globales.PantPrincipal = Pantalla_Principal;
             this.setEnabled(false);
         }
     }//GEN-LAST:event_BContinuarActionPerformed

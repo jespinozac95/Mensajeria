@@ -24,6 +24,10 @@ public class Proceso {
             this.Bloqueado = false;
         }
         else{
+            List <Registro> r= new LinkedList<Registro>(); 
+            bitacora = new Bitacora (r); 
+            List <Mensaje> m = new LinkedList<Mensaje>();
+            cola = new Cola(m);
             if (Globales.IndirectoEstatico==true){
                 this.nombre = name;
                 //this.log= this.log+this.nombre+".txt";
@@ -46,7 +50,9 @@ public class Proceso {
 
     void conectar(String nameMBox){
         Globales.buscarMB(nameMBox).conectar(this);
+        //System.out.println("Conectado en mailbox --> proceso");
         this.mailbox_conectado = Globales.buscarMB(nameMBox).nombre;
+        //System.out.println("Conectado en proceso --> mb");
         this.conectado = true;
         System.out.println("me conecte");
     }
@@ -99,11 +105,11 @@ public class Proceso {
         Mensaje NewMsj = new Mensaje(this,procesoDestino,msg);
         Registro NewReg = new Registro("send()",this.nombre,Boolean.toString(this.Bloqueado),procesoDestino.nombre,msg); 
         Registro NewReg2 = new Registro("Mensaje Recibido",procesoDestino.nombre,Boolean.toString(procesoDestino.Bloqueado),this.nombre,msg); 
-        System.out.println("Creó mensaje");
+        //System.out.println("Creó mensaje");
         procesoDestino.cola.agregar_final(NewMsj);
         this.bitacora.agregar_final(NewReg);
         procesoDestino.bitacora.agregar_final(NewReg2);
-        System.out.println("Agregó msj al origen");
+        //System.out.println("Agregó msj al origen");
         this.running();
     }
     
@@ -124,19 +130,25 @@ public class Proceso {
     }
     
     void sendIndirecto(String NombreMailboxDestino, String msg){
+        //if (this.mailbox_conectado.equals(NombreMailboxDestino)){
+         
         this.running();
         if (Globales.SendBlocking==true){
             this.bloquear();
             this.sending(NombreMailboxDestino, msg);
             this.desbloquear();
         }
-        Mensaje NewMsj = new Mensaje(this,null,msg);
+        Mensaje NewMsj = new Mensaje(this,Globales.buscarMB(NombreMailboxDestino),msg);
+        //System.out.println("Creó msj");
         Registro NewReg = new Registro("send()",this.nombre,Boolean.toString(this.Bloqueado),NombreMailboxDestino,msg); 
         Registro NewReg2 = new Registro("Mensaje Recibido",NombreMailboxDestino,"",this.nombre,msg);
+        //System.out.println("Creó registros");
         Globales.buscarMB(NombreMailboxDestino).contenido.agregar_final(NewMsj);
+        //System.out.println("Mandó msj");
         this.bitacora.agregar_final(NewReg);
+        //System.out.println("Asignó reg a Proceso");
         Globales.buscarMB(NombreMailboxDestino).bitacora.agregar_final(NewReg2);
-        
+        //System.out.println("Asignó reg2 a MB");
         this.running();
     }
     
@@ -147,12 +159,15 @@ public class Proceso {
             this.sending(NombreMailboxDestino, msg);
             this.desbloquear();
         }
-        Mensaje NewMsj = new Mensaje(this,null,msg,Prioridad);
+        Mensaje NewMsj = new Mensaje(this,Globales.buscarMB(NombreMailboxDestino),msg,Prioridad);
+        //System.out.println("Creó msj");
         Registro NewReg = new Registro("send()",this.nombre,Boolean.toString(this.Bloqueado),NombreMailboxDestino,msg); 
         Registro NewReg2 = new Registro("Mensaje Recibido",NombreMailboxDestino,"",this.nombre,msg);
+        //System.out.println("Creó registros");
         Globales.buscarMB(NombreMailboxDestino).contenido.agregar_final(NewMsj);
         Globales.buscarMB(NombreMailboxDestino).bitacora.agregar_final(NewReg2);
         this.bitacora.agregar_final(NewReg);
+        //System.out.println("Creó asignó reg2 a MB");
         this.running();
     }  
         

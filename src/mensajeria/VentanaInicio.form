@@ -72,6 +72,8 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="CIndirecto" min="-2" pref="131" max="-2" attributes="0"/>
                                   </Group>
+                                  <Component id="LCola" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="TCola" alignment="0" min="-2" pref="69" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace pref="23" max="32767" attributes="0"/>
                               <Component id="BContinuar" min="-2" max="-2" attributes="0"/>
@@ -83,8 +85,6 @@
                                       <Component id="LSeleccionFormato1" min="-2" pref="272" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="TCola" min="-2" pref="69" max="-2" attributes="0"/>
-                                          <Component id="LCola" min="-2" max="-2" attributes="0"/>
                                           <Component id="TCantFijo" alignment="0" min="-2" pref="69" max="-2" attributes="0"/>
                                           <Component id="LFijo" min="-2" max="-2" attributes="0"/>
                                       </Group>
@@ -109,9 +109,15 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="LBienvenido" min="-2" pref="30" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
-              <Component id="LSeleccionCantProcesos" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="LSeleccionCantProcesos" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="LCola" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-              <Component id="TCantProcesos" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="TCantProcesos" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="TCola" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="LSeleccionSinc" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -139,14 +145,10 @@
                   <Component id="TCantFijo" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="LSeleccionFormato1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="LCola" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
+              <Component id="LSeleccionFormato1" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="CDisciplina" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="TCola" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="BContinuar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="0" pref="17" max="32767" attributes="0"/>
@@ -173,6 +175,19 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Seleccione el tipo de direccionamiento deseado:"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="LCola">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Tama&#xf1;o de la cola:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="TCola">
+      <Properties>
+        <Property name="toolTipText" type="java.lang.String" value="Cantidad de elementos en la cola de mensajes."/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TColaActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="BContinuar">
       <Properties>
@@ -331,19 +346,6 @@
       <Properties>
         <Property name="toolTipText" type="java.lang.String" value="Cantidad de caracteres del largo de cada mensaje."/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="LCola">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Tama&#xf1;o de la cola:"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="TCola">
-      <Properties>
-        <Property name="toolTipText" type="java.lang.String" value="Cantidad de elementos en la cola de mensajes."/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TColaActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="LFijo">
       <Properties>

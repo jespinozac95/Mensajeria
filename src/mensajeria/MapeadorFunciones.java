@@ -53,14 +53,20 @@ public class MapeadorFunciones {
                     break;
                 case "reset":
                     if (parametros[0].equals("")){
+                        //resetear variables
                         Globales.reset = true;
                         Globales.LargoMsj = 0;
                         Globales.UltimoIndiceMailbox = 0;
                         Globales.mails = new Mailbox[10];
+                        
+                        //Limpiar LOGS DE PROCESOS
+                        for (int i =0;i<Globales.Procesos;i++){
+                            Globales.procs[i] = new Proceso(Globales.procs[i].nombre);
+                        }
+                                
                         VentanaInicio v = new VentanaInicio();
                         v.setVisible(true);
                         exito = true;
-                        //LIMPIAR LOGS,Procesos y si es indirecto --> directo o al reves, modificar mailboxes
                     }
                     break;
                 case "send":
@@ -105,20 +111,34 @@ public class MapeadorFunciones {
                         if (Globales.FIFO){
                             if ((!(parametros[0].equals(""))) && (!(parametros[1].equals(""))) && (!(parametros[2].equals(""))) && (IsMailbox(parametros[1])) && (IsProceso(parametros[0]))){
                                 //mappear con la funcion
-                                Globales.buscarPro(parametros[0]).sendIndirecto(parametros[1], parametros[2]);
-                                exito = true;
+                                Proceso p = Globales.buscarPro(parametros[0]);
+                                if (p.mailbox_conectado.equals(parametros[1])){
+                                    p.sendIndirecto(parametros[1], parametros[2]);
+                                    exito = true;
+                                }
+                                else{
+                                    PantallaError pe = new PantallaError("El proceso en cuestión no está conectado con el buzón especificado.");
+                                    exito = false;
+                                }
                             }
                         }
                         else{
                             if ((!(parametros[0].equals(""))) && (!(parametros[1].equals(""))) && (!(parametros[2].equals(""))) && (!(parametros[3].equals(""))) && (IsMailbox(parametros[1])) && (IsProceso(parametros[0]))){
                                 //mappear la funcion
-                                int prioridad = Integer.parseInt(parametros[3]);
-                                if ((prioridad < 4)&&(prioridad > 0)){
-                                    Globales.buscarPro(parametros[0]).sendIndirecto(parametros[1], parametros[2], prioridad);
-                                    exito = true;
+                                Proceso p = Globales.buscarPro(parametros[0]);
+                                if (p.mailbox_conectado.equals(parametros[1])){
+                                    int prioridad = Integer.parseInt(parametros[3]);
+                                    if ((prioridad < 4)&&(prioridad > 0)){
+                                        p.sendIndirecto(parametros[1], parametros[2], prioridad);
+                                        exito = true;
+                                    }
+                                    else{    
+                                        PantallaError pe = new PantallaError("La prioridad del mensaje que ingresó no es entre 1 y 3.");
+                                        exito = false;
+                                    }
                                 }
-                                else{    
-                                    PantallaError pe = new PantallaError("La prioridad del mensaje que ingresó no es entre 1 y 3.");
+                                else{
+                                    PantallaError pe = new PantallaError("El proceso en cuestión no está conectado con el buzón especificado.");
                                     exito = false;
                                 }
                             }
@@ -160,14 +180,14 @@ public class MapeadorFunciones {
                     }
                     break;
                 case "connect_mailbox":
-                    if ((!(parametros[0].equals(""))) && (!(parametros[1].equals(""))) && (IsMailbox(parametros[0])) && (IsProceso(parametros[1]))){
+                    if ((!(parametros[0].equals(""))) && (!(parametros[1].equals(""))) && (IsMailbox(parametros[1])) && (IsProceso(parametros[0]))){
                         //mappear con la funcion
                         Globales.buscarPro(parametros[0]).conectar(parametros[1]);
                         exito = true;
                     }
                     break;
                 case "disconnect_mailbox":
-                    if ((!(parametros[0].equals(""))) && (!(parametros[1].equals(""))) && (IsMailbox(parametros[0])) && (IsProceso(parametros[1]))){
+                    if ((!(parametros[0].equals(""))) && (!(parametros[1].equals(""))) && (IsMailbox(parametros[1])) && (IsProceso(parametros[0]))){
                         //mappear con la funcion
                         Globales.buscarPro(parametros[0]).desconectar();
                         exito = true;

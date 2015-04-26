@@ -33,6 +33,9 @@ public class View extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         TView = new javax.swing.JTable();
+        VerCola = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         TView.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -55,25 +58,42 @@ public class View extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(TView);
 
+        VerCola.setText("Ver Cola");
+        VerCola.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                VerColaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 531, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(237, 237, 237)
+                .addComponent(VerCola)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(VerCola)
+                .addGap(20, 20, 20))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void VerColaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerColaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_VerColaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -113,8 +133,8 @@ public class View extends javax.swing.JFrame {
     public void viewPorProceso(String proceso){ 
        
        int lenProcs = Globales.Procesos;  
-       Object[][] infoProceso = new Object[10][5];
-       String[] columnas = new String[]{"Fecha","Origen","Estado Blocked","Destino","Mensaje"};
+       Object[][] infoProceso = new Object[10][6];
+       String[] columnas = new String[]{"Fecha","Acción","Origen","Estado Blocked","Destino","Mensaje"};
     
        final Class[] tiposColumnas = new Class[]{java.lang.String.class,java.lang.String.class,java.lang.String.class,java.lang.String.class,java.lang.String.class,java.lang.String.class}; //Variable que especifica el tipo de dato de cada columna.
        
@@ -129,10 +149,11 @@ public class View extends javax.swing.JFrame {
             }
             //System.out.println("else de view por proceso");
             infoProceso[i][0] = p.bitacora.listaR.get(i).fecha;
-            infoProceso[i][1] = p.bitacora.listaR.get(i).origen;
-            infoProceso[i][2] = p.bitacora.listaR.get(i).estado_origen;
-            infoProceso[i][3] = p.bitacora.listaR.get(i).destino;
-            infoProceso[i][4] = p.bitacora.listaR.get(i).mensaje;
+            infoProceso[i][1] = p.bitacora.listaR.get(i).accion;
+            infoProceso[i][2] = p.bitacora.listaR.get(i).origen;
+            infoProceso[i][3] = p.bitacora.listaR.get(i).estado_origen;
+            infoProceso[i][4] = p.bitacora.listaR.get(i).destino;
+            infoProceso[i][5] = p.bitacora.listaR.get(i).mensaje;
         }
        }
         TView.setModel(new javax.swing.table.DefaultTableModel(infoProceso,columnas) {
@@ -149,8 +170,8 @@ public class View extends javax.swing.JFrame {
                 });
     }
     public void viewPorMB(String nombreMB) {
-       Object[][] infoMB = new Object[10][5];
-       String[] columnas = new String[]{"Fecha","Origen","Estado Blocked","Destino","Mensaje"};
+       Object[][] infoMB = new Object[10][4];
+       String[] columnas = new String[]{"Fecha","Acción","Origen","Mensaje"};
     
        final Class[] tiposColumnas = new Class[]{java.lang.String.class,java.lang.String.class,java.lang.String.class,java.lang.String.class,java.lang.String.class,java.lang.String.class}; //Variable que especifica el tipo de dato de cada columna.
        
@@ -165,10 +186,9 @@ public class View extends javax.swing.JFrame {
             }
             //System.out.println("else de view por proceso");
             infoMB[i][0] = mb.bitacora.listaR.get(i).fecha;
-            infoMB[i][1] = mb.bitacora.listaR.get(i).origen;
-            infoMB[i][2] = mb.bitacora.listaR.get(i).estado_origen;
-            infoMB[i][3] = mb.bitacora.listaR.get(i).destino;
-            infoMB[i][4] = mb.bitacora.listaR.get(i).mensaje;
+            infoMB[i][1] = mb.bitacora.listaR.get(i).accion;
+            infoMB[i][2] = mb.bitacora.listaR.get(i).origen;
+            infoMB[i][3] = mb.bitacora.listaR.get(i).mensaje;
         }
        }
         TView.setModel(new javax.swing.table.DefaultTableModel(infoMB,columnas) {
@@ -187,6 +207,7 @@ public class View extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TView;
+    private javax.swing.JButton VerCola;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 

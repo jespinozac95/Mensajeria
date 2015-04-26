@@ -33,6 +33,7 @@ public class Pantalla_principal extends javax.swing.JFrame {
         Globales.PantPrincipal = this;
         TLogs.setEnabled(false);
         TLogs.setVisible(false);
+        consolaText.requestFocusInWindow();
     }
 
     /**
@@ -73,13 +74,13 @@ public class Pantalla_principal extends javax.swing.JFrame {
 
         TLogs.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         TLogs.setEnabled(false);
@@ -210,6 +211,11 @@ public class Pantalla_principal extends javax.swing.JFrame {
                 CreditosActionPerformed(evt);
             }
         });
+        Creditos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                CreditosKeyPressed(evt);
+            }
+        });
         menu.add(Creditos);
 
         setJMenuBar(menu);
@@ -256,8 +262,7 @@ public class Pantalla_principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public void CreaTabla (){ 
-    int lenProcs = Globales.Procesos;    
-    int lenMails = Globales.mails.length;    
+    int lenProcs = Globales.Procesos;      
     Object[][] datos = new Object[12][2];    
     String[] columnas = new String[]{            
             "Nombre",
@@ -275,7 +280,7 @@ public class Pantalla_principal extends javax.swing.JFrame {
             datos[numerofilas][0]= Globales.procs[numerofilas].nombre;
             datos[numerofilas][1]= new JButton("Ver Proceso");}
         }
-     for (int i=0;i<lenMails;i++){
+     for (int i=0;i<10;i++){
         if (Globales.mails[i]==null){
             break;}
         else{
@@ -317,7 +322,6 @@ public class Pantalla_principal extends javax.swing.JFrame {
                     view.viewPorProceso(nombreProceso);
                     view.setTitle("Estado del Proceso: "+nombreProceso);
                     view.setVisible(true);
-                   //Esto es un comentario 
 
                     if (TLogs.getModel().getColumnClass(columna).equals(JButton.class)) {                                                            
                         StringBuilder sb = new StringBuilder();
@@ -326,6 +330,7 @@ public class Pantalla_principal extends javax.swing.JFrame {
                                 sb.append("\n").append(TLogs.getModel().getColumnName(i)).append(": ").append(TLogs.getModel().getValueAt(fila, i));
                             }
                         }
+                        //view.viewPorProceso(nombreProceso);
                         //JOptionPane.showMessageDialog(null, "Seleccionado el proceso" + sb.toString());
                     }
                 }
@@ -346,6 +351,7 @@ public class Pantalla_principal extends javax.swing.JFrame {
                                 sb.append("\n").append(TLogs.getModel().getColumnName(i)).append(": ").append(TLogs.getModel().getValueAt(fila, i));
                             }
                         }
+                        //view.viewPorMB(nombreMB);
                         //JOptionPane.showMessageDialog(null, "Seleccionado el proceso" + sb.toString());
                     }
                 }
@@ -612,6 +618,10 @@ public class Pantalla_principal extends javax.swing.JFrame {
     private void CreditosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CreditosMousePressed
         JOptionPane.showMessageDialog(new JFrame(),"El presente programa fue diseñado y desarrollado para el curso Infraestructura Tecnológica I, I semestre 2015.\n\nLos estudiantes responsables son:\n- Adrián Siles Masís\n- Mauricio Gamboa Cubero\n- Andrés Pacheco Quesada\n- Josué Espinoza Castro","Créditos",JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_CreditosMousePressed
+
+    private void CreditosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CreditosKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CreditosKeyPressed
 
     /**
      * @param args the command line arguments

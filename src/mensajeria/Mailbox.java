@@ -19,7 +19,7 @@ public class Mailbox {
     public int largo;
     public ArrayList<Proceso> conectados = new ArrayList();
     public Bitacora bitacora; 
-    public Cola contenido;
+    public Cola contenido ;
     
     
     public Mailbox(String nomb){
@@ -27,11 +27,14 @@ public class Mailbox {
         this.largo = Globales.TamanoCola;
         List <Registro> r= new LinkedList<Registro>(); 
         bitacora = new Bitacora (r); 
-        this.contenido = new Cola();
+        List <Mensaje> l = new LinkedList<>();
+        this.contenido = new Cola(l);
     }
     
     public void conectar(Proceso Px){
+        //System.out.println("Quiero conectarlo");
         conectados.add(Px);
+        //System.out.println("Conectado");
     }
     
     public void desconectar(Proceso Px){
