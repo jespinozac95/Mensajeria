@@ -34,8 +34,6 @@ public class View extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         TView = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         TView.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -112,30 +110,84 @@ public class View extends javax.swing.JFrame {
         });
     }
     
-    public void viewPorProceso(){ 
+    public void viewPorProceso(String proceso){ 
        
        int lenProcs = Globales.Procesos;  
-       Object[][] infoProceso = new Object[8][5];
+       Object[][] infoProceso = new Object[10][5];
        String[] columnas = new String[]{"Fecha","Origen","Estado Blocked","Destino","Mensaje"};
     
        final Class[] tiposColumnas = new Class[]{java.lang.String.class,java.lang.String.class,java.lang.String.class,java.lang.String.class,java.lang.String.class,java.lang.String.class}; //Variable que especifica el tipo de dato de cada columna.
        
+       Proceso p = Globales.buscarPro(proceso);
+       
         for (int i=0;i<lenProcs;i++){           
-        if ((Globales.procs[i]==null)||(Globales.procs[i].bitacora==null)){            
+        if ((p==null)||(p.bitacora==null) || (p.bitacora.tamano()==0)){            
             break;}
         else{
-            System.out.println("else de view por proceso");
-            infoProceso[i][0] = Globales.procs[i].bitacora.listaR.get(i).fecha;
-            infoProceso[i][1] = Globales.procs[i].bitacora.listaR.get(i).origen;
-            infoProceso[i][2] = Globales.procs[i].bitacora.listaR.get(i).estado_origen;
-            infoProceso[i][3] = Globales.procs[i].bitacora.listaR.get(i).destino;
-            infoProceso[i][4] = Globales.procs[i].bitacora.listaR.get(i).mensaje;
+            if (p.bitacora.tamano()==i){
+                break;
+            }
+            //System.out.println("else de view por proceso");
+            infoProceso[i][0] = p.bitacora.listaR.get(i).fecha;
+            infoProceso[i][1] = p.bitacora.listaR.get(i).origen;
+            infoProceso[i][2] = p.bitacora.listaR.get(i).estado_origen;
+            infoProceso[i][3] = p.bitacora.listaR.get(i).destino;
+            infoProceso[i][4] = p.bitacora.listaR.get(i).mensaje;
         }
        }
+        TView.setModel(new javax.swing.table.DefaultTableModel(infoProceso,columnas) {
+                    // Se puede saber el tipo  de dato que tiene cada columna.
+                    /*Class[] tipos = tiposColumnas;
+                    @Override
+                    public Class getColumnClass(int columnIndex) {                
+                        return tipos[columnIndex];
+                    }
+                    @Override
+                    public boolean isCellEditable(int row, int column) {               
+                        return !(this.getColumnClass(column)!=null);
+                    }*/
+                });
+    }
+    public void viewPorMB(String nombreMB) {
+       Object[][] infoMB = new Object[10][5];
+       String[] columnas = new String[]{"Fecha","Origen","Estado Blocked","Destino","Mensaje"};
+    
+       final Class[] tiposColumnas = new Class[]{java.lang.String.class,java.lang.String.class,java.lang.String.class,java.lang.String.class,java.lang.String.class,java.lang.String.class}; //Variable que especifica el tipo de dato de cada columna.
+       
+       Mailbox mb = Globales.buscarMB(nombreMB);
+       
+        for (int i=0;i<6;i++){           
+        if ((mb==null)||(mb.bitacora==null) || (mb.bitacora.tamano()==0)){            
+            break;}
+        else{
+            if (mb.bitacora.tamano()==i){
+                break;
+            }
+            //System.out.println("else de view por proceso");
+            infoMB[i][0] = mb.bitacora.listaR.get(i).fecha;
+            infoMB[i][1] = mb.bitacora.listaR.get(i).origen;
+            infoMB[i][2] = mb.bitacora.listaR.get(i).estado_origen;
+            infoMB[i][3] = mb.bitacora.listaR.get(i).destino;
+            infoMB[i][4] = mb.bitacora.listaR.get(i).mensaje;
+        }
+       }
+        TView.setModel(new javax.swing.table.DefaultTableModel(infoMB,columnas) {
+                    // Se puede saber el tipo  de dato que tiene cada columna.
+                    /*Class[] tipos = tiposColumnas;
+                    @Override
+                    public Class getColumnClass(int columnIndex) {                
+                        return tipos[columnIndex];
+                    }
+                    @Override
+                    public boolean isCellEditable(int row, int column) {               
+                        return !(this.getColumnClass(column)!=null);
+                    }*/
+                });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TView;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+
 }

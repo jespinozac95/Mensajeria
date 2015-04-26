@@ -31,6 +31,8 @@ public class Pantalla_principal extends javax.swing.JFrame {
     public Pantalla_principal() {
         initComponents();
         Globales.PantPrincipal = this;
+        TLogs.setEnabled(false);
+        TLogs.setVisible(false);
     }
 
     /**
@@ -80,6 +82,7 @@ public class Pantalla_principal extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        TLogs.setEnabled(false);
         jScrollPane3.setViewportView(TLogs);
 
         javax.swing.GroupLayout PanelViewDinamicoLayout = new javax.swing.GroupLayout(PanelViewDinamico);
@@ -253,7 +256,7 @@ public class Pantalla_principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public void CreaTabla (){ 
-    int lenProcs = Globales.procs.length;    
+    int lenProcs = Globales.Procesos;    
     int lenMails = Globales.mails.length;    
     Object[][] datos = new Object[12][2];    
     String[] columnas = new String[]{            
@@ -280,7 +283,8 @@ public class Pantalla_principal extends javax.swing.JFrame {
             datos[numerofilas][1]= new JButton("Ver Mailbox");}
             numerofilas++;
         }
-     
+     TLogs.setEnabled(true);
+     TLogs.setVisible(true);
      TLogs.setModel(new javax.swing.table.DefaultTableModel(datos,columnas) {
             // Se puede saber el tipo  de dato que tiene cada columna.
             Class[] tipos = tiposColumnas;
@@ -305,27 +309,48 @@ public class Pantalla_principal extends javax.swing.JFrame {
        TLogs.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                View view = new View();
-                view.viewPorProceso();
-                view.setVisible(true);
-                int fila = TLogs.rowAtPoint(e.getPoint());
-                int columna = TLogs.columnAtPoint(e.getPoint());
-               //Esto es un comentario 
-                
+                if (MapeadorFunciones.IsProceso((String) TLogs.getValueAt(TLogs.rowAtPoint(e.getPoint()), 0))){
+                    View view = new View();
+                    int fila = TLogs.rowAtPoint(e.getPoint());
+                    int columna = TLogs.columnAtPoint(e.getPoint());
+                    String nombreProceso = (String) TLogs.getValueAt(fila, 0);
+                    view.viewPorProceso(nombreProceso);
+                    view.setTitle("Estado del Proceso: "+nombreProceso);
+                    view.setVisible(true);
+                   //Esto es un comentario 
 
-                if (TLogs.getModel().getColumnClass(columna).equals(JButton.class)) {                                                            
-                    StringBuilder sb = new StringBuilder();
-                    for (int i = 0; i < TLogs.getModel().getColumnCount(); i++) {
-                        if (!TLogs.getModel().getColumnClass(i).equals(JButton.class)) {
-                            sb.append("\n").append(TLogs.getModel().getColumnName(i)).append(": ").append(TLogs.getModel().getValueAt(fila, i));
+                    if (TLogs.getModel().getColumnClass(columna).equals(JButton.class)) {                                                            
+                        StringBuilder sb = new StringBuilder();
+                        for (int i = 0; i < TLogs.getModel().getColumnCount(); i++) {
+                            if (!TLogs.getModel().getColumnClass(i).equals(JButton.class)) {
+                                sb.append("\n").append(TLogs.getModel().getColumnName(i)).append(": ").append(TLogs.getModel().getValueAt(fila, i));
+                            }
                         }
+                        //JOptionPane.showMessageDialog(null, "Seleccionado el proceso" + sb.toString());
                     }
-                    JOptionPane.showMessageDialog(null, "Seleccionado el proceso" + sb.toString());
-                    
-                    
-                    
+                }
+                else{//es un mailbox
+                    View view = new View();
+                    int fila = TLogs.rowAtPoint(e.getPoint());
+                    int columna = TLogs.columnAtPoint(e.getPoint());
+                    String nombreMB = (String) TLogs.getValueAt(fila, 0);
+                    view.viewPorMB(nombreMB);
+                    view.setTitle("Estado del Buzón (Mailbox): "+nombreMB);
+                    view.setVisible(true);
+                   //Esto es un comentario 
+
+                    if (TLogs.getModel().getColumnClass(columna).equals(JButton.class)) {                                                            
+                        StringBuilder sb = new StringBuilder();
+                        for (int i = 0; i < TLogs.getModel().getColumnCount(); i++) {
+                            if (!TLogs.getModel().getColumnClass(i).equals(JButton.class)) {
+                                sb.append("\n").append(TLogs.getModel().getColumnName(i)).append(": ").append(TLogs.getModel().getValueAt(fila, i));
+                            }
+                        }
+                        //JOptionPane.showMessageDialog(null, "Seleccionado el proceso" + sb.toString());
+                    }
                 }
             }
+            
         });
       
      /************************/ 
