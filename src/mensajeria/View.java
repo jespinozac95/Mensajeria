@@ -7,6 +7,8 @@ package mensajeria;
 
 import java.awt.Component;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 /**
@@ -156,6 +158,7 @@ public class View extends javax.swing.JFrame {
             infoProceso[i][5] = p.bitacora.listaR.get(i).mensaje;
         }
        }
+        //JOptionPane.showMessageDialog(null,new JScrollPane(TView));
         TView.setModel(new javax.swing.table.DefaultTableModel(infoProceso,columnas) {
                     // Se puede saber el tipo  de dato que tiene cada columna.
                     /*Class[] tipos = tiposColumnas;

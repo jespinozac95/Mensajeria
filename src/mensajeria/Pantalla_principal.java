@@ -290,6 +290,7 @@ public class Pantalla_principal extends javax.swing.JFrame {
         }
      TLogs.setEnabled(true);
      TLogs.setVisible(true);
+     
      TLogs.setModel(new javax.swing.table.DefaultTableModel(datos,columnas) {
             // Se puede saber el tipo  de dato que tiene cada columna.
             Class[] tipos = tiposColumnas;
