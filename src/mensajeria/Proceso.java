@@ -24,11 +24,13 @@ public class Proceso {
             this.Bloqueado = false;
         }
         else{
+            
             List <Registro> r= new LinkedList<Registro>(); 
             bitacora = new Bitacora (r); 
             List <Mensaje> m = new LinkedList<Mensaje>();
             cola = new Cola(m);
             if (Globales.IndirectoEstatico==true){
+                //System.out.println("Voy a conectar el proceso "+name+" a su mailbox");
                 this.nombre = name;
                 //this.log= this.log+this.nombre+".txt";
                 Mailbox mb = new Mailbox("MB"+this.nombre);

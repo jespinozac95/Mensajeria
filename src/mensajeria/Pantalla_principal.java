@@ -261,12 +261,11 @@ public class Pantalla_principal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void CreaTabla (){ 
-    int lenProcs = Globales.Procesos;      
-    Object[][] datos = new Object[12][2];    
-    String[] columnas = new String[]{            
-            "Nombre",
-            "Bitacora"};
+    public Object[][] CreaTabla (){
+    //System.out.println("Entró a CreaTabla");
+    int lenProcs = Globales.Procesos;     
+    Object[] elementosDelSistema = new Object[12];
+    Object[][] datos = new Object[12][2];
     final Class[] tiposColumnas = new Class[]{
          //Variable que especifica el tipo de dato de cada columna
             java.lang.String.class,            
@@ -278,6 +277,7 @@ public class Pantalla_principal extends javax.swing.JFrame {
             break;}
         else{
             datos[numerofilas][0]= Globales.procs[numerofilas].nombre;
+            elementosDelSistema[numerofilas]=Globales.procs[numerofilas].nombre;
             datos[numerofilas][1]= new JButton("Ver Proceso");}
         }
      for (int i=0;i<10;i++){
@@ -285,9 +285,23 @@ public class Pantalla_principal extends javax.swing.JFrame {
             break;}
         else{
             datos[numerofilas][0]= Globales.mails[i].nombre;
+            elementosDelSistema[numerofilas] = Globales.mails[i].nombre;
             datos[numerofilas][1]= new JButton("Ver Mailbox");}
             numerofilas++;
         }
+     return datos;
+    }
+   
+    public void MostrarTabla(Object [][] datos){
+    
+        String[] columnas = new String[]{            
+            "Nombre",
+            "Bitacora"};
+        final Class[] tiposColumnas = new Class[]{
+         //Variable que especifica el tipo de dato de cada columna
+            java.lang.String.class,            
+            JButton.class 
+        };
      TLogs.setEnabled(true);
      TLogs.setVisible(true);
      
@@ -316,13 +330,13 @@ public class Pantalla_principal extends javax.swing.JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (MapeadorFunciones.IsProceso((String) TLogs.getValueAt(TLogs.rowAtPoint(e.getPoint()), 0))){
-                    View view = new View();
+                    
                     int fila = TLogs.rowAtPoint(e.getPoint());
                     int columna = TLogs.columnAtPoint(e.getPoint());
                     String nombreProceso = (String) TLogs.getValueAt(fila, 0);
-                    view.viewPorProceso(nombreProceso);
-                    view.setTitle("Estado del Proceso: "+nombreProceso);
-                    view.setVisible(true);
+                    Globales.view.viewPorProceso(nombreProceso);
+                    Globales.view.setTitle("Estado del Proceso: "+nombreProceso);
+                    Globales.view.setVisible(true);
 
                     if (TLogs.getModel().getColumnClass(columna).equals(JButton.class)) {                                                            
                         StringBuilder sb = new StringBuilder();
@@ -336,13 +350,12 @@ public class Pantalla_principal extends javax.swing.JFrame {
                     }
                 }
                 else{//es un mailbox
-                    View view = new View();
                     int fila = TLogs.rowAtPoint(e.getPoint());
                     int columna = TLogs.columnAtPoint(e.getPoint());
                     String nombreMB = (String) TLogs.getValueAt(fila, 0);
-                    view.viewPorMB(nombreMB);
-                    view.setTitle("Estado del Buzón (Mailbox): "+nombreMB);
-                    view.setVisible(true);
+                    Globales.view.viewPorMB(nombreMB);
+                    Globales.view.setTitle("Estado del Buzón (Mailbox): "+nombreMB);
+                    Globales.view.setVisible(true);
                    //Esto es un comentario 
 
                     if (TLogs.getModel().getColumnClass(columna).equals(JButton.class)) {                                                            
@@ -359,11 +372,7 @@ public class Pantalla_principal extends javax.swing.JFrame {
             }
             
         });
-      
-     /************************/ 
-     
     }
-   
    
    
    /************************/
@@ -475,7 +484,7 @@ public class Pantalla_principal extends javax.swing.JFrame {
                         }
                         else{
                             if (Globales.ReceiveExplicito){
-                                Texto += "\n - receive(NombreDelProcesoReceptor,NombreDelProcesoDeOrigen)";
+                                Texto += " - receive(NombreDelProcesoReceptor,NombreDelProcesoDeOrigen)";
                                 Texto += ": Recibe un mensaje del buzón suscrito del proceso de origen especificado.";
                             }
                             else{

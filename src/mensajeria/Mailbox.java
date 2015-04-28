@@ -16,7 +16,7 @@ import java.util.List;
 public class Mailbox {
     
     public String nombre;
-    public int largo;
+    //public int largo;
     public ArrayList<Proceso> conectados = new ArrayList();
     public Bitacora bitacora; 
     public Cola contenido ;
@@ -24,7 +24,7 @@ public class Mailbox {
     
     public Mailbox(String nomb){
         this.nombre = nomb;
-        this.largo = Globales.TamanoCola;
+        //this.largo = Globales.TamanoCola;
         List <Registro> r= new LinkedList<Registro>(); 
         bitacora = new Bitacora (r); 
         List <Mensaje> l = new LinkedList<>();

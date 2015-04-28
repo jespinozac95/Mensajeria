@@ -21,9 +21,7 @@ public class VentanaInicio extends javax.swing.JFrame {
      * Creates new form VentanaInicio
      */
     public VentanaInicio() {
-        initComponents();
-        CSend.setVisible(false);
-        CReceive.setVisible(false);        
+        initComponents();       
         CIndirecto.setVisible(false);
         CDirecReceive.setVisible(false);        
         TCantFijo.setEditable(false);
@@ -52,7 +50,6 @@ public class VentanaInicio extends javax.swing.JFrame {
         BContinuar = new javax.swing.JButton();
         LSeleccionFormato = new javax.swing.JLabel();
         LSeleccionFormato1 = new javax.swing.JLabel();
-        CSincronizacion = new javax.swing.JComboBox();
         CDireccionamiento = new javax.swing.JComboBox();
         CDisciplina = new javax.swing.JComboBox();
         CSend = new javax.swing.JComboBox();
@@ -64,14 +61,17 @@ public class VentanaInicio extends javax.swing.JFrame {
         CLargo = new javax.swing.JComboBox();
         TCantFijo = new javax.swing.JTextField();
         LFijo = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         LBienvenido.setFont(new java.awt.Font("Calibri Light", 0, 24)); // NOI18N
-        LBienvenido.setText("¡Bienvenido!");
+        LBienvenido.setText("¡Bienvenido a OSchat!");
         LBienvenido.setName(""); // NOI18N
 
-        LSeleccionSinc.setText("Seleccione el tipo de sincronización deseado:");
+        LSeleccionSinc.setText("Seleccione el tipo de sincronización Send deseado:");
 
         LSeleccionDirecc.setText("Seleccione el tipo de direccionamiento deseado:");
 
@@ -94,16 +94,6 @@ public class VentanaInicio extends javax.swing.JFrame {
         LSeleccionFormato.setText("Seleccione el tipo de formato deseado:");
 
         LSeleccionFormato1.setText("Seleccione la disciplina de manejo de datos deseada:");
-
-        CSincronizacion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Send", "Receive" }));
-        CSincronizacion.setToolTipText("Debe escoger el tipo de sincronización requerido");
-        CSincronizacion.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        CSincronizacion.setName(""); // NOI18N
-        CSincronizacion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CSincronizacionActionPerformed(evt);
-            }
-        });
 
         CDireccionamiento.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Directo", "Indirecto" }));
         CDireccionamiento.setToolTipText("Selección de direccionamiento requerido.");
@@ -173,6 +163,12 @@ public class VentanaInicio extends javax.swing.JFrame {
 
         LFijo.setText("Tamaño fijo de mensaje:");
 
+        jLabel1.setText("Seleccione el tipo de sincronización Receive deseado:");
+
+        jLabel2.setText("A continuación, se le solicita la configuración del sistema de mensajería.");
+
+        jLabel3.setText("Recuerde que si no selecciona algún campo para cambiarse, las opciones por defecto serán cargadas.");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -181,101 +177,115 @@ public class VentanaInicio extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(LSeleccionSinc))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(197, 197, 197)
-                        .addComponent(LBienvenido, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(LSeleccionCantProcesos))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(CDireccionamiento, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(CSincronizacion, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(CLargo, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGap(84, 84, 84))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                            .addComponent(CDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGap(140, 140, 140)))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(LSeleccionFormato, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(65, 65, 65)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGap(56, 56, 56)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(CDireccionamiento, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(1, 1, 1)
+                                                .addComponent(CLargo, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(LSeleccionFormato, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(CReceive, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGap(56, 56, 56)
                                         .addComponent(CSend, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(58, 58, 58)
+                                        .addComponent(TCantProcesos, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(55, 55, 55)
+                                        .addComponent(CDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(BContinuar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(LSeleccionSinc)
+                                    .addComponent(LSeleccionCantProcesos)
+                                    .addComponent(LSeleccionDirecc))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(CReceive, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(CDirecReceive, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(CIndirecto, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(LCola)
-                                    .addComponent(TCola, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-                                .addComponent(BContinuar))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(LSeleccionDirecc)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(LSeleccionFormato1, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(82, 82, 82)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(TCantFijo, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(LFijo))))
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                                    .addComponent(TCola, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel1)
+                                    .addComponent(LFijo)
+                                    .addComponent(TCantFijo, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(71, 71, 71))))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(TCantProcesos, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel3))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel2)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(LBienvenido, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(LSeleccionFormato1, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(LBienvenido, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(13, 13, 13)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(LSeleccionCantProcesos)
-                    .addComponent(LCola))
-                .addGap(9, 9, 9)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TCantProcesos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TCola, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(LSeleccionSinc)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CSincronizacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CSend, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CReceive, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(LSeleccionDirecc, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CDireccionamiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CIndirecto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CDirecReceive, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(LSeleccionFormato)
-                    .addComponent(LFijo))
+                .addGap(23, 23, 23)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(LSeleccionCantProcesos)
+                        .addGap(9, 9, 9)
+                        .addComponent(TCantProcesos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(LSeleccionSinc)
+                        .addGap(18, 18, 18)
+                        .addComponent(CSend, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(LSeleccionDirecc, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(CDireccionamiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(LSeleccionFormato)
+                        .addGap(18, 18, 18)
+                        .addComponent(CLargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(LCola)
+                        .addGap(9, 9, 9)
+                        .addComponent(TCola, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(CReceive, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(48, 48, 48)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(CIndirecto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(CDirecReceive, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(LFijo)
+                        .addGap(18, 18, 18)
+                        .addComponent(TCantFijo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CLargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TCantFijo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
                 .addComponent(LSeleccionFormato1)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(CDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BContinuar))
-                .addGap(0, 17, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -323,7 +333,7 @@ public class VentanaInicio extends javax.swing.JFrame {
             PantallaError Error = new PantallaError("Debe configurar la sincronización Send para continuar.");            
             PuedeContinuar = false;
         }
-        //GET DIRECCIONAMIENTO FALTA EL INDIRECTO
+        //GET DIRECCIONAMIENTO 
         try{
             if (CDireccionamiento.getSelectedItem().toString().equals("Directo")){
                 Globales.DireccionamientoDirecto = true;
@@ -410,6 +420,7 @@ public class VentanaInicio extends javax.swing.JFrame {
             this.setVisible(false);
             //Cerrar esta ventana y tirar ventana de consola
             if ((Globales.reset) && (!(Globales.DireccionamientoDirecto)) && (Globales.IndirectoEstatico)){
+                //System.out.println("Reset con Indirecto Estatico");
                 for (int i = 0;i<Globales.Procesos;i++){
                     Mailbox mb = new Mailbox("MB"+Globales.procs[i].nombre);
                     Globales.mails[Globales.UltimoIndiceMailbox]=mb;
@@ -423,20 +434,6 @@ public class VentanaInicio extends javax.swing.JFrame {
             this.setEnabled(false);
         }
     }//GEN-LAST:event_BContinuarActionPerformed
-
-    private void CSincronizacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CSincronizacionActionPerformed
-        // TODO add your handling code here:        
-        String valor=CSincronizacion.getSelectedItem().toString();
-        if (valor.equals("Send")){
-        CSend.setVisible(true);
-        CReceive.setVisible(false);
-        }
-        else if (valor.equals("Receive")){
-        CReceive.setVisible(true);
-        CSend.setVisible(false);
-        }
-            
-    }//GEN-LAST:event_CSincronizacionActionPerformed
 
     private void CDireccionamientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CDireccionamientoActionPerformed
         // TODO add your handling code here:
@@ -604,7 +601,6 @@ public class VentanaInicio extends javax.swing.JFrame {
     private javax.swing.JComboBox CLargo;
     private javax.swing.JComboBox CReceive;
     private javax.swing.JComboBox CSend;
-    private javax.swing.JComboBox CSincronizacion;
     private javax.swing.JLabel LBienvenido;
     private javax.swing.JLabel LCola;
     private javax.swing.JLabel LFijo;
@@ -616,16 +612,19 @@ public class VentanaInicio extends javax.swing.JFrame {
     private javax.swing.JTextField TCantFijo;
     private javax.swing.JTextField TCantProcesos;
     private javax.swing.JTextField TCola;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 
     public void SetNombresDeProcesos() {
         for (int i=0;i<Globales.Procesos;i++){
             int numeroDeProcesoEnCuestion = i+1;
             String nombre = (String)JOptionPane.showInputDialog(new JFrame(),"Escriba el nombre del proceso #"+numeroDeProcesoEnCuestion,"Nombrar Procesos",JOptionPane.PLAIN_MESSAGE);
-            //System.out.println("Proceso #"+numeroDeProcesoEnCuestion+" = "+nombre);
             while ((nombre==null) || (nombre.equals("")) || (MapeadorFunciones.IsProceso(nombre))){
                 nombre = (String)JOptionPane.showInputDialog(new JFrame(),"El nombre que escribió ya está asignado a un proceso o no tenía caracteres.\nEscriba otro nombre para el proceso #"+numeroDeProcesoEnCuestion,"Nombrar Procesos",JOptionPane.PLAIN_MESSAGE);    
             }
+            //System.out.println("Proceso #"+numeroDeProcesoEnCuestion+" = "+nombre);
             Proceso p = new Proceso(nombre);
             Globales.procs[i]=p;
         }

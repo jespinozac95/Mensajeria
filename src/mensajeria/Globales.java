@@ -28,6 +28,8 @@ public class Globales {
     public static int TamanoCola = 0;
     public static int UltimoIndiceMailbox = 0;
     public static Pantalla_principal PantPrincipal;
+    public static View view;
+    public static ViewCola viewcola;
     
     public static Mailbox buscarMB(String MB){
         int j = Globales.mails.length; 

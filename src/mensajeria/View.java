@@ -16,12 +16,14 @@ import javax.swing.JTable;
  * @author Andres
  */
 public class View extends javax.swing.JFrame {
-
+    public String nombre;
+    public boolean esProceso;
     /**
      * Creates new form View
      */
     public View() {
         initComponents();
+        
     }
 
     /**
@@ -94,7 +96,14 @@ public class View extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void VerColaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerColaActionPerformed
-        // TODO add your handling code here:
+        if (this.esProceso){
+            Globales.viewcola.viewColaProceso(this.nombre);
+            Globales.viewcola.setVisible(true);
+        }
+        else{
+            Globales.viewcola.viewColaMB(this.nombre);
+            Globales.viewcola.setVisible(true);
+        }
     }//GEN-LAST:event_VerColaActionPerformed
 
     /**
@@ -133,7 +142,8 @@ public class View extends javax.swing.JFrame {
     }
     
     public void viewPorProceso(String proceso){ 
-       
+       this.nombre = proceso;
+       this.esProceso = true;
        int lenProcs = Globales.Procesos;  
        Object[][] infoProceso = new Object[10][6];
        String[] columnas = new String[]{"Fecha","Acción","Origen","Estado Blocked","Destino","Mensaje"};
@@ -173,6 +183,8 @@ public class View extends javax.swing.JFrame {
                 });
     }
     public void viewPorMB(String nombreMB) {
+       this.nombre = nombreMB;
+       this.esProceso = false;
        Object[][] infoMB = new Object[10][4];
        String[] columnas = new String[]{"Fecha","Acción","Origen","Mensaje"};
     
@@ -190,7 +202,7 @@ public class View extends javax.swing.JFrame {
             //System.out.println("else de view por proceso");
             infoMB[i][0] = mb.bitacora.listaR.get(i).fecha;
             infoMB[i][1] = mb.bitacora.listaR.get(i).accion;
-            infoMB[i][2] = mb.bitacora.listaR.get(i).origen;
+            infoMB[i][2] = mb.bitacora.listaR.get(i).destino;
             infoMB[i][3] = mb.bitacora.listaR.get(i).mensaje;
         }
        }

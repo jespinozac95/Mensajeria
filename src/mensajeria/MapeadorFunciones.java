@@ -5,6 +5,9 @@
  */
 package mensajeria;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  *
  * @author Jespi_000
@@ -46,8 +49,29 @@ public class MapeadorFunciones {
             switch (funcion){
                 case "view":
                     if (parametros[0].equals("")){
+                        if (Globales.view == null){
+                            View v = new View();
+                            Globales.view = v;
+                            ViewCola vc = new ViewCola();
+                            Globales.viewcola = vc;
+                        }
                         //mappear la funcion
-                        Globales.PantPrincipal.CreaTabla();
+                        Object [][] o = Globales.PantPrincipal.CreaTabla();
+                        Globales.PantPrincipal.MostrarTabla(o);
+                        //Limpiar LOGS DE PROCESOS
+                        for (int i =0;i<Globales.Procesos;i++){
+                            List <Registro> r= new LinkedList<Registro>();
+                            Globales.procs[i].bitacora.listaR = r;
+                        }
+                        for (int e = 0;e<Globales.mails.length;e++){
+                            if (Globales.mails[e]==null){
+                                break;
+                            }
+                            else{
+                                List <Registro> r= new LinkedList<Registro>();
+                                Globales.mails[e].bitacora.listaR = r;
+                            }
+                        }
                         exito = true;
                     }
                     break;
@@ -72,14 +96,23 @@ public class MapeadorFunciones {
                 case "send":
                     if ((Globales.LargoMsjFijo) && (parametros[2].length() > Globales.LargoMsj)){
                         PantallaError pe = new PantallaError("El largo del mensaje sobrepasa el largo que especificó");
+                        exito = false;
                         break;
                     }
                     if (Globales.DireccionamientoDirecto){
                         if (Globales.FIFO){
                             if ((!(parametros[0].equals(""))) && (!(parametros[1].equals(""))) && (!(parametros[2].equals(""))) && (IsProceso(parametros[0])) && (IsProceso(parametros[1])) && (!(parametros[0].equals(parametros[1] ))) ){
                                 //mappear la funcion
-                                Globales.buscarPro(parametros[0]).sendDirecto(parametros[1], parametros[2]);
-                                exito = true;
+                                Proceso emisor = Globales.buscarPro(parametros[0]);
+                                Proceso receptor = Globales.buscarPro(parametros[1]);
+                                if (receptor.cola.lista.size() < Globales.TamanoCola){
+                                    emisor.sendDirecto(parametros[1], parametros[2]);
+                                    exito = true;                                    
+                                }
+                                else{
+                                    PantallaError pe = new PantallaError("El proceso receptor tiene su cola de mensajes llena");
+                                    exito = false;
+                                }
                                 //System.out.println("Exito en send 1 dentro if= "+exito);
                             }
                             /*else{
@@ -95,8 +128,16 @@ public class MapeadorFunciones {
                                 //mappear la funcion
                                 int prioridad = Integer.parseInt(parametros[2]);
                                 if ((prioridad < 4)&&(prioridad > 0)){
-                                    Globales.buscarPro(parametros[0]).sendDirecto(parametros[0], parametros[1], prioridad);
-                                    exito = true;
+                                    Proceso emisor = Globales.buscarPro(parametros[0]);
+                                    Proceso receptor = Globales.buscarPro(parametros[1]);
+                                    if (receptor.cola.lista.size() < Globales.TamanoCola){
+                                        emisor.sendDirecto(parametros[1], parametros[2],prioridad);
+                                        exito = true;                                    
+                                    }
+                                    else{
+                                        PantallaError pe = new PantallaError("El proceso receptor tiene su cola de mensajes llena");
+                                        exito = false;
+                                    }
                                 }
                                 else{    
                                     PantallaError pe = new PantallaError("La prioridad del mensaje que ingresó no es entre 1 y 3.");
@@ -112,12 +153,12 @@ public class MapeadorFunciones {
                             if ((!(parametros[0].equals(""))) && (!(parametros[1].equals(""))) && (!(parametros[2].equals(""))) && (IsMailbox(parametros[1])) && (IsProceso(parametros[0]))){
                                 //mappear con la funcion
                                 Proceso p = Globales.buscarPro(parametros[0]);
-                                if (p.mailbox_conectado.equals(parametros[1])){
+                                if (Globales.buscarMB(parametros[1]).contenido.lista.size() < Globales.TamanoCola){
                                     p.sendIndirecto(parametros[1], parametros[2]);
                                     exito = true;
                                 }
                                 else{
-                                    PantallaError pe = new PantallaError("El proceso en cuestión no está conectado con el buzón especificado.");
+                                    PantallaError pe = new PantallaError("El buzón ya está lleno. No se le puede enviar un mensaje. Debe recibir uno antes.");
                                     exito = false;
                                 }
                             }
@@ -126,19 +167,19 @@ public class MapeadorFunciones {
                             if ((!(parametros[0].equals(""))) && (!(parametros[1].equals(""))) && (!(parametros[2].equals(""))) && (!(parametros[3].equals(""))) && (IsMailbox(parametros[1])) && (IsProceso(parametros[0]))){
                                 //mappear la funcion
                                 Proceso p = Globales.buscarPro(parametros[0]);
-                                if (p.mailbox_conectado.equals(parametros[1])){
-                                    int prioridad = Integer.parseInt(parametros[3]);
-                                    if ((prioridad < 4)&&(prioridad > 0)){
+                                int prioridad = Integer.parseInt(parametros[3]);
+                                if ((prioridad < 4)&&(prioridad > 0)){
+                                    if (Globales.buscarMB(parametros[1]).contenido.lista.size() < Globales.TamanoCola){
                                         p.sendIndirecto(parametros[1], parametros[2], prioridad);
                                         exito = true;
                                     }
-                                    else{    
-                                        PantallaError pe = new PantallaError("La prioridad del mensaje que ingresó no es entre 1 y 3.");
+                                    else{
+                                        PantallaError pe = new PantallaError("El buzón ya está lleno. No se le puede enviar un mensaje. Debe recibir uno antes");
                                         exito = false;
                                     }
                                 }
-                                else{
-                                    PantallaError pe = new PantallaError("El proceso en cuestión no está conectado con el buzón especificado.");
+                                else{    
+                                    PantallaError pe = new PantallaError("La prioridad del mensaje que ingresó no es entre 1 y 3.");
                                     exito = false;
                                 }
                             }
