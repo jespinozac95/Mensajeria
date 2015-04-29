@@ -4,10 +4,8 @@
  * and open the template in the editor.
  */
 package mensajeria;
-
 import java.util.LinkedList;
 import java.util.List;
-
 /**
  *
  * @author Jespi_000
@@ -33,7 +31,35 @@ public class Globales {
     public static Pantalla_principal PantPrincipal;
     public static View view;
     public static ViewCola viewcola;
-    public static List<Registro> LogCentral = new LinkedList();  
+    public static InformacionView[] InformacionDeElementosParaView = new InformacionView[13];
+    public static int UltimoIndiceElementos = 0;
+    public static int NumeroElementos = 0;
+    public static List<Registro> LogCentral = new LinkedList(); 
+    public static List<Registro> LogCentralActivo;
+    public static List <Mensaje> m = new LinkedList<Mensaje>();
+    public static Cola ColaCentral = new Cola(m);
+    
+    public static InformacionView buscarElemento(String nombre){
+        InformacionView elemento = null;
+        boolean cambio = false;
+        for (int i = 0;i<UltimoIndiceElementos;i++){
+            /*if (Globales.InformacionDeElementosParaView[i] == null){
+                break;
+            }
+            else{*/
+            InformacionView e = Globales.InformacionDeElementosParaView[i];
+            if (e.nombre.equals(nombre)){
+                elemento = e;
+                cambio = true;
+                break;
+                //}
+            }
+        }
+        if (cambio==false){
+            System.out.println("En buscarElemento, no se encontró el elemento.");
+        }
+        return elemento;
+    }
     
     public static Mailbox buscarMB(String MB){
         int j = Globales.mails.length; 
@@ -64,6 +90,20 @@ public class Globales {
         }
         return null;
         //return Globales.procs[0];
+    }
+
+    public static void ImprimirElementos() {
+        for (int i=0;i<Globales.NumeroElementos;i++){
+            System.out.println("Elemento: "+Globales.InformacionDeElementosParaView[i].nombre);
+            for (int e=0;e<Globales.InformacionDeElementosParaView[i].bitacoraInfo.length;e++){
+                try{
+                    System.out.println("    Dato en bitacora: "+Globales.InformacionDeElementosParaView[i].bitacoraInfo[i][1].toString());
+                }
+                catch (Exception ex){
+                    
+                }
+            }
+        }
     }
     
 }

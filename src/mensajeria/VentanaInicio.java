@@ -43,46 +43,45 @@ public class VentanaInicio extends javax.swing.JFrame {
     private void initComponents() {
 
         LBienvenido = new javax.swing.JLabel();
-        LSeleccionSinc = new javax.swing.JLabel();
-        LSeleccionDirecc = new javax.swing.JLabel();
-        LCola = new javax.swing.JLabel();
-        TCola = new javax.swing.JTextField();
-        BContinuar = new javax.swing.JButton();
-        LSeleccionFormato = new javax.swing.JLabel();
-        LSeleccionFormato1 = new javax.swing.JLabel();
-        CDireccionamiento = new javax.swing.JComboBox();
-        CDisciplina = new javax.swing.JComboBox();
-        CSend = new javax.swing.JComboBox();
-        CReceive = new javax.swing.JComboBox();
-        CIndirecto = new javax.swing.JComboBox();
-        CDirecReceive = new javax.swing.JComboBox();
-        LSeleccionCantProcesos = new javax.swing.JLabel();
-        TCantProcesos = new javax.swing.JTextField();
-        CLargo = new javax.swing.JComboBox();
-        TCantFijo = new javax.swing.JTextField();
-        LFijo = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        LSeleccionCantProcesos = new javax.swing.JLabel();
+        LSeleccionFormato1 = new javax.swing.JLabel();
+        BContinuar = new javax.swing.JButton();
+        CLargo = new javax.swing.JComboBox();
+        LSeleccionDirecc = new javax.swing.JLabel();
+        TCola = new javax.swing.JTextField();
+        LSeleccionFormato = new javax.swing.JLabel();
+        TCantProcesos = new javax.swing.JTextField();
+        LCola = new javax.swing.JLabel();
+        CSend = new javax.swing.JComboBox();
+        LFijo = new javax.swing.JLabel();
+        TCantFijo = new javax.swing.JTextField();
+        CDirecReceive = new javax.swing.JComboBox();
+        CReceive = new javax.swing.JComboBox();
+        CIndirecto = new javax.swing.JComboBox();
+        CDireccionamiento = new javax.swing.JComboBox();
+        CDisciplina = new javax.swing.JComboBox();
+        LSeleccionSinc = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocationByPlatform(true);
+        setPreferredSize(new java.awt.Dimension(700, 580));
+        setResizable(false);
 
         LBienvenido.setFont(new java.awt.Font("Calibri Light", 0, 24)); // NOI18N
         LBienvenido.setText("¡Bienvenido a OSchat!");
         LBienvenido.setName(""); // NOI18N
 
-        LSeleccionSinc.setText("Seleccione el tipo de sincronización Send deseado:");
+        jLabel2.setText("A continuación, se le solicita la configuración del sistema de mensajería.");
 
-        LSeleccionDirecc.setText("Seleccione el tipo de direccionamiento deseado:");
+        jLabel3.setText("Recuerde que si no selecciona algún campo para cambiarse, las opciones por defecto serán cargadas.");
 
-        LCola.setText("Tamaño de la cola:");
+        LSeleccionCantProcesos.setText("Seleccione la cantidad de procesos por utilizar:");
 
-        TCola.setToolTipText("Cantidad de elementos en la cola de mensajes.");
-        TCola.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TColaActionPerformed(evt);
-            }
-        });
+        LSeleccionFormato1.setText("Seleccione la disciplina de manejo de datos deseada:");
 
         BContinuar.setText("Continuar");
         BContinuar.addActionListener(new java.awt.event.ActionListener() {
@@ -91,9 +90,64 @@ public class VentanaInicio extends javax.swing.JFrame {
             }
         });
 
+        CLargo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Variable", "Fijo" }));
+        CLargo.setToolTipText("Formato de colas que se desee.");
+        CLargo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CLargoActionPerformed(evt);
+            }
+        });
+
+        LSeleccionDirecc.setText("Seleccione el tipo de direccionamiento deseado:");
+
+        TCola.setToolTipText("Cantidad de elementos en la cola de mensajes.");
+        TCola.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TColaActionPerformed(evt);
+            }
+        });
+
         LSeleccionFormato.setText("Seleccione el tipo de formato deseado:");
 
-        LSeleccionFormato1.setText("Seleccione la disciplina de manejo de datos deseada:");
+        TCantProcesos.setToolTipText("Debe ingresar el númerro (2 a 6) de procesos que desea utillizar en la ejecución.");
+        TCantProcesos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TCantProcesosActionPerformed(evt);
+            }
+        });
+
+        LCola.setText("Tamaño de la cola:");
+
+        CSend.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Blocking", "Non-Blocking" }));
+        CSend.setToolTipText("Debe seleccionar la modalidad de envío que se desee");
+        CSend.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CSendActionPerformed(evt);
+            }
+        });
+
+        LFijo.setText("Tamaño fijo de mensaje:");
+
+        TCantFijo.setToolTipText("Cantidad de caracteres del largo de cada mensaje.");
+
+        CDirecReceive.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Receive Explícito", "Receive Implícito" }));
+        CDirecReceive.setToolTipText("Tipo de emisor deseado.");
+        CDirecReceive.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CDirecReceiveActionPerformed(evt);
+            }
+        });
+
+        CReceive.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Blocking", "Non-Blocking", "Prueba de llegada" }));
+        CReceive.setToolTipText("Debe seleccionar la modalidad de de recibo de mensajes deseada.");
+
+        CIndirecto.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Estático", "Dinámico" }));
+        CIndirecto.setToolTipText("Modalidad de direccionamieno indrecto deseada.");
+        CIndirecto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CIndirectoActionPerformed(evt);
+            }
+        });
 
         CDireccionamiento.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Directo", "Indirecto" }));
         CDireccionamiento.setToolTipText("Selección de direccionamiento requerido.");
@@ -115,181 +169,194 @@ public class VentanaInicio extends javax.swing.JFrame {
             }
         });
 
-        CSend.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Blocking", "Non-Blocking" }));
-        CSend.setToolTipText("Debe seleccionar la modalidad de envío que se desee");
-        CSend.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CSendActionPerformed(evt);
-            }
-        });
-
-        CReceive.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Blocking", "Non-Blocking", "Prueba de llegada" }));
-        CReceive.setToolTipText("Debe seleccionar la modalidad de de recibo de mensajes deseada.");
-
-        CIndirecto.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Estático", "Dinámico" }));
-        CIndirecto.setToolTipText("Modalidad de direccionamieno indrecto deseada.");
-        CIndirecto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CIndirectoActionPerformed(evt);
-            }
-        });
-
-        CDirecReceive.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Receive Explícito", "Receive Implícito" }));
-        CDirecReceive.setToolTipText("Tipo de emisor deseado.");
-        CDirecReceive.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CDirecReceiveActionPerformed(evt);
-            }
-        });
-
-        LSeleccionCantProcesos.setText("Seleccione la cantidad de procesos por utilizar:");
-
-        TCantProcesos.setToolTipText("Debe ingresar el númerro (2 a 6) de procesos que desea utillizar en la ejecución.");
-        TCantProcesos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TCantProcesosActionPerformed(evt);
-            }
-        });
-
-        CLargo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Variable", "Fijo" }));
-        CLargo.setToolTipText("Formato de colas que se desee.");
-        CLargo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CLargoActionPerformed(evt);
-            }
-        });
-
-        TCantFijo.setToolTipText("Cantidad de caracteres del largo de cada mensaje.");
-
-        LFijo.setText("Tamaño fijo de mensaje:");
+        LSeleccionSinc.setText("Seleccione el tipo de sincronización Send deseado:");
 
         jLabel1.setText("Seleccione el tipo de sincronización Receive deseado:");
 
-        jLabel2.setText("A continuación, se le solicita la configuración del sistema de mensajería.");
-
-        jLabel3.setText("Recuerde que si no selecciona algún campo para cambiarse, las opciones por defecto serán cargadas.");
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(66, 66, 66)
+                .addComponent(TCantProcesos, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 202, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(TCantFijo, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(LFijo)
+                    .addComponent(LCola)
+                    .addComponent(TCola, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CReceive, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(CDirecReceive, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(CIndirecto, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(BContinuar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(250, 250, 250))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGap(56, 56, 56)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(CDireccionamiento, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                            .addGap(1, 1, 1)
+                                            .addComponent(CLargo, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(LSeleccionFormato, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGap(56, 56, 56)
+                                    .addComponent(CSend, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGap(55, 55, 55)
+                                    .addComponent(CDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(LSeleccionDirecc)
+                                .addComponent(LSeleccionSinc)
+                                .addComponent(LSeleccionCantProcesos)
+                                .addComponent(LSeleccionFormato1, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addContainerGap(571, Short.MAX_VALUE)))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(LCola)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TCola, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TCantProcesos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(22, 22, 22)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(CReceive, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(51, 51, 51)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(CDirecReceive, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CIndirecto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(LFijo)
+                .addGap(18, 18, 18)
+                .addComponent(TCantFijo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52)
+                .addComponent(BContinuar, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(LSeleccionCantProcesos)
+                    .addGap(47, 47, 47)
+                    .addComponent(LSeleccionSinc)
+                    .addGap(18, 18, 18)
+                    .addComponent(CSend, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(LSeleccionDirecc, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addComponent(CDireccionamiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addComponent(LSeleccionFormato)
+                    .addGap(18, 18, 18)
+                    .addComponent(CLargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(45, 45, 45)
+                    .addComponent(LSeleccionFormato1)
+                    .addGap(18, 18, 18)
+                    .addComponent(CDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(56, 56, 56)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(CDireccionamiento, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(1, 1, 1)
-                                                .addComponent(CLargo, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                    .addComponent(LSeleccionFormato, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(56, 56, 56)
-                                        .addComponent(CSend, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(58, 58, 58)
-                                        .addComponent(TCantProcesos, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(55, 55, 55)
-                                        .addComponent(CDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(BContinuar))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(LSeleccionSinc)
-                                    .addComponent(LSeleccionCantProcesos)
-                                    .addComponent(LSeleccionDirecc))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(CReceive, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(CDirecReceive, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(CIndirecto, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(LCola)
-                                    .addComponent(TCola, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel1)
-                                    .addComponent(LFijo)
-                                    .addComponent(TCantFijo, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(71, 71, 71))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel3))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel2)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(LBienvenido, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(LSeleccionFormato1, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel2)
+                    .addComponent(LBienvenido, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(layout.createSequentialGroup()
+                .addGap(21, 21, 21)
                 .addComponent(LBienvenido, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(LSeleccionCantProcesos)
-                        .addGap(9, 9, 9)
-                        .addComponent(TCantProcesos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(LSeleccionSinc)
-                        .addGap(18, 18, 18)
-                        .addComponent(CSend, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(LSeleccionDirecc, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(CDireccionamiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(LSeleccionFormato)
-                        .addGap(18, 18, 18)
-                        .addComponent(CLargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(LCola)
-                        .addGap(9, 9, 9)
-                        .addComponent(TCola, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(CReceive, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(48, 48, 48)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(CIndirecto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(CDirecReceive, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(LFijo)
-                        .addGap(18, 18, 18)
-                        .addComponent(TCantFijo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(28, 28, 28)
-                .addComponent(LSeleccionFormato1)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BContinuar))
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void CDirectoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CDirectoActionPerformed
+       
+    }//GEN-LAST:event_CDirectoActionPerformed
+
+    private void CDisciplinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CDisciplinaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CDisciplinaActionPerformed
+
+    private void CDireccionamientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CDireccionamientoActionPerformed
+        // TODO add your handling code here:
+        String valor=CDireccionamiento.getSelectedItem().toString();
+        switch (valor) {
+            case "Directo":
+            CDirecReceive.setVisible(true);
+            CIndirecto.setVisible(false);
+            break;
+            case "Indirecto":
+            CIndirecto.setVisible(true);
+            CDirecReceive.setVisible(false);
+            break;
+        }
+    }//GEN-LAST:event_CDireccionamientoActionPerformed
+
+    private void CIndirectoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CIndirectoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CIndirectoActionPerformed
+
+    private void CDirecReceiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CDirecReceiveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CDirecReceiveActionPerformed
+
+    private void CSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CSendActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CSendActionPerformed
+
+    private void TCantProcesosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TCantProcesosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TCantProcesosActionPerformed
+
+    private void TColaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TColaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TColaActionPerformed
+
+    private void CLargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CLargoActionPerformed
+        // TODO add your handling code here:
+        String valorCLargo=CLargo.getSelectedItem().toString();
+        switch (valorCLargo) {
+            case "Fijo":
+            TCantFijo.setEditable(true);
+            TCantFijo.setVisible(true);
+            LFijo.setVisible(true);
+            break;
+            case "Variable":
+            TCantFijo.setVisible(false);
+            LFijo.setVisible(false);
+            break;
+        }
+    }//GEN-LAST:event_CLargoActionPerformed
 
     private void BContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BContinuarActionPerformed
         boolean PuedeContinuar = true;
@@ -315,25 +382,25 @@ public class VentanaInicio extends javax.swing.JFrame {
             Globales.Receive = CReceive.getSelectedItem().toString();
         }
         catch(Exception e){
-            PantallaError Error = new PantallaError("Debe configurar la sincronización Receive para continuar.");            
+            PantallaError Error = new PantallaError("Debe configurar la sincronización Receive para continuar.");
             PuedeContinuar = false;
         }
         //GET SEND
         try{
             switch (CSend.getSelectedItem().toString()){
                 case "Blocking":
-                    Globales.SendBlocking = true;
-                    break;
+                Globales.SendBlocking = true;
+                break;
                 case "Non-Blocking":
-                    Globales.SendBlocking = false;
-                    break;
+                Globales.SendBlocking = false;
+                break;
             }
         }
         catch(Exception e){
-            PantallaError Error = new PantallaError("Debe configurar la sincronización Send para continuar.");            
+            PantallaError Error = new PantallaError("Debe configurar la sincronización Send para continuar.");
             PuedeContinuar = false;
         }
-        //GET DIRECCIONAMIENTO 
+        //GET DIRECCIONAMIENTO
         try{
             if (CDireccionamiento.getSelectedItem().toString().equals("Directo")){
                 Globales.DireccionamientoDirecto = true;
@@ -352,7 +419,7 @@ public class VentanaInicio extends javax.swing.JFrame {
                 else{
                     Globales.IndirectoEstatico = false;
                 }
-            }            
+            }
         }
         catch(Exception e){
             PantallaError Error = new PantallaError("Debe configurar la sincronización de Direccionamiento completamente para continuar.");
@@ -378,7 +445,7 @@ public class VentanaInicio extends javax.swing.JFrame {
             PantallaError Error = new PantallaError("Debe configurar el Formato (largo) de los mensajes completamente para continuar.");
             PuedeContinuar = false;
         }
-        //GET DISCIPLINA 
+        //GET DISCIPLINA
         try{
             if (CDisciplina.getSelectedItem().toString().equals("Prioridad")){
                 Globales.FIFO = false;
@@ -435,41 +502,9 @@ public class VentanaInicio extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_BContinuarActionPerformed
 
-    private void CDireccionamientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CDireccionamientoActionPerformed
-        // TODO add your handling code here:
-        String valor=CDireccionamiento.getSelectedItem().toString();
-        switch (valor) {
-            case "Directo": 
-                CDirecReceive.setVisible(true);
-                CIndirecto.setVisible(false);
-                break;
-            case "Indirecto":
-                CIndirecto.setVisible(true);
-                CDirecReceive.setVisible(false);
-                break;
-        }
-        
-    }//GEN-LAST:event_CDireccionamientoActionPerformed
-
-    private void CDisciplinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CDisciplinaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CDisciplinaActionPerformed
-
-    private void CDirecReceiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CDirecReceiveActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CDirecReceiveActionPerformed
-
-    private void CDirectoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CDirectoActionPerformed
-       
-    }//GEN-LAST:event_CDirectoActionPerformed
-
-    private void CSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CSendActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CSendActionPerformed
-
     public void SetTextoAyuda(){
         //Adaptar el texto de ayuda de acuerdo con las variables de configuración al momento
-        String Texto = "Bienvenido a la Sección de Ayuda \nRecuerde escribir sin espacios.\nLista de comandos que puede ejecutar:\n - view(): Permite observar todo lo que está ocurriendo en el sistema mediante la sección de Visualización de Estados y Logs.\n - reset(): Reinicia el sistema y permite reconfigurarlo.";
+        String Texto = "Bienvenido a la Sección de Ayuda \nRecuerde escribir sin espacios.\nNota: Por regla de negocio, habrán máximo 6 mailboxes creados en el sistema.\nLista de comandos que puede ejecutar:\n - view(): Permite observar todo lo que está ocurriendo en el sistema mediante la sección de Visualización de Estados y Logs.\n - reset(): Reinicia el sistema y permite reconfigurarlo.";
         if (Globales.DireccionamientoDirecto){
             if (Globales.FIFO){
                 Texto += "\n - send(NombreDelProcesoEmisor,NombreDelProcesoReceptor,Mensaje)";
@@ -529,34 +564,6 @@ public class VentanaInicio extends javax.swing.JFrame {
         Globales.TextoAyuda = Texto;
     }
     
-    private void CLargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CLargoActionPerformed
-        // TODO add your handling code here:        
-        String valorCLargo=CLargo.getSelectedItem().toString();
-        switch (valorCLargo) {
-            case "Fijo":
-                TCantFijo.setEditable(true);
-                TCantFijo.setVisible(true);
-                LFijo.setVisible(true);
-                break;
-            case "Variable":
-                TCantFijo.setVisible(false);
-                LFijo.setVisible(false);
-                break;
-        }
-    }//GEN-LAST:event_CLargoActionPerformed
-
-    private void TCantProcesosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TCantProcesosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TCantProcesosActionPerformed
-
-    private void TColaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TColaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TColaActionPerformed
-
-    private void CIndirectoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CIndirectoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_CIndirectoActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -615,6 +622,7 @@ public class VentanaInicio extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 
     public void SetNombresDeProcesos() {

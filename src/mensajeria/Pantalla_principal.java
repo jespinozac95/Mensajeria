@@ -11,6 +11,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -264,8 +265,8 @@ public class Pantalla_principal extends javax.swing.JFrame {
     public Object[][] CreaTabla (){
     //System.out.println("Entró a CreaTabla");
     int lenProcs = Globales.Procesos;     
-    Object[] elementosDelSistema = new Object[12];
-    Object[][] datos = new Object[12][2];
+    //Object[] elementosDelSistema = new Object[12];
+    Object[][] datos = new Object[13][2];
     final Class[] tiposColumnas = new Class[]{
          //Variable que especifica el tipo de dato de cada columna
             java.lang.String.class,            
@@ -277,7 +278,7 @@ public class Pantalla_principal extends javax.swing.JFrame {
             break;}
         else{
             datos[numerofilas][0]= Globales.procs[numerofilas].nombre;
-            elementosDelSistema[numerofilas]=Globales.procs[numerofilas].nombre;
+            //elementosDelSistema[numerofilas]=Globales.procs[numerofilas].nombre;
             datos[numerofilas][1]= new JButton("Ver Proceso");}
         }
      for (int i=0;i<10;i++){
@@ -285,13 +286,62 @@ public class Pantalla_principal extends javax.swing.JFrame {
             break;}
         else{
             datos[numerofilas][0]= Globales.mails[i].nombre;
-            elementosDelSistema[numerofilas] = Globales.mails[i].nombre;
+            //elementosDelSistema[numerofilas] = Globales.mails[i].nombre;
             datos[numerofilas][1]= new JButton("Ver Mailbox");}
             numerofilas++;
         }
+     datos[numerofilas][0] = "Cola Central";
+     datos[numerofilas][1] = new JButton("Ver Cola Central");
+     numerofilas++;
+     Globales.NumeroElementos = numerofilas;
      return datos;
     }
-   
+    public Object [][] ViewPorProceso(String proceso){
+        int lenProcs = Globales.Procesos;  
+       Object[][] infoProceso = new Object[10][6];
+       
+       Proceso p = Globales.buscarPro(proceso);
+       //System.out.println("Nombre proceso para bitacora: "+proceso);
+        for (int i=0;i<lenProcs;i++){           
+        if ((p==null)||(p.bitacora==null) || (p.bitacora.tamano()==0)){            
+            break;}
+        else{
+            if (p.bitacora.tamano()==i){
+                break;
+            }
+            //System.out.println("else de view por proceso");
+            infoProceso[i][0] = p.bitacora.listaR.get(i).fecha;
+            infoProceso[i][1] = p.bitacora.listaR.get(i).accion;
+            infoProceso[i][2] = p.bitacora.listaR.get(i).origen;
+            infoProceso[i][3] = p.bitacora.listaR.get(i).estado_origen;
+            infoProceso[i][4] = p.bitacora.listaR.get(i).destino;
+            infoProceso[i][5] = p.bitacora.listaR.get(i).mensaje;
+            //System.out.println("    Nuevo ingreso en bitacora: "+infoProceso[i][2]);
+        }
+       }
+        return infoProceso;
+    }
+    public Object[][] ViewPorMB(String nombreMB){
+        Object[][] infoMB = new Object[10][4];
+       Mailbox mb = Globales.buscarMB(nombreMB);
+       //System.out.println("Nombre mailbox para bitacora: "+nombreMB);
+        for (int i=0;i<6;i++){           
+        if ((mb==null)||(mb.bitacora==null) || (mb.bitacora.tamano()==0)){            
+            break;}
+        else{
+            if (mb.bitacora.tamano()==i){
+                break;
+            }
+            //System.out.println("else de view por proceso");
+            infoMB[i][0] = mb.bitacora.listaR.get(i).fecha;
+            infoMB[i][1] = mb.bitacora.listaR.get(i).accion;
+            infoMB[i][2] = mb.bitacora.listaR.get(i).destino;
+            infoMB[i][3] = mb.bitacora.listaR.get(i).mensaje;
+            //System.out.println("    Nuevo ingreso en bitacora: "+infoMB[i][2]);
+        }
+       }
+        return infoMB;
+    }
     public void MostrarTabla(Object [][] datos){
     
         String[] columnas = new String[]{            
@@ -302,10 +352,10 @@ public class Pantalla_principal extends javax.swing.JFrame {
             java.lang.String.class,            
             JButton.class 
         };
-     TLogs.setEnabled(true);
-     TLogs.setVisible(true);
+     Globales.PantPrincipal.TLogs.setEnabled(true);
+     Globales.PantPrincipal.TLogs.setVisible(true);
      
-     TLogs.setModel(new javax.swing.table.DefaultTableModel(datos,columnas) {
+     Globales.PantPrincipal.TLogs.setModel(new javax.swing.table.DefaultTableModel(datos,columnas) {
             // Se puede saber el tipo  de dato que tiene cada columna.
             Class[] tipos = tiposColumnas;
             @Override
@@ -318,7 +368,7 @@ public class Pantalla_principal extends javax.swing.JFrame {
             }
         });
    
-      TLogs.setDefaultRenderer(JButton.class, new TableCellRenderer() {
+      Globales.PantPrincipal.TLogs.setDefaultRenderer(JButton.class, new TableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable jtable, Object objeto, boolean estaSeleccionado, boolean tieneElFoco, int fila, int columna) {                
                 return (Component) objeto;
@@ -326,48 +376,79 @@ public class Pantalla_principal extends javax.swing.JFrame {
         });
      /*****Click del mouse*****/
       
-       TLogs.addMouseListener(new MouseAdapter() {
+       Globales.PantPrincipal.TLogs.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (MapeadorFunciones.IsProceso((String) TLogs.getValueAt(TLogs.rowAtPoint(e.getPoint()), 0))){
-                    
-                    int fila = TLogs.rowAtPoint(e.getPoint());
-                    int columna = TLogs.columnAtPoint(e.getPoint());
+                int fila = Globales.PantPrincipal.TLogs.rowAtPoint(e.getPoint());
+                int columna = Globales.PantPrincipal.TLogs.columnAtPoint(e.getPoint());
+                if (fila+1>Globales.NumeroElementos){
+                }
+                else{
+                if (MapeadorFunciones.IsProceso((String) Globales.PantPrincipal.TLogs.getValueAt(Globales.PantPrincipal.TLogs.rowAtPoint(e.getPoint()), 0))){
+                    //System.out.println("view de un proceso");
                     String nombreProceso = (String) TLogs.getValueAt(fila, 0);
-                    Globales.view.viewPorProceso(nombreProceso);
+                    Globales.view.MostrarViewPorProceso(Globales.buscarElemento(nombreProceso).bitacoraInfo,nombreProceso); //mandarle los datos que se pueden mostrar
                     Globales.view.setTitle("Estado del Proceso: "+nombreProceso);
                     Globales.view.setVisible(true);
 
-                    if (TLogs.getModel().getColumnClass(columna).equals(JButton.class)) {                                                            
+                    if (Globales.PantPrincipal.TLogs.getModel().getColumnClass(columna).equals(JButton.class)) {                                                            
                         StringBuilder sb = new StringBuilder();
-                        for (int i = 0; i < TLogs.getModel().getColumnCount(); i++) {
-                            if (!TLogs.getModel().getColumnClass(i).equals(JButton.class)) {
-                                sb.append("\n").append(TLogs.getModel().getColumnName(i)).append(": ").append(TLogs.getModel().getValueAt(fila, i));
+                        for (int i = 0; i < Globales.PantPrincipal.TLogs.getModel().getColumnCount(); i++) {
+                            if (!Globales.PantPrincipal.TLogs.getModel().getColumnClass(i).equals(JButton.class)) {
+                                sb.append("\n").append(Globales.PantPrincipal.TLogs.getModel().getColumnName(i)).append(": ").append(Globales.PantPrincipal.TLogs.getModel().getValueAt(fila, i));
                             }
                         }
                         //view.viewPorProceso(nombreProceso);
                         //JOptionPane.showMessageDialog(null, "Seleccionado el proceso" + sb.toString());
                     }
                 }
-                else{//es un mailbox
-                    int fila = TLogs.rowAtPoint(e.getPoint());
-                    int columna = TLogs.columnAtPoint(e.getPoint());
-                    String nombreMB = (String) TLogs.getValueAt(fila, 0);
-                    Globales.view.viewPorMB(nombreMB);
+                else if (MapeadorFunciones.IsMailbox((String) Globales.PantPrincipal.TLogs.getValueAt(Globales.PantPrincipal.TLogs.rowAtPoint(e.getPoint()), 0))){//es un mailbox
+                    //System.out.println("view de un mailbox");
+                    String nombreMB = (String) Globales.PantPrincipal.TLogs.getValueAt(fila, 0);
+                    Globales.view.viewPorMB(Globales.buscarElemento(nombreMB).bitacoraInfo,nombreMB);
                     Globales.view.setTitle("Estado del Buzón (Mailbox): "+nombreMB);
                     Globales.view.setVisible(true);
                    //Esto es un comentario 
 
-                    if (TLogs.getModel().getColumnClass(columna).equals(JButton.class)) {                                                            
+                    if (Globales.PantPrincipal.TLogs.getModel().getColumnClass(columna).equals(JButton.class)) {                                                            
                         StringBuilder sb = new StringBuilder();
-                        for (int i = 0; i < TLogs.getModel().getColumnCount(); i++) {
-                            if (!TLogs.getModel().getColumnClass(i).equals(JButton.class)) {
-                                sb.append("\n").append(TLogs.getModel().getColumnName(i)).append(": ").append(TLogs.getModel().getValueAt(fila, i));
+                        for (int i = 0; i < Globales.PantPrincipal.TLogs.getModel().getColumnCount(); i++) {
+                            if (!Globales.PantPrincipal.TLogs.getModel().getColumnClass(i).equals(JButton.class)) {
+                                sb.append("\n").append(Globales.PantPrincipal.TLogs.getModel().getColumnName(i)).append(": ").append(Globales.PantPrincipal.TLogs.getModel().getValueAt(fila, i));
                             }
                         }
                         //view.viewPorMB(nombreMB);
                         //JOptionPane.showMessageDialog(null, "Seleccionado el proceso" + sb.toString());
                     }
+                }
+                else{//is cola central
+                    //System.out.println("view de la cola central. Size = "+Globales.LogCentral.size());
+                    Object[][] infoColaCentral = new Object [100][6];
+                    List<Registro> l = Globales.LogCentralActivo;
+                    for (int i=0;i<l.size();i++){
+                        //System.out.println("Registro #"+i+" de la bitacora de la Cola Central");
+                        infoColaCentral[i][0]=l.get(i).fecha;
+                        infoColaCentral[i][1]=l.get(i).accion;
+                        infoColaCentral[i][2]=l.get(i).origen;
+                        infoColaCentral[i][3]=l.get(i).estado_origen;
+                        infoColaCentral[i][4]=l.get(i).destino;
+                        infoColaCentral[i][5]=l.get(i).mensaje;
+                    }
+                    Globales.view.MostrarViewPorProceso(infoColaCentral,"Cola Central"); //mandarle los datos que se pueden mostrar
+                    Globales.view.setTitle("Estado de la Cola Central");
+                    Globales.view.setVisible(true);
+
+                    if (Globales.PantPrincipal.TLogs.getModel().getColumnClass(columna).equals(JButton.class)) {                                                            
+                        StringBuilder sb = new StringBuilder();
+                        for (int i = 0; i < Globales.PantPrincipal.TLogs.getModel().getColumnCount(); i++) {
+                            if (!Globales.PantPrincipal.TLogs.getModel().getColumnClass(i).equals(JButton.class)) {
+                                sb.append("\n").append(Globales.PantPrincipal.TLogs.getModel().getColumnName(i)).append(": ").append(Globales.PantPrincipal.TLogs.getModel().getValueAt(fila, i));
+                            }
+                        }
+                        //view.viewPorProceso(nombreProceso);
+                        //JOptionPane.showMessageDialog(null, "Seleccionado el proceso" + sb.toString());
+                    }
+                }
                 }
             }
             

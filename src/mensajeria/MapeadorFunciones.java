@@ -55,23 +55,47 @@ public class MapeadorFunciones {
                             ViewCola vc = new ViewCola();
                             Globales.viewcola = vc;
                         }
+                        Globales.UltimoIndiceElementos = 0;
                         //mappear la funcion
-                        Object [][] o = Globales.PantPrincipal.CreaTabla();
-                        Globales.PantPrincipal.MostrarTabla(o);
+                        Object [][] nombresYbotones = Globales.PantPrincipal.CreaTabla();
+                        //System.out.println("\nCreó Tabla\n");
+                        for (int e = 0;e<Globales.NumeroElementos;e++){
+                            if (MapeadorFunciones.IsProceso(nombresYbotones[e][0].toString())){
+                                Object [][] bitacoraElemento = Globales.PantPrincipal.ViewPorProceso(nombresYbotones[e][0].toString());
+                                Object [][] colaElemento = Globales.viewcola.viewColaProceso(nombresYbotones[e][0].toString());
+                                InformacionView infoElemento = new InformacionView(nombresYbotones[e][0].toString(),true,bitacoraElemento,colaElemento);
+                                Globales.InformacionDeElementosParaView[Globales.UltimoIndiceElementos] = infoElemento;
+                                /*System.out.println("infoElemento.nombre = "+infoElemento.nombre);
+                                try{
+                                    System.out.println("infoElemento.bitacoraInfo[0][1].toString() = "+infoElemento.bitacoraInfo[0][1].toString());
+                                }
+                                catch(Exception paa){
+                                }*/
+                                Globales.UltimoIndiceElementos++;
+                            }
+                            else{
+                                Object [][] bitacoraElemento = Globales.PantPrincipal.ViewPorMB(nombresYbotones[e][0].toString());
+                                Object [][] colaElemento = Globales.viewcola.viewColaMB(nombresYbotones[e][0].toString());
+                                InformacionView infoElemento = new InformacionView(nombresYbotones[e][0].toString(),false,bitacoraElemento,colaElemento);
+                                Globales.InformacionDeElementosParaView[Globales.UltimoIndiceElementos] = infoElemento;
+                                Globales.UltimoIndiceElementos++;
+                            }
+                        }
+                        //System.out.println("\nCreó Info\n");
+                        Globales.LogCentralActivo = Globales.LogCentral;
+                        Globales.PantPrincipal.MostrarTabla(nombresYbotones);
+                        //Globales.ImprimirElementos();
+                        //System.out.println("\nMostró Tabla\n");
                         //Limpiar LOGS DE PROCESOS
                         for (int i =0;i<Globales.Procesos;i++){
                             List <Registro> r= new LinkedList<Registro>();
-                            r = Globales.procs[i].bitacora.listaR ;
+                            Globales.procs[i].bitacora.listaR = r;
                         }
-                        for (int e = 0;e<Globales.mails.length;e++){
-                            if (Globales.mails[e]==null){
-                                break;
-                            }
-                            else{
-                                List <Registro> r= new LinkedList<Registro>();
-                                Globales.mails[e].bitacora.listaR = r;
-                            }
+                        for (int e = 0;e<Globales.UltimoIndiceMailbox;e++){
+                            List <Registro> r= new LinkedList<Registro>();
+                            Globales.mails[e].bitacora.listaR = r;
                         }
+                        Globales.LogCentral = new LinkedList();
                         exito = true;
                     }
                     break;
@@ -82,7 +106,13 @@ public class MapeadorFunciones {
                         Globales.LargoMsj = 0;
                         Globales.UltimoIndiceMailbox = 0;
                         Globales.mails = new Mailbox[10];
-                        
+                        Globales.InformacionDeElementosParaView = new InformacionView[13];
+                        Globales.UltimoIndiceElementos = 0;
+                        Globales.NumeroElementos = 0;
+                        Globales.LogCentral = new LinkedList();  
+                        Globales.m = new LinkedList<Mensaje>();
+                        Globales.ColaCentral = new Cola(Globales.m);
+                        Globales.view = null;
                         //Limpiar LOGS DE PROCESOS
                         for (int i =0;i<Globales.Procesos;i++){
                             Globales.procs[i] = new Proceso(Globales.procs[i].nombre);

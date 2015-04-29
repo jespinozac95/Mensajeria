@@ -18,39 +18,39 @@ public class ViewCola extends javax.swing.JFrame {
         initComponents();
     }
     
-    public void viewColaProceso(String proceso){
+    public Object[][] viewColaProceso(String proceso){
         Object[][] infoProceso = new Object[Globales.TamanoCola][2];
-        String[] columnas = new String[]{"Mensaje","Emisor"};
         Proceso p = Globales.buscarPro(proceso);
-       
-        for (int i=0;i<p.cola.lista.size();i++){           
-        if ((p==null)||(p.cola==null) || (p.cola.lista.isEmpty())){            
-            break;}
-        else{
-            //System.out.println("else de view por proceso");
-            infoProceso[i][0] = p.cola.lista.get(i).contenido;
-            infoProceso[i][1] = p.cola.lista.get(i).origen.nombre;
+        if (!((p==null)||(p.cola==null) || (p.cola.lista.isEmpty()))){            
+            for (int i=0;i<p.cola.lista.size();i++){
+                //System.out.println("else de view por proceso");
+                infoProceso[i][0] = p.cola.lista.get(i).contenido;
+                infoProceso[i][1] = p.cola.lista.get(i).origen.nombre;
+            }
         }
-        Globales.viewcola.TViewCola.setModel(new javax.swing.table.DefaultTableModel(infoProceso,columnas) {
-                });
+        return infoProceso;
     }
-    }
-    public void viewColaMB(String mailbox){
-        Object[][] infoProceso = new Object[Globales.TamanoCola][2];
-        String[] columnas = new String[]{"Mensaje","Emisor"};
+    public Object[][] viewColaMB(String mailbox){
+        Object[][] infoMB = new Object[Globales.TamanoCola][2];
         Mailbox mb = Globales.buscarMB(mailbox);
-       
-        for (int i=0;i<mb.contenido.lista.size();i++){           
-        if ((mb==null)||(mb.contenido==null) || (mb.contenido.lista.isEmpty())){            
-            break;}
-        else{
-            //System.out.println("else de view por proceso");
-            infoProceso[i][0] = mb.contenido.lista.get(i).contenido;
-            infoProceso[i][1] = mb.contenido.lista.get(i).origen.nombre;
+        if (!((mb==null)||(mb.contenido==null) || (mb.contenido.lista.isEmpty()))){
+            for (int i=0;i<mb.contenido.lista.size();i++){
+                //System.out.println("else de view por proceso");
+                infoMB[i][0] = mb.contenido.lista.get(i).contenido;
+                infoMB[i][1] = mb.contenido.lista.get(i).origen.nombre;
+            }
         }
-        Globales.viewcola.TViewCola.setModel(new javax.swing.table.DefaultTableModel(infoProceso,columnas) {
-                });
+        return infoMB;
     }
+    public void MostrarColaProceso(Object [][] infoProceso,String titulo){
+    String[] columnas = new String[]{"Mensaje","Emisor"};
+    Globales.viewcola.setTitle(titulo);
+        Globales.viewcola.TViewCola.setModel(new javax.swing.table.DefaultTableModel(infoProceso,columnas) {});
+    }
+    public void MostrarColaMB(Object [][] infoMB,String titulo){
+    String[] columnas = new String[]{"Mensaje","Emisor"};
+    Globales.viewcola.setTitle(titulo);
+        Globales.viewcola.TViewCola.setModel(new javax.swing.table.DefaultTableModel(infoMB,columnas) {});
     }
     /**
      * This method is called from within the constructor to initialize the form.

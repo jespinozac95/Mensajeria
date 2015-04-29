@@ -96,12 +96,22 @@ public class View extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void VerColaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerColaActionPerformed
-        if (this.esProceso){
-            Globales.viewcola.viewColaProceso(this.nombre);
+        if (this.nombre.equals("Cola Central")){
+            Object[][] infoCC = new Object[Globales.ColaCentral.lista.size()][2];
+            for (int i=0;i<Globales.ColaCentral.lista.size();i++){
+                //System.out.println("Entrada de la cola de la cola central #"+i);
+                infoCC[i][0] = Globales.ColaCentral.lista.get(i).contenido;
+                infoCC[i][1] = Globales.ColaCentral.lista.get(i).origen.nombre;
+            }
+            Globales.viewcola.MostrarColaProceso(infoCC,"Estado de la Cola Central");
+            Globales.viewcola.setVisible(true);
+        }
+        else if (MapeadorFunciones.IsProceso(this.nombre)){
+            Globales.viewcola.MostrarColaProceso(Globales.buscarElemento(this.nombre).colaInfo,"Estado de la cola del proceso: "+this.nombre); //mostrar cola
             Globales.viewcola.setVisible(true);
         }
         else{
-            Globales.viewcola.viewColaMB(this.nombre);
+            Globales.viewcola.MostrarColaProceso(Globales.buscarElemento(this.nombre).colaInfo,"Estado de la cola del buzón: "+this.nombre);
             Globales.viewcola.setVisible(true);
         }
     }//GEN-LAST:event_VerColaActionPerformed
@@ -141,35 +151,16 @@ public class View extends javax.swing.JFrame {
         });
     }
     
-    public void viewPorProceso(String proceso){ 
+    public void MostrarViewPorProceso(Object [][] infoProceso,String proceso){ 
        this.nombre = proceso;
        this.esProceso = true;
-       int lenProcs = Globales.Procesos;  
-       Object[][] infoProceso = new Object[10][6];
-       String[] columnas = new String[]{"Fecha","Acción","Origen","Estado Blocked","Destino","Mensaje"};
-    
-       final Class[] tiposColumnas = new Class[]{java.lang.String.class,java.lang.String.class,java.lang.String.class,java.lang.String.class,java.lang.String.class,java.lang.String.class}; //Variable que especifica el tipo de dato de cada columna.
        
-       Proceso p = Globales.buscarPro(proceso);
-       
-        for (int i=0;i<lenProcs;i++){           
-        if ((p==null)||(p.bitacora==null) || (p.bitacora.tamano()==0)){            
-            break;}
-        else{
-            if (p.bitacora.tamano()==i){
-                break;
-            }
-            //System.out.println("else de view por proceso");
-            infoProceso[i][0] = p.bitacora.listaR.get(i).fecha;
-            infoProceso[i][1] = p.bitacora.listaR.get(i).accion;
-            infoProceso[i][2] = p.bitacora.listaR.get(i).origen;
-            infoProceso[i][3] = p.bitacora.listaR.get(i).estado_origen;
-            infoProceso[i][4] = p.bitacora.listaR.get(i).destino;
-            infoProceso[i][5] = p.bitacora.listaR.get(i).mensaje;
-        }
-       }
         //JOptionPane.showMessageDialog(null,new JScrollPane(TView));
-        TView.setModel(new javax.swing.table.DefaultTableModel(infoProceso,columnas) {
+        String[] columnas = new String[]{"Fecha","Acción","Origen","Estado Blocked","Destino","Mensaje"};
+    
+        final Class[] tiposColumnas = new Class[]{java.lang.String.class,java.lang.String.class,java.lang.String.class,java.lang.String.class,java.lang.String.class,java.lang.String.class}; //Variable que especifica el tipo de dato de cada columna.
+       
+        Globales.view.TView.setModel(new javax.swing.table.DefaultTableModel(infoProceso,columnas) {
                     // Se puede saber el tipo  de dato que tiene cada columna.
                     /*Class[] tipos = tiposColumnas;
                     @Override
@@ -182,41 +173,24 @@ public class View extends javax.swing.JFrame {
                     }*/
                 });
     }
-    public void viewPorMB(String nombreMB) {
+    public void MostrarColaCentral(Object [][] infoColaCentral){
+        String[] columnas = new String[]{"Fecha","Acción","Origen","Estado Blocked","Destino","Mensaje"};
+        final Class[] tiposColumnas = new Class[]{java.lang.String.class,java.lang.String.class,java.lang.String.class,java.lang.String.class,java.lang.String.class,java.lang.String.class}; //Variable que especifica el tipo de dato de cada columna.
+        //Globales.view.VerCola.setEnabled(false);
+        //Globales.view.VerCola.setVisible(false);
+        Globales.view.TView.setModel(new javax.swing.table.DefaultTableModel(infoColaCentral,columnas) {
+                });
+    }
+    
+    public void viewPorMB(Object [][] infoMB,String nombreMB) {
        this.nombre = nombreMB;
        this.esProceso = false;
-       Object[][] infoMB = new Object[10][4];
+       
        String[] columnas = new String[]{"Fecha","Acción","Origen","Mensaje"};
     
        final Class[] tiposColumnas = new Class[]{java.lang.String.class,java.lang.String.class,java.lang.String.class,java.lang.String.class,java.lang.String.class,java.lang.String.class}; //Variable que especifica el tipo de dato de cada columna.
        
-       Mailbox mb = Globales.buscarMB(nombreMB);
-       
-        for (int i=0;i<6;i++){           
-        if ((mb==null)||(mb.bitacora==null) || (mb.bitacora.tamano()==0)){            
-            break;}
-        else{
-            if (mb.bitacora.tamano()==i){
-                break;
-            }
-            //System.out.println("else de view por proceso");
-            infoMB[i][0] = mb.bitacora.listaR.get(i).fecha;
-            infoMB[i][1] = mb.bitacora.listaR.get(i).accion;
-            infoMB[i][2] = mb.bitacora.listaR.get(i).destino;
-            infoMB[i][3] = mb.bitacora.listaR.get(i).mensaje;
-        }
-       }
-        TView.setModel(new javax.swing.table.DefaultTableModel(infoMB,columnas) {
-                    // Se puede saber el tipo  de dato que tiene cada columna.
-                    /*Class[] tipos = tiposColumnas;
-                    @Override
-                    public Class getColumnClass(int columnIndex) {                
-                        return tipos[columnIndex];
-                    }
-                    @Override
-                    public boolean isCellEditable(int row, int column) {               
-                        return !(this.getColumnClass(column)!=null);
-                    }*/
+        Globales.view.TView.setModel(new javax.swing.table.DefaultTableModel(infoMB,columnas) {
                 });
     }
 
