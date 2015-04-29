@@ -5,6 +5,9 @@
  */
 package mensajeria;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  *
  * @author Jespi_000
@@ -30,6 +33,7 @@ public class Globales {
     public static Pantalla_principal PantPrincipal;
     public static View view;
     public static ViewCola viewcola;
+    public static List<Registro> LogCentral = new LinkedList();  
     
     public static Mailbox buscarMB(String MB){
         int j = Globales.mails.length; 
