@@ -61,7 +61,7 @@ public class MapeadorFunciones {
                         //Limpiar LOGS DE PROCESOS
                         for (int i =0;i<Globales.Procesos;i++){
                             List <Registro> r= new LinkedList<Registro>();
-                            Globales.procs[i].bitacora.listaR = r;
+                            r = Globales.procs[i].bitacora.listaR ;
                         }
                         for (int e = 0;e<Globales.mails.length;e++){
                             if (Globales.mails[e]==null){
