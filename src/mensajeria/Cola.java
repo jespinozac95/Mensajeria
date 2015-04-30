@@ -36,7 +36,7 @@ public class Cola {
     }
     
     void eliminar_inicio(){
-        System.out.print("aca estoy *******************0.11c");
+        System.out.println(" estoy *******************en eliminar inicio");
         this.lista.remove(0);
     }
     
@@ -50,7 +50,7 @@ public class Cola {
         int tamano_lista= ListaMSN.size();
         if (tamano_lista>0){
             Mensaje primero= lista.get(0); 
-            this.eliminar_inicio();
+            //this.eliminar_inicio();
             //System.out.println(primero.contenido); 
             return primero; 
         }
@@ -133,12 +133,14 @@ public class Cola {
         }
         System.out.println(res.contenido);
         ListaMSN.remove(res);
+        this.lista=ListaMSN;
         return res;
         }
         else{
             if (tamano_lista==1){
                 System.out.println(res.contenido);
                 ListaMSN.remove(res);
+                this.lista=ListaMSN;
                 return res; 
                 
             }
@@ -170,6 +172,7 @@ public class Cola {
         if (res.origen.nombre.equalsIgnoreCase(proceso)){
             System.out.println(res.contenido);
             ListaMSN.remove(res);
+            this.lista=ListaMSN;
             return res; 
         }
         else{
@@ -183,6 +186,7 @@ public class Cola {
                 if (res.origen.nombre.equalsIgnoreCase(proceso)){
                 System.out.println(res.contenido);
                 ListaMSN.remove(res);
+                this.lista=ListaMSN;
                 return res; 
                 }
                 else{
