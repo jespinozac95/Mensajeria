@@ -23,12 +23,12 @@ public class VentanaInicio extends javax.swing.JFrame {
     public VentanaInicio() {
         initComponents();       
         CIndirecto.setVisible(false);
-        CDirecReceive.setVisible(false);        
+        CDirecReceive.setEditable(false);        
         TCantFijo.setEditable(false);
-        LFijo.setVisible(false);
+        //LFijo.setVisible(false);
         if (Globales.reset){
-            LSeleccionCantProcesos.setVisible(false);
-            TCantProcesos.setVisible(false);
+            //LSeleccionCantProcesos.setVisible(false);
+            TCantProcesos.setEditable(false);
         }
         this.getRootPane().setDefaultButton(BContinuar);
     }
@@ -67,6 +67,7 @@ public class VentanaInicio extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(72, 91, 231));
         setLocationByPlatform(true);
         setPreferredSize(new java.awt.Dimension(700, 580));
         setResizable(false);
@@ -199,27 +200,23 @@ public class VentanaInicio extends javax.swing.JFrame {
                     .addContainerGap()
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(56, 56, 56)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(CDireccionamiento, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGap(56, 56, 56)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(CDireccionamiento, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addGap(1, 1, 1)
-                                            .addComponent(CLargo, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addComponent(LSeleccionFormato, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGap(56, 56, 56)
-                                    .addComponent(CSend, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGap(55, 55, 55)
-                                    .addComponent(CDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGap(1, 1, 1)
+                                    .addComponent(CLargo, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(LSeleccionFormato, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(LSeleccionDirecc)
-                                .addComponent(LSeleccionSinc)
-                                .addComponent(LSeleccionCantProcesos)
-                                .addComponent(LSeleccionFormato1, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGap(56, 56, 56)
+                            .addComponent(CSend, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(55, 55, 55)
+                            .addComponent(CDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(LSeleccionDirecc)
+                        .addComponent(LSeleccionSinc)
+                        .addComponent(LSeleccionCantProcesos)
+                        .addComponent(LSeleccionFormato1, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addContainerGap(571, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
@@ -479,10 +476,10 @@ public class VentanaInicio extends javax.swing.JFrame {
             if (!(Globales.reset)){
                 SetNombresDeProcesos();
                 //Tire pantalla de exito con: create() fue realizado
-                PantallaExito exitoCreate = new PantallaExito("Create() realizado con éxito.\nLos procesos y elementos que especificó fueron creados con sus configuraciones.");
+                PantallaExito exitoCreate = new PantallaExito("Create() realizado con éxito.\nLos procesos y elementos que especificó fueron creados con sus configuraciones.\n\nPresione F1 para observar cuáles funciones puede realizar.\nPresione F2 para observar los elementos del sistema.");
             }
             else{
-                PantallaExito exitoCreate = new PantallaExito("Las configuraciones fueron cambiadas exitosamente y los logs reiniciado.");
+                PantallaExito exitoCreate = new PantallaExito("Las configuraciones fueron cambiadas exitosamente y los logs reiniciado.\n\nPresione F1 para observar cuáles funciones puede realizar.\nPresione F2 para observar los elementos del sistema.");
             }
             this.setVisible(false);
             //Cerrar esta ventana y tirar ventana de consola

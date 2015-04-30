@@ -38,6 +38,7 @@ public class Globales {
     public static List<Registro> LogCentralActivo;
     public static List <Mensaje> m = new LinkedList<Mensaje>();
     public static Cola ColaCentral = new Cola(m);
+    public static Object[][] ColaCentralActiva;
     
     public static InformacionView buscarElemento(String nombre){
         InformacionView elemento = null;

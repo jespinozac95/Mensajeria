@@ -59,7 +59,7 @@ public class MapeadorFunciones {
                         //mappear la funcion
                         Object [][] nombresYbotones = Globales.PantPrincipal.CreaTabla();
                         //System.out.println("\nCreó Tabla\n");
-                        for (int e = 0;e<Globales.NumeroElementos;e++){
+                        for (int e = 0;e<Globales.NumeroElementos-1;e++){
                             if (MapeadorFunciones.IsProceso(nombresYbotones[e][0].toString())){
                                 Object [][] bitacoraElemento = Globales.PantPrincipal.ViewPorProceso(nombresYbotones[e][0].toString());
                                 Object [][] colaElemento = Globales.viewcola.viewColaProceso(nombresYbotones[e][0].toString());
@@ -73,7 +73,7 @@ public class MapeadorFunciones {
                                 }*/
                                 Globales.UltimoIndiceElementos++;
                             }
-                            else{
+                            else {
                                 Object [][] bitacoraElemento = Globales.PantPrincipal.ViewPorMB(nombresYbotones[e][0].toString());
                                 Object [][] colaElemento = Globales.viewcola.viewColaMB(nombresYbotones[e][0].toString());
                                 InformacionView infoElemento = new InformacionView(nombresYbotones[e][0].toString(),false,bitacoraElemento,colaElemento);
@@ -83,6 +83,13 @@ public class MapeadorFunciones {
                         }
                         //System.out.println("\nCreó Info\n");
                         Globales.LogCentralActivo = Globales.LogCentral;
+                        Object[][] infoCC = new Object[Globales.ColaCentral.lista.size()][2];
+                        for (int i=0;i<Globales.ColaCentral.lista.size();i++){
+                            //System.out.println("Entrada en la colacola central con contenido: "+Globales.ColaCentral.lista.get(i).contenido);
+                            infoCC[i][0] = Globales.ColaCentral.lista.get(i).contenido;
+                            infoCC[i][1] = Globales.ColaCentral.lista.get(i).origen.nombre;
+                        }
+                        Globales.ColaCentralActiva = infoCC;
                         Globales.PantPrincipal.MostrarTabla(nombresYbotones);
                         //Globales.ImprimirElementos();
                         //System.out.println("\nMostró Tabla\n");

@@ -97,13 +97,7 @@ public class View extends javax.swing.JFrame {
 
     private void VerColaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerColaActionPerformed
         if (this.nombre.equals("Cola Central")){
-            Object[][] infoCC = new Object[Globales.ColaCentral.lista.size()][2];
-            for (int i=0;i<Globales.ColaCentral.lista.size();i++){
-                //System.out.println("Entrada de la cola de la cola central #"+i);
-                infoCC[i][0] = Globales.ColaCentral.lista.get(i).contenido;
-                infoCC[i][1] = Globales.ColaCentral.lista.get(i).origen.nombre;
-            }
-            Globales.viewcola.MostrarColaProceso(infoCC,"Estado de la Cola Central");
+            Globales.viewcola.MostrarColaProceso(Globales.ColaCentralActiva,"Estado de la Cola Central");
             Globales.viewcola.setVisible(true);
         }
         else if (MapeadorFunciones.IsProceso(this.nombre)){

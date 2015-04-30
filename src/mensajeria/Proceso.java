@@ -109,6 +109,7 @@ public class Proceso {
         Registro NewReg2 = new Registro("Mensaje Recibido",procesoDestino.nombre,Boolean.toString(procesoDestino.Bloqueado),this.nombre,msg); 
         //System.out.println("Creó mensaje");
         procesoDestino.cola.agregar_final(NewMsj);
+        Globales.ColaCentral.agregar_final(NewMsj);
         this.bitacora.agregar_final(NewReg);
         Globales.LogCentral.add(NewReg); 
         procesoDestino.bitacora.agregar_final(NewReg2);
@@ -131,6 +132,7 @@ public class Proceso {
         Globales.LogCentral.add(NewReg);
         Globales.LogCentral.add(NewReg2);
         Globales.buscarPro(NombreProcesoDestino).cola.agregar_final(NewMsj);
+        Globales.ColaCentral.agregar_final(NewMsj);
         Globales.buscarPro(NombreProcesoDestino).bitacora.agregar_final(NewReg2);
         this.running();
     }
@@ -150,6 +152,7 @@ public class Proceso {
         Registro NewReg2 = new Registro("Mensaje Recibido",NombreMailboxDestino,"",this.nombre,msg);
         //System.out.println("Creó registros");
         Globales.buscarMB(NombreMailboxDestino).contenido.agregar_final(NewMsj);
+        Globales.ColaCentral.agregar_final(NewMsj);
         //System.out.println("Mandó msj");
         this.bitacora.agregar_final(NewReg);
         Globales.LogCentral.add(NewReg);
@@ -173,6 +176,7 @@ public class Proceso {
         Registro NewReg2 = new Registro("Mensaje Recibido",NombreMailboxDestino,"",this.nombre,msg);
         //System.out.println("Creó registros");
         Globales.buscarMB(NombreMailboxDestino).contenido.agregar_final(NewMsj);
+        Globales.ColaCentral.agregar_final(NewMsj);
         Globales.buscarMB(NombreMailboxDestino).bitacora.agregar_final(NewReg2);
         this.bitacora.agregar_final(NewReg);
         Globales.LogCentral.add(NewReg);
@@ -278,6 +282,7 @@ public class Proceso {
     void receiveD(String NombreProcesoOrigen){
         this.running();
         Mensaje msj;
+        try{
         if (Globales.Receive=="Blocking"){
             this.bloquear();
             if (this.cola.estoyVacio()==false){
@@ -366,6 +371,10 @@ public class Proceso {
                 }
             }
             }
+        }
+        catch(Exception e){
+            PantallaError pe = new PantallaError("No se encontró un mensaje de dicho proceso para ser recibido.");
+        }
         }
     
     void receiveI(){
@@ -482,6 +491,7 @@ public class Proceso {
     void receiveI(String NombreProcesoOrigen){
         this.running();
         Mensaje msj;
+        try{
         if (Globales.Receive=="Blocking"){
             if (this.conectado==true){
                 Mailbox MB =Globales.buscarMB(this.mailbox_conectado);
@@ -587,6 +597,10 @@ public class Proceso {
                     }
                 }
             }
+        }
+        }
+        catch(Exception e){
+            PantallaError pe = new PantallaError("No se encontró un mensaje de dicho proceso para ser recibido.");
         }
     }
     
