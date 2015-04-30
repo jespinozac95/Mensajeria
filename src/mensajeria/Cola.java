@@ -36,7 +36,8 @@ public class Cola {
     }
     
     void eliminar_inicio(){
-        lista.remove(0); 
+        System.out.print("aca estoy *******************0.11c");
+        this.lista.remove(0);
     }
     
     public int tamano(){

@@ -189,10 +189,13 @@ public class Proceso {
         this.running();
         Mensaje msj;
         if (Globales.Receive=="Blocking"){
+            System.out.print("aca estoy *******************0");
             this.bloquear();
             if (this.cola.estoyVacio()==false){
                 if (Globales.FIFO==true){
                     msj= this.cola.obtener_mensaje();
+                    this.cola.eliminar_inicio();
+                    System.out.print("aca estoy *******************1");
                 }
                 else{
                     msj= this.cola.devolver_mayor_prioridad();
@@ -216,17 +219,28 @@ public class Proceso {
             }
         }
         else{
-            if (Globales.Receive=="NonBlocking"){
+            System.out.print("aca estoy *******************0.1");
+            if (Globales.Receive=="Non-Blocking"){
+                System.out.print("aca estoy *******************0.10");
                 if (this.cola.estoyVacio()==false){
+                    System.out.print("aca estoy *******************0.100");
                     if (Globales.FIFO==true){
+                        System.out.print("aca estoy *******************0.11a");
                         msj= this.cola.obtener_mensaje();
+                        System.out.print("aca estoy *******************0.11b");
+                        this.cola.eliminar_inicio();
+                        System.out.print("aca estoy *******************0.11d");
                     }
                     else{
+                        System.out.print("aca estoy *******************0.12a");
                         msj= this.cola.devolver_mayor_prioridad();
+                        System.out.print("aca estoy *******************0.12b");
+                        //revisar si se elimina o se debe eliminar desde aca
                     }
-                    if (msj==null){
+                    /*if (msj==null){
                         this.bloquear("no me han llegado msj");
                         this.running();
+                        System.out.print("aca estoy *******************0.13");
                     }
                     else{
                         msj.recibir();
@@ -236,19 +250,24 @@ public class Proceso {
                         msj.leer();
                         this.receiving();
                         this.running();
-                    }
+                        System.out.print("aca estoy *******************0.14");
+                    }*/
                 }
                 else{
                     this.bloquear("no me han llegado msj");       
                     this.running();
+                    System.out.print("aca estoy *******************0.15");
                 }
             }
             else{
+                System.out.print("aca estoy *******************0.2");
                 if (Globales.Receive=="Prueba de llegada"){
                     this.bloquear();
                     if (this.cola.estoyVacio()==false){
                         if (Globales.FIFO==true){
                              msj= this.cola.obtener_mensaje();
+                             this.cola.eliminar_inicio();
+                             System.out.print("aca estoy *******************3");
                         }
                     else{
                         msj= this.cola.devolver_mayor_prioridad();
@@ -311,7 +330,7 @@ public class Proceso {
             }
         }
         else{
-            if (Globales.Receive=="NonBlocking"){
+            if (Globales.Receive=="Non-Blocking"){
                 if (this.cola.estoyVacio()==false){
                     if (Globales.FIFO==true){
                         msj= this.cola.obtener_mensaje_explicito(NombreProcesoOrigen);
@@ -414,7 +433,7 @@ public class Proceso {
             }
         }
         else{
-            if (Globales.Receive=="NonBlocking"){
+            if (Globales.Receive=="Non-Blocking"){
                 if (this.conectado==true){
                     Mailbox MB =Globales.buscarMB(this.mailbox_conectado);
                     if (MB.contenido.estoyVacio()==false){
@@ -526,7 +545,7 @@ public class Proceso {
             }
         }
         else{
-            if (Globales.Receive=="NonBlocking"){
+            if (Globales.Receive=="Non-Blocking"){
                 if (this.conectado==true){
                     Mailbox MB =Globales.buscarMB(this.mailbox_conectado);
                     if (MB.contenido.estoyVacio()==false){
