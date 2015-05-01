@@ -51,6 +51,7 @@ public class Proceso {
         }
     }
 
+    
     void conectar(String nameMBox){
         Globales.buscarMB(nameMBox).conectar(this);
         //System.out.println("Conectado en mailbox --> proceso");
@@ -67,6 +68,7 @@ public class Proceso {
         System.out.println("me desconecte");
     }
         
+    
     void bloquear(){
         this.Bloqueado=true;
         System.out.println("me bloquee, estoy bloqueado");
@@ -81,6 +83,7 @@ public class Proceso {
         System.out.println("me desbloquee, estoy desbloqueado");
     }
     
+    
     void running(){
         this.Bloqueado=false;
         System.out.println("estoy running");
@@ -94,9 +97,12 @@ public class Proceso {
         System.out.println("recibiendo mensaje(P)");
     }
     
+    
     void error(){
         System.out.println("ERROR. no estoy conectado en ningun lugar, no puedo recibir mensaje");
     }
+    
+    
     
     void sendDirecto(String NombreProcesoDestino, String msg){
         this.running();
@@ -378,8 +384,7 @@ public class Proceso {
             }
             }
     }
-    
-    
+     
     void receiveD(String NombreProcesoOrigen){
         System.out.println("(╯°□°）╯︵ ┻━┻)");
         this.running();
@@ -451,6 +456,8 @@ public class Proceso {
             PantallaError pe = new PantallaError("No se encontró un mensaje de dicho proceso para ser recibido.");
         }
         }
+ 
+    
     
     void receiveI(){
         System.out.println("(╯°□°）╯︵ ┻━┻)");
@@ -566,6 +573,7 @@ public class Proceso {
             }
         }
     }
+    
     
     void receiveI(String NombreProcesoOrigen){
         System.out.println("(╯°□°）╯︵ ┻━┻)");
