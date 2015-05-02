@@ -511,10 +511,10 @@ public class VentanaInicio extends javax.swing.JFrame {
                 }
             }
             else{
-                Texto += "\n - send(NombreDelProcesoEmisor,NombreDelProceso,Mensaje,NúmeroDePrioridad)";
+                Texto += "\n - send(NombreDelProcesoEmisor,NombreDelProcesoReceptor,Mensaje,NúmeroDePrioridad)";
                 Texto += ": Envía un mensaje a un proceso con cierta prioridad (1,2 o 3, con 1 la más alta).";
                 if (Globales.LargoMsjFijo){
-                    Texto += "El mensaje no debe sobrepasar los "+Globales.LargoMsj+" caracteres.";
+                    Texto += "\nEl mensaje no debe sobrepasar los "+Globales.LargoMsj+" caracteres.";
                 }
             }
             if (Globales.ReceiveExplicito){

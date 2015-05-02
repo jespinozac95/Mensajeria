@@ -59,47 +59,57 @@ public class Proceso {
         //System.out.println("Conectado en proceso --> mb");
         this.conectado = true;
         System.out.println("me conecte");
+        Globales.PantPrincipal.outputText.append("\nProceso: "+this.nombre+", se ha conectado al buzón: "+this.mailbox_conectado);
     }
     
     void desconectar(){
-        Globales.buscarMB(this.mailbox_conectado).desconectar(this);
+        String mb = this.mailbox_conectado;
+        Globales.buscarMB(mb).desconectar(this);
         this.mailbox_conectado = "";
         this.conectado = false;
         System.out.println("me desconecte");
+        Globales.PantPrincipal.outputText.append("\nProceso: "+this.nombre+", se ha desconectado del buzón: "+mb);
     }
         
     
     void bloquear(){
         this.Bloqueado=true;
         System.out.println("me bloquee, estoy bloqueado");
+        Globales.PantPrincipal.outputText.append("\nProceso: "+this.nombre+", se ha bloqueado.");
     }
     
     void bloquear(String algo){
         System.out.println(algo);
+        Globales.PantPrincipal.outputText.append("\nProceso: "+this.nombre+", dice: "+algo);
     }
     
     void desbloquear(){
         this.Bloqueado=false;
         System.out.println("me desbloquee, estoy desbloqueado");
+        Globales.PantPrincipal.outputText.append("\nProceso: "+this.nombre+", se ha desbloqueado.");
     }
     
     
     void running(){
         this.Bloqueado=false;
         System.out.println("estoy running");
+        Globales.PantPrincipal.outputText.append("\nProceso: "+this.nombre+", está en ejecución (running).");
     }
     
     void sending(String destino, String contenido){
         System.out.println("enviando el mensaje "+contenido+ "; a "+destino);
+        Globales.PantPrincipal.outputText.append("\nProceso: "+this.nombre+", está enviando el mensaje "+contenido+", a "+destino+".");
     }
     
     void receiving(){
         System.out.println("recibiendo mensaje(P)");
+        Globales.PantPrincipal.outputText.append("\nProceso: "+this.nombre+", está recibiendo un mensaje.");
     }
     
     
     void error(){
         System.out.println("ERROR. no estoy conectado en ningun lugar, no puedo recibir mensaje");
+        Globales.PantPrincipal.outputText.append("\nError: "+this.nombre+", no está conectado a ningún lugar.");
     }
     
     
@@ -208,26 +218,26 @@ public class Proceso {
     
     
     void receiveD(){
-        System.out.println("(╯°□°）╯︵ ┻━┻)");
+        //System.out.println("(╯°□°）╯︵ ┻━┻)");
         this.running();
         Mensaje msj;
-        if (Globales.Receive=="Blocking"){
-            System.out.println("aca estoy *******************0");
+        if (Globales.Receive.equals("Blocking")){
+            //System.out.println("aca estoy *******************0");
             this.bloquear();
             if (this.cola.estoyVacio()==false){
-                System.out.println("aca estoy *******************0.0");
+                //System.out.println("aca estoy *******************0.0");
                 if (Globales.FIFO==true){
                     msj= this.cola.obtener_mensaje();
                     this.cola.eliminar_inicio();
-                    System.out.println("aca estoy *******************0.01");
+                    //System.out.println("aca estoy *******************0.01");
                 }
                 else{
                     msj= this.cola.devolver_mayor_prioridad();
-                    System.out.println("aca estoy *******************0.001");
+                    //System.out.println("aca estoy *******************0.001");
                 }
                 if (msj==null){
-                    this.bloquear("no me han llegado msj");
-                    System.out.println("aca estoy *******************0.0001");
+                    this.bloquear("no me han llegado mensajes.");
+                    //System.out.println("aca estoy *******************0.0001");
                 }
                 else{
                     msj.recibir();
@@ -238,36 +248,36 @@ public class Proceso {
                     this.receiving();
                     this.desbloquear();
                     this.running();
-                    System.out.println("aca estoy *******************0.00001");
+                    //System.out.println("aca estoy *******************0.00001");
                 }
             }
             else{
-                this.bloquear("no me han llegado msj");                    
+                this.bloquear("no me han llegado mensajes.");                    
             }
         }
         else{
-            System.out.println("aca estoy *******************0.1");
-            if (Globales.Receive=="Non-Blocking"){
-                System.out.println("aca estoy *******************0.10");
+            //System.out.println("aca estoy *******************0.1");
+            if (Globales.Receive.equals("Non-Blocking")){
+                //System.out.println("aca estoy *******************0.10");
                 if (this.cola.estoyVacio()==false){
-                    System.out.println("aca estoy *******************0.100");
+                    //System.out.println("aca estoy *******************0.100");
                     if (Globales.FIFO==true){
-                        System.out.println("aca estoy *******************0.11a");
+                        //System.out.println("aca estoy *******************0.11a");
                         msj= this.cola.obtener_mensaje();
-                        System.out.println("aca estoy *******************0.11b");
+                        //System.out.println("aca estoy *******************0.11b");
                         this.cola.eliminar_inicio();
-                        System.out.println("aca estoy *******************0.11d");
+                        //System.out.println("aca estoy *******************0.11d");
                     }
                     else{
-                        System.out.println("aca estoy *******************0.12a");
+                        //System.out.println("aca estoy *******************0.12a");
                         msj= this.cola.devolver_mayor_prioridad();
-                        System.out.println("aca estoy *******************0.12b");
+                        //System.out.println("aca estoy *******************0.12b");
                         //revisar si se elimina o se debe eliminar desde aca
                     }
                     if (msj==null){
-                        this.bloquear("no me han llegado msj");
+                        this.bloquear("no me han llegado mensajes.");
                         this.running();
-                        System.out.println("aca estoy *******************0.13");
+                        //System.out.println("aca estoy *******************0.13");
                     }
                     else{
                         msj.recibir();
@@ -277,20 +287,17 @@ public class Proceso {
                         msj.leer();
                         this.receiving();
                         this.running();
-                        System.out.println("aca estoy *******************0.14");
+                        //System.out.println("aca estoy *******************0.14");
                     }
                 }
                 else{
-                    this.bloquear("no me han llegado MENSAJES");       
+                    this.bloquear("no me han llegado mensajes.");       
                     this.running();
-                    System.out.println("aca estoy *******************0.15");
+                    //System.out.println("aca estoy *******************0.15");
                 }
             }
             else{
-                System.out.println("aca estoy *******************0.2");
-                if (Globales.Receive=="Prueba de llegada"){
                     this.receiveDAUX();
-                }
             }
             }
     }
@@ -301,7 +308,7 @@ public class Proceso {
         for (int i = 0; i<100;i++){
             if (i==99)
             {
-                this.bloquear("se intento hacer la prueba de llegada el maximo de veces, el proceso continuara");  
+                this.bloquear("se intentó hacer la prueba de llegada el máximo de veces, el proceso continuará.");  
                 this.running();
             }
             else{
@@ -309,15 +316,15 @@ public class Proceso {
                         if (Globales.FIFO==true){
                              msj= this.cola.obtener_mensaje();
                              this.cola.eliminar_inicio();
-                             System.out.println("aca estoy *******************3");
+                             //System.out.println("aca estoy *******************3");
                         }
                     else{
                         msj= this.cola.devolver_mayor_prioridad();
                     }
                     if (msj==null){
-                        this.bloquear("no me han llegado msj");
+                        this.bloquear("no me han llegado mensajes.");
                         this.running();
-                        this.bloquear("pero continuare a la espera");
+                        this.bloquear("pero continuaré a la espera.");
                     }
                     else{
                         msj.recibir();
@@ -332,7 +339,7 @@ public class Proceso {
                 }
                 else{
                     this.bloquear("Prueba de llegada, # "+Integer.toString(i+1));  
-                    this.bloquear("no me han llegado MSJS, seguire haciendo pruebas de llegada");       
+                    this.bloquear("no me han llegado mensajes, seguiré haciendo pruebas de llegada.");       
                     this.running();
                     //Thread.sleep(4000);
                     //contador++;
@@ -347,7 +354,7 @@ public class Proceso {
         for (int i = 0; i<100;i++){
             if (i==99)
             {
-                this.bloquear("se intento hacer la prueba de llegada el maximo de veces, el proceso continuara");  
+                this.bloquear("se intentó hacer la prueba de llegada el máximo de veces, el proceso continuará.");  
                 this.running();
             }
             else{
@@ -360,9 +367,9 @@ public class Proceso {
                         msj= this.cola.devolver_mayor_prioridad_explícito(NombreProcesoOrigen);
                     }
                     if (msj==null){
-                        this.bloquear("no me han llegado msj");
+                        this.bloquear("no me han llegado mensajes.");
                         this.running();
-                        this.bloquear("pero continuare a la espera");
+                        this.bloquear("pero continuaré a la espera.");
                     }
                     else{
                         msj.recibir();
@@ -372,13 +379,13 @@ public class Proceso {
                         msj.leer();
                         this.receiving();
                         this.running();
-                        System.out.println("aca estoy *******************2.9");
+                        //System.out.println("aca estoy *******************2.9");
                         break;
                     }
                 }
                 else{
                     this.bloquear("Prueba de llegada, # "+Integer.toString(i+1));  
-                    this.bloquear("no me han llegado MSJS, seguire haciendo pruebas de llegada");    
+                    this.bloquear("no me han llegado mensajes, seguiré haciendo pruebas de llegada.");    
                     //Thread.sleep(4000);
                 }
             }
@@ -386,11 +393,11 @@ public class Proceso {
     }
      
     void receiveD(String NombreProcesoOrigen){
-        System.out.println("(╯°□°）╯︵ ┻━┻)");
+        //System.out.println("(╯°□°）╯︵ ┻━┻)");
         this.running();
         Mensaje msj;
         try{
-        if (Globales.Receive=="Blocking"){
+        if (Globales.Receive.equals("Blocking")){
             this.bloquear();
             if (this.cola.estoyVacio()==false){
                 if (Globales.FIFO==true){
@@ -400,7 +407,7 @@ public class Proceso {
                     msj= this.cola.devolver_mayor_prioridad_explícito(NombreProcesoOrigen);
                 }
                 if (msj==null){
-                    this.bloquear("no me han llegado msj");
+                    this.bloquear("no me han llegado mensajes.");
                 }
                 else{
                     msj.recibir();
@@ -414,11 +421,11 @@ public class Proceso {
                 }
             }
             else{
-                this.bloquear("no me han llegado msj");                    
+                this.bloquear("no me han llegado mensajes.");                    
             }
         }
         else{
-            if (Globales.Receive=="Non-Blocking"){
+            if (Globales.Receive.equals("Non-Blocking")){
                 if (this.cola.estoyVacio()==false){
                     if (Globales.FIFO==true){
                         msj= this.cola.obtener_mensaje_explicito(NombreProcesoOrigen);
@@ -427,7 +434,7 @@ public class Proceso {
                         msj= this.cola.devolver_mayor_prioridad_explícito(NombreProcesoOrigen);
                     }
                     if (msj==null){
-                        this.bloquear("no me han llegado msj");
+                        this.bloquear("no me han llegado mensajes.");
                         this.running();
                     }
                     else{
@@ -441,14 +448,12 @@ public class Proceso {
                     }
                 }
                 else{
-                    this.bloquear("no me han llegado msj");       
+                    this.bloquear("no me han llegado mensajes.");       
                     this.running();
                 }
             }
             else{
-                if (Globales.Receive=="Prueba de llegada"){
                     this.receiveDAUX(NombreProcesoOrigen);
-                }
             }
             }
         }
@@ -460,10 +465,10 @@ public class Proceso {
     
     
     void receiveI(){
-        System.out.println("(╯°□°）╯︵ ┻━┻)");
+        //System.out.println("(╯°□°）╯︵ ┻━┻)");
         this.running();
         Mensaje msj;
-        if (Globales.Receive=="Blocking"){
+        if (Globales.Receive.equals("Blocking")){
             if (this.conectado==true){
                 Mailbox MB =Globales.buscarMB(this.mailbox_conectado);
                 this.bloquear();
@@ -476,7 +481,7 @@ public class Proceso {
                         msj= MB.contenido.devolver_mayor_prioridad();
                     }
                     if (msj==null){
-                        this.bloquear("no me han llegado msj");
+                        this.bloquear("no me han llegado mensajes.");
                     }
                     else{
                         msj.recibir();
@@ -490,7 +495,7 @@ public class Proceso {
                     }
                 }
                 else{
-                    this.bloquear("no me han llegado msj");                    
+                    this.bloquear("no me han llegado mensajes.");                    
                 }
             }
             else{
@@ -498,7 +503,7 @@ public class Proceso {
             }
         }
         else{
-            if (Globales.Receive=="Non-Blocking"){
+            if (Globales.Receive.equals("Non-Blocking")){
                 if (this.conectado==true){
                     Mailbox MB =Globales.buscarMB(this.mailbox_conectado);
                     if (MB.contenido.estoyVacio()==false){
@@ -510,7 +515,7 @@ public class Proceso {
                             msj= MB.contenido.devolver_mayor_prioridad();
                         }
                         if (msj==null){
-                            this.bloquear("no me han llegado msj");
+                            this.bloquear("no me han llegado mensajes.");
                             this.running();
                         }
                         else{
@@ -524,7 +529,7 @@ public class Proceso {
                         }
                     }
                     else{
-                        this.bloquear("no me han llegado msj");       
+                        this.bloquear("no me han llegado mensajes.");       
                         this.running();
                     }
                 }
@@ -533,7 +538,7 @@ public class Proceso {
                 }
             }
             else{
-                if (Globales.Receive=="Prueba de llegada"){
+                if (Globales.Receive.equals("Prueba de llegada")){
                     if (this.conectado==true){
                         Mailbox MB =Globales.buscarMB(this.mailbox_conectado);
                         this.bloquear();
@@ -546,7 +551,7 @@ public class Proceso {
                                 msj= MB.contenido.devolver_mayor_prioridad();
                             }
                             if (msj==null){
-                                this.bloquear("no me han llegado msj");
+                                this.bloquear("no me han llegado mensajes.");
                                 this.running();
                                 this.receiveD();
                             }
@@ -561,7 +566,7 @@ public class Proceso {
                             }
                         }
                         else{
-                            this.bloquear("no me han llegado msj");       
+                            this.bloquear("no me han llegado mensajes.");       
                             this.running();
                             this.receiveD();
                         }
@@ -576,11 +581,11 @@ public class Proceso {
     
     
     void receiveI(String NombreProcesoOrigen){
-        System.out.println("(╯°□°）╯︵ ┻━┻)");
+        //System.out.println("(╯°□°）╯︵ ┻━┻)");
         this.running();
         Mensaje msj;
         try{
-        if (Globales.Receive=="Blocking"){
+        if (Globales.Receive.equals("Blocking")){
             if (this.conectado==true){
                 Mailbox MB =Globales.buscarMB(this.mailbox_conectado);
                 this.bloquear();
@@ -592,7 +597,7 @@ public class Proceso {
                         msj= MB.contenido.devolver_mayor_prioridad_explícito(NombreProcesoOrigen);
                     }
                     if (msj==null){
-                        this.bloquear("no me han llegado msj");
+                        this.bloquear("no me han llegado mensajes.");
                     }
                     else{
                         msj.recibir();
@@ -606,7 +611,7 @@ public class Proceso {
                     }
                 }
                 else{
-                    this.bloquear("no me han llegado msj");                    
+                    this.bloquear("no me han llegado mensajes.");                    
                 }
             }
             else{
@@ -614,7 +619,7 @@ public class Proceso {
             }
         }
         else{
-            if (Globales.Receive=="Non-Blocking"){
+            if (Globales.Receive.equals("Non-Blocking")){
                 if (this.conectado==true){
                     Mailbox MB =Globales.buscarMB(this.mailbox_conectado);
                     if (MB.contenido.estoyVacio()==false){
@@ -625,7 +630,7 @@ public class Proceso {
                             msj= MB.contenido.devolver_mayor_prioridad_explícito(NombreProcesoOrigen);
                         }
                         if (msj==null){
-                            this.bloquear("no me han llegado msj");
+                            this.bloquear("no me han llegado mensajes.");
                             this.running();
                         }
                         else{
@@ -639,7 +644,7 @@ public class Proceso {
                         }
                     }
                     else{
-                        this.bloquear("no me han llegado msj");       
+                        this.bloquear("no me han llegado mensajes.");       
                         this.running();
                     }
                 }
@@ -648,7 +653,7 @@ public class Proceso {
                 }
             }
             else{
-                if (Globales.Receive=="Prueba de llegada"){
+                if (Globales.Receive.equals("Prueba de llegada")){
                     if (this.conectado==true){
                         Mailbox MB =Globales.buscarMB(this.mailbox_conectado);
                         this.bloquear();
@@ -660,7 +665,7 @@ public class Proceso {
                                 msj= MB.contenido.devolver_mayor_prioridad_explícito(NombreProcesoOrigen);
                             }
                             if (msj==null){
-                                this.bloquear("no me han llegado msj");
+                                this.bloquear("no me han llegado mensajes.");
                                 this.running();
                                 this.receiveD();
                             }
@@ -675,7 +680,7 @@ public class Proceso {
                             }
                         }
                         else{
-                            this.bloquear("no me han llegado msj");       
+                            this.bloquear("no me han llegado mensajes.");       
                             this.running();
                             this.receiveD();
                         }

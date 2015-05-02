@@ -493,7 +493,7 @@ public class Pantalla_principal extends javax.swing.JFrame {
                         if (nombreFuncion.equals("reset")){
                             this.setVisible(false);
                         }
-                        outputText.setText("Realizado con éxito.");
+                        outputText.append("\nRealizado con éxito.");
                     }
                     else{
                         outputText.setText("Los parámetros ingresados no pudieron ser enlazados para la ejecución de la función.");
@@ -764,7 +764,7 @@ public class Pantalla_principal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JMenuBar menu;
     private java.awt.Label outputLabel;
-    private javax.swing.JTextArea outputText;
+    public javax.swing.JTextArea outputText;
     private javax.swing.JLabel visualizacionLabel;
     // End of variables declaration//GEN-END:variables
 

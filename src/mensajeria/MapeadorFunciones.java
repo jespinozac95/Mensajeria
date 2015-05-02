@@ -138,7 +138,7 @@ public class MapeadorFunciones {
                     }
                     if (Globales.DireccionamientoDirecto){
                         if (Globales.FIFO){
-                            if ((!(parametros[0].equals(""))) && (!(parametros[1].equals(""))) && (!(parametros[2].equals(""))) && (IsProceso(parametros[0])) && (IsProceso(parametros[1])) && (!(parametros[0].equals(parametros[1] ))) ){
+                            if ((ValidarNumeroParametros(parametros,3)) && (!(parametros[0].equals(""))) && (!(parametros[1].equals(""))) && (!(parametros[2].equals(""))) && (IsProceso(parametros[0])) && (IsProceso(parametros[1])) && (!(parametros[0].equals(parametros[1] ))) ){
                                 //mappear la funcion
                                 Proceso emisor = Globales.buscarPro(parametros[0]);
                                 Proceso receptor = Globales.buscarPro(parametros[1]);
@@ -161,9 +161,9 @@ public class MapeadorFunciones {
                             //System.out.println("Exito en send 1 fuera if= "+exito);
                         }
                         else{
-                            if ((!(parametros[0].equals(""))) && (!(parametros[1].equals(""))) && (!(parametros[2].equals(""))) && (!(parametros[3].equals(""))) && (IsProceso(parametros[0])) && (IsProceso(parametros[1])) && (!(parametros[0].equals(parametros[1] ))) ){
+                            if ((ValidarNumeroParametros(parametros,4)) && (!(parametros[0].equals(""))) && (!(parametros[1].equals(""))) && (!(parametros[2].equals(""))) && (!(parametros[3].equals(""))) && (IsProceso(parametros[0])) && (IsProceso(parametros[1])) && (!(parametros[0].equals(parametros[1] ))) ){
                                 //mappear la funcion
-                                int prioridad = Integer.parseInt(parametros[2]);
+                                int prioridad = Integer.parseInt(parametros[3]);
                                 if ((prioridad < 4)&&(prioridad > 0)){
                                     Proceso emisor = Globales.buscarPro(parametros[0]);
                                     Proceso receptor = Globales.buscarPro(parametros[1]);
@@ -187,7 +187,7 @@ public class MapeadorFunciones {
                     }
                     else{
                         if (Globales.FIFO){
-                            if ((!(parametros[0].equals(""))) && (!(parametros[1].equals(""))) && (!(parametros[2].equals(""))) && (IsMailbox(parametros[1])) && (IsProceso(parametros[0]))){
+                            if ((ValidarNumeroParametros(parametros,3)) && (!(parametros[0].equals(""))) && (!(parametros[1].equals(""))) && (!(parametros[2].equals(""))) && (IsMailbox(parametros[1])) && (IsProceso(parametros[0]))){
                                 //mappear con la funcion
                                 Proceso p = Globales.buscarPro(parametros[0]);
                                 if (Globales.buscarMB(parametros[1]).contenido.lista.size() < Globales.TamanoCola){
@@ -201,7 +201,7 @@ public class MapeadorFunciones {
                             }
                         }
                         else{
-                            if ((!(parametros[0].equals(""))) && (!(parametros[1].equals(""))) && (!(parametros[2].equals(""))) && (!(parametros[3].equals(""))) && (IsMailbox(parametros[1])) && (IsProceso(parametros[0]))){
+                            if ((ValidarNumeroParametros(parametros,4)) && (!(parametros[0].equals(""))) && (!(parametros[1].equals(""))) && (!(parametros[2].equals(""))) && (!(parametros[3].equals(""))) && (IsMailbox(parametros[1])) && (IsProceso(parametros[0]))){
                                 //mappear la funcion
                                 Proceso p = Globales.buscarPro(parametros[0]);
                                 int prioridad = Integer.parseInt(parametros[3]);
@@ -226,14 +226,14 @@ public class MapeadorFunciones {
                 case "receive":
                     if (Globales.DireccionamientoDirecto){
                         if (Globales.ReceiveExplicito){
-                            if ((!(parametros[0].equals(""))) && (!(parametros[1].equals(""))) && (IsProceso(parametros[0])) && (IsProceso(parametros[1])) && (!(parametros[0].equals(parametros[1] ))) ){
+                            if ((ValidarNumeroParametros(parametros,2)) && (!(parametros[0].equals(""))) && (!(parametros[1].equals(""))) && (IsProceso(parametros[0])) && (IsProceso(parametros[1])) && (!(parametros[0].equals(parametros[1] ))) ){
                                 //mappear la funcion
                                 Globales.buscarPro(parametros[0]).receiveD(parametros[1]);
                                 exito = true;
                             }
                         }
                         else{
-                            if ((!(parametros[0].equals(""))) && (IsProceso(parametros[0]))){
+                            if ((ValidarNumeroParametros(parametros,1)) && (!(parametros[0].equals(""))) && (IsProceso(parametros[0]))){
                                 //mappear con la funcion
                                 Globales.buscarPro(parametros[0]).receiveD();
                                 exito = true;
@@ -242,14 +242,14 @@ public class MapeadorFunciones {
                     }
                     else{
                         if (Globales.ReceiveExplicito){
-                            if ((!(parametros[0].equals(""))) && (!(parametros[1].equals(""))) && (IsProceso(parametros[0])) && (IsProceso(parametros[1])) && (!(parametros[0].equals(parametros[1] ))) ){
+                            if ((ValidarNumeroParametros(parametros,2)) && (!(parametros[0].equals(""))) && (!(parametros[1].equals(""))) && (IsProceso(parametros[0])) && (IsProceso(parametros[1])) && (!(parametros[0].equals(parametros[1] ))) ){
                                 //mappear con la funcion
                                 Globales.buscarPro(parametros[0]).receiveI(parametros[1]);
                                 exito = true;
                             }
                         }
                         else{
-                            if ((!(parametros[0].equals(""))) && (IsProceso(parametros[0]))){
+                            if ((ValidarNumeroParametros(parametros,1)) && (!(parametros[0].equals(""))) && (IsProceso(parametros[0]))){
                                 //mappear con la funcion
                                 Globales.buscarPro(parametros[0]).receiveI();
                                 exito = true;
@@ -258,14 +258,14 @@ public class MapeadorFunciones {
                     }
                     break;
                 case "connect_mailbox":
-                    if ((!(parametros[0].equals(""))) && (!(parametros[1].equals(""))) && (IsMailbox(parametros[1])) && (IsProceso(parametros[0]))){
+                    if ((ValidarNumeroParametros(parametros,2)) && (!(parametros[0].equals(""))) && (!(parametros[1].equals(""))) && (IsMailbox(parametros[1])) && (IsProceso(parametros[0]))){
                         //mappear con la funcion
                         Globales.buscarPro(parametros[0]).conectar(parametros[1]);
                         exito = true;
                     }
                     break;
                 case "disconnect_mailbox":
-                    if ((!(parametros[0].equals(""))) && (!(parametros[1].equals(""))) && (IsMailbox(parametros[1])) && (IsProceso(parametros[0]))){
+                    if ((ValidarNumeroParametros(parametros,2)) && (!(parametros[0].equals(""))) && (!(parametros[1].equals(""))) && (IsMailbox(parametros[1])) && (IsProceso(parametros[0]))){
                         //mappear con la funcion
                         Globales.buscarPro(parametros[0]).desconectar();
                         exito = true;
@@ -279,7 +279,7 @@ public class MapeadorFunciones {
                         }
                     }
                     else{*/
-                        if ((!(parametros[0].equals(""))) && (!(IsMailbox(parametros[0])))){
+                        if ((ValidarNumeroParametros(parametros,1)) && (!(parametros[0].equals(""))) && (!(IsMailbox(parametros[0])))){
                             //mappear con la funcion
                             Globales.procs[0].create_MB(parametros[0]);
                             exito = true;
@@ -304,5 +304,23 @@ public class MapeadorFunciones {
             }
         }
         return true;
+    }
+    public static boolean ValidarNumeroParametros(String[] parametros,int numeroDeseado){
+        int numeroActual = 0;
+        for (String parametro : parametros) {
+            System.out.print("\nParametro: "+parametro);
+            if (!(parametro.isEmpty()) || (!(parametro.equals("")))) {
+                System.out.print("  <-- no es vacío.");
+                numeroActual++;
+            }
+        }
+        System.out.println("\nNumero Actual = "+numeroActual);
+        System.out.println("Numero Deseado = "+numeroDeseado);
+        if (numeroActual == numeroDeseado){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }

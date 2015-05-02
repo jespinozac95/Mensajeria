@@ -275,6 +275,9 @@
             <Property name="toolTipText" type="java.lang.String" value="Aqu&#xed; se muestran los mensajes de error, advertencia, ayuda o &#xe9;xito de sus acciones."/>
             <Property name="wrapStyleWord" type="boolean" value="true"/>
           </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
