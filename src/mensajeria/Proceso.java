@@ -301,97 +301,7 @@ public class Proceso {
             }
             }
     }
-    
-    void receiveDAUX(){
-        Mensaje msj;
-        this.bloquear();
-        for (int i = 0; i<100;i++){
-            if (i==99)
-            {
-                this.bloquear("se intentó hacer la prueba de llegada el máximo de veces, el proceso continuará.");  
-                this.running();
-            }
-            else{
-                    if (this.cola.estoyVacio()==false){
-                        if (Globales.FIFO==true){
-                             msj= this.cola.obtener_mensaje();
-                             this.cola.eliminar_inicio();
-                             //System.out.println("aca estoy *******************3");
-                        }
-                    else{
-                        msj= this.cola.devolver_mayor_prioridad();
-                    }
-                    if (msj==null){
-                        this.bloquear("no me han llegado mensajes.");
-                        this.running();
-                        this.bloquear("pero continuaré a la espera.");
-                    }
-                    else{
-                        msj.recibir();
-                        Registro NewReg2 = new Registro("receive()",msj.origen.nombre,Boolean.toString(Globales.buscarPro(this.nombre).Bloqueado),this.nombre,msj.contenido);
-                        this.bitacora.agregar_final(NewReg2);
-                        Globales.LogCentral.add(NewReg2);
-                        msj.leer();
-                        this.receiving();
-                        this.running();
-                        break;
-                    }
-                }
-                else{
-                    this.bloquear("Prueba de llegada, # "+Integer.toString(i+1));  
-                    this.bloquear("no me han llegado mensajes, seguiré haciendo pruebas de llegada.");       
-                    this.running();
-                    //Thread.sleep(4000);
-                    //contador++;
-                }
-            }
-        }
-        }
-    
-    void receiveDAUX(String NombreProcesoOrigen){
-        Mensaje msj;
-        this.bloquear();
-        for (int i = 0; i<100;i++){
-            if (i==99)
-            {
-                this.bloquear("se intentó hacer la prueba de llegada el máximo de veces, el proceso continuará.");  
-                this.running();
-            }
-            else{
-    
-                    if (this.cola.estoyVacio()==false){
-                        if (Globales.FIFO==true){
-                             msj= this.cola.obtener_mensaje_explicito(NombreProcesoOrigen);
-                        }
-                    else{
-                        msj= this.cola.devolver_mayor_prioridad_explícito(NombreProcesoOrigen);
-                    }
-                    if (msj==null){
-                        this.bloquear("no me han llegado mensajes.");
-                        this.running();
-                        this.bloquear("pero continuaré a la espera.");
-                    }
-                    else{
-                        msj.recibir();
-                        Registro NewReg2 = new Registro("receive()",msj.origen.nombre,Boolean.toString(Globales.buscarPro(this.nombre).Bloqueado),this.nombre,msj.contenido);
-                        this.bitacora.agregar_final(NewReg2);
-                        Globales.LogCentral.add(NewReg2);
-                        msj.leer();
-                        this.receiving();
-                        this.running();
-                        //System.out.println("aca estoy *******************2.9");
-                        break;
-                    }
-                }
-                else{
-                    this.bloquear("Prueba de llegada, # "+Integer.toString(i+1));  
-                    this.bloquear("no me han llegado mensajes, seguiré haciendo pruebas de llegada.");    
-                    //Thread.sleep(4000);
-                }
-            }
-            }
-    }
-     
+        
     void receiveD(String NombreProcesoOrigen){
         //System.out.println("(╯°□°）╯︵ ┻━┻)");
         this.running();
@@ -461,6 +371,96 @@ public class Proceso {
             PantallaError pe = new PantallaError("No se encontró un mensaje de dicho proceso para ser recibido.");
         }
         }
+    
+    void receiveDAUX(){
+        Mensaje msj;
+        this.bloquear();
+        for (int i = 0; i<100;i++){
+            if (i==99)
+            {
+                this.bloquear("se intentó hacer la prueba de llegada el máximo de veces, el proceso continuará.");  
+                this.running();
+            }
+            else{
+                    if (this.cola.estoyVacio()==false){
+                        if (Globales.FIFO==true){
+                             msj= this.cola.obtener_mensaje();
+                             this.cola.eliminar_inicio();
+                             //System.out.println("aca estoy *******************3");
+                        }
+                    else{
+                        msj= this.cola.devolver_mayor_prioridad();
+                    }
+                    if (msj==null){
+                        this.bloquear("no me han llegado mensajes.");
+                        this.running();
+                        this.bloquear("pero continuaré a la espera.");
+                    }
+                    else{
+                        msj.recibir();
+                        Registro NewReg2 = new Registro("receive()",msj.origen.nombre,Boolean.toString(Globales.buscarPro(this.nombre).Bloqueado),this.nombre,msj.contenido);
+                        this.bitacora.agregar_final(NewReg2);
+                        Globales.LogCentral.add(NewReg2);
+                        msj.leer();
+                        this.receiving();
+                        this.running();
+                        break;
+                    }
+                }
+                else{
+                    this.bloquear("Prueba de llegada, # "+Integer.toString(i+1));  
+                    this.bloquear("no me han llegado mensajes, seguiré haciendo pruebas de llegada.");       
+                    this.running();
+                    //Thread.sleep(4000);
+                    //contador++;
+                }
+            }
+        }
+    }
+    
+    void receiveDAUX(String NombreProcesoOrigen){
+        Mensaje msj;
+        this.bloquear();
+        for (int i = 0; i<100;i++){
+            if (i==99)
+            {
+                this.bloquear("se intentó hacer la prueba de llegada el máximo de veces, el proceso continuará.");  
+                this.running();
+            }
+            else{
+    
+                    if (this.cola.estoyVacio()==false){
+                        if (Globales.FIFO==true){
+                             msj= this.cola.obtener_mensaje_explicito(NombreProcesoOrigen);
+                        }
+                    else{
+                        msj= this.cola.devolver_mayor_prioridad_explícito(NombreProcesoOrigen);
+                    }
+                    if (msj==null){
+                        this.bloquear("no me han llegado mensajes.");
+                        this.running();
+                        this.bloquear("pero continuaré a la espera.");
+                    }
+                    else{
+                        msj.recibir();
+                        Registro NewReg2 = new Registro("receive()",msj.origen.nombre,Boolean.toString(Globales.buscarPro(this.nombre).Bloqueado),this.nombre,msj.contenido);
+                        this.bitacora.agregar_final(NewReg2);
+                        Globales.LogCentral.add(NewReg2);
+                        msj.leer();
+                        this.receiving();
+                        this.running();
+                        //System.out.println("aca estoy *******************2.9");
+                        break;
+                    }
+                }
+                else{
+                    this.bloquear("Prueba de llegada, # "+Integer.toString(i+1));  
+                    this.bloquear("no me han llegado mensajes, seguiré haciendo pruebas de llegada.");    
+                    //Thread.sleep(4000);
+                }
+            }
+            }
+    }
  
     
     
@@ -697,7 +697,98 @@ public class Proceso {
         }
     }
     
+    void receiveIAUX(){
+        Mensaje msj;
+        this.bloquear();
+        for (int i = 0; i<100;i++){
+            if (i==99)
+            {
+                this.bloquear("se intentó hacer la prueba de llegada el máximo de veces, el proceso continuará.");  
+                this.running();
+            }
+            else{
+                    if (this.cola.estoyVacio()==false){
+                        if (Globales.FIFO==true){
+                             msj= this.cola.obtener_mensaje();
+                             this.cola.eliminar_inicio();
+                             //System.out.println("aca estoy *******************3");
+                        }
+                    else{
+                        msj= this.cola.devolver_mayor_prioridad();
+                    }
+                    if (msj==null){
+                        this.bloquear("no me han llegado mensajes.");
+                        this.running();
+                        this.bloquear("pero continuaré a la espera.");
+                    }
+                    else{
+                        msj.recibir();
+                        Registro NewReg2 = new Registro("receive()",msj.origen.nombre,Boolean.toString(Globales.buscarPro(this.nombre).Bloqueado),this.nombre,msj.contenido);
+                        this.bitacora.agregar_final(NewReg2);
+                        Globales.LogCentral.add(NewReg2);
+                        msj.leer();
+                        this.receiving();
+                        this.running();
+                        break;
+                    }
+                }
+                else{
+                    this.bloquear("Prueba de llegada, # "+Integer.toString(i+1));  
+                    this.bloquear("no me han llegado mensajes, seguiré haciendo pruebas de llegada.");       
+                    this.running();
+                    //Thread.sleep(4000);
+                    //contador++;
+                }
+            }
+        }
+    }
+    
+    void receiveIAUX(String NombreProcesoOrigen){
+        Mensaje msj;
+        this.bloquear();
+        for (int i = 0; i<100;i++){
+            if (i==99)
+            {
+                this.bloquear("se intentó hacer la prueba de llegada el máximo de veces, el proceso continuará.");  
+                this.running();
+            }
+            else{
+    
+                    if (this.cola.estoyVacio()==false){
+                        if (Globales.FIFO==true){
+                             msj= this.cola.obtener_mensaje_explicito(NombreProcesoOrigen);
+                        }
+                    else{
+                        msj= this.cola.devolver_mayor_prioridad_explícito(NombreProcesoOrigen);
+                    }
+                    if (msj==null){
+                        this.bloquear("no me han llegado mensajes.");
+                        this.running();
+                        this.bloquear("pero continuaré a la espera.");
+                    }
+                    else{
+                        msj.recibir();
+                        Registro NewReg2 = new Registro("receive()",msj.origen.nombre,Boolean.toString(Globales.buscarPro(this.nombre).Bloqueado),this.nombre,msj.contenido);
+                        this.bitacora.agregar_final(NewReg2);
+                        Globales.LogCentral.add(NewReg2);
+                        msj.leer();
+                        this.receiving();
+                        this.running();
+                        //System.out.println("aca estoy *******************2.9");
+                        break;
+                    }
+                }
+                else{
+                    this.bloquear("Prueba de llegada, # "+Integer.toString(i+1));  
+                    this.bloquear("no me han llegado mensajes, seguiré haciendo pruebas de llegada.");    
+                    //Thread.sleep(4000);
+                }
+            }
+            }
+    }
+    
        
+    
     void create_MB(String nombre){
         //maximo son 6 MB
         if (Globales.UltimoIndiceMailbox == 6){
