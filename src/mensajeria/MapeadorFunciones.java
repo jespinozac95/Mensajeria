@@ -226,7 +226,7 @@ public class MapeadorFunciones {
                 case "receive":
                     if (Globales.DireccionamientoDirecto){
                         if (Globales.ReceiveExplicito){
-                            if ((ValidarNumeroParametros(parametros,2)) && (!(parametros[0].equals(""))) && (!(parametros[1].equals(""))) && (IsProceso(parametros[0])) && (IsProceso(parametros[1])) && (!(parametros[0].equals(parametros[1] ))) ){
+                            if ((ValidarNumeroParametros(parametros,2)) && (!(parametros[0].equals(""))) && (!(parametros[1].equals(""))) && (IsProceso(parametros[0])) && (IsProceso(parametros[1])) ){
                                 //mappear la funcion
                                 Globales.buscarPro(parametros[0]).receiveD(parametros[1]);
                                 exito = true;
@@ -242,7 +242,7 @@ public class MapeadorFunciones {
                     }
                     else{
                         if (Globales.ReceiveExplicito){
-                            if ((ValidarNumeroParametros(parametros,2)) && (!(parametros[0].equals(""))) && (!(parametros[1].equals(""))) && (IsProceso(parametros[0])) && (IsProceso(parametros[1])) && (!(parametros[0].equals(parametros[1] ))) ){
+                            if ((ValidarNumeroParametros(parametros,2)) && (!(parametros[0].equals(""))) && (!(parametros[1].equals(""))) && (IsProceso(parametros[0])) && (IsProceso(parametros[1])) ){
                                 //mappear con la funcion
                                 Globales.buscarPro(parametros[0]).receiveI(parametros[1]);
                                 exito = true;

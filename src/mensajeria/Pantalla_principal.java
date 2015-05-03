@@ -297,16 +297,15 @@ public class Pantalla_principal extends javax.swing.JFrame {
      return datos;
     }
     public Object [][] ViewPorProceso(String proceso){
-        int lenProcs = Globales.Procesos;  
-       Object[][] infoProceso = new Object[10][6];
-       
+       //int lenProcs = Globales.Procesos;  
        Proceso p = Globales.buscarPro(proceso);
+        Object[][] infoProceso = new Object[p.bitacora.tamanoActivo()][6];
        //System.out.println("Nombre proceso para bitacora: "+proceso);
-        for (int i=0;i<lenProcs;i++){           
-        if ((p==null)||(p.bitacora==null) || (p.bitacora.tamano()==0)){            
+        for (int i=0;i<p.bitacora.tamanoActivo();i++){           
+        if ((p==null)||(p.bitacora==null) || (p.bitacora.tamanoActivo()==0)){            
             break;}
         else{
-            if (p.bitacora.tamano()==i){
+            if (p.bitacora.tamanoActivo()==i){
                 break;
             }
             //System.out.println("else de view por proceso");
@@ -322,14 +321,15 @@ public class Pantalla_principal extends javax.swing.JFrame {
         return infoProceso;
     }
     public Object[][] ViewPorMB(String nombreMB){
-        Object[][] infoMB = new Object[10][4];
        Mailbox mb = Globales.buscarMB(nombreMB);
+       Object[][] infoMB = new Object[mb.bitacora.tamanoActivo()][4];
+       
        //System.out.println("Nombre mailbox para bitacora: "+nombreMB);
-        for (int i=0;i<6;i++){           
-        if ((mb==null)||(mb.bitacora==null) || (mb.bitacora.tamano()==0)){            
+        for (int i=0;i<mb.bitacora.tamanoActivo();i++){           
+        if ((mb==null)||(mb.bitacora==null) || (mb.bitacora.tamanoActivo()==0)){            
             break;}
         else{
-            if (mb.bitacora.tamano()==i){
+            if (mb.bitacora.tamanoActivo()==i){
                 break;
             }
             //System.out.println("else de view por proceso");
@@ -423,7 +423,13 @@ public class Pantalla_principal extends javax.swing.JFrame {
                 }
                 else{//is cola central
                     //System.out.println("view de la cola central. Size = "+Globales.LogCentral.size());
-                    Object[][] infoColaCentral = new Object [100][6];
+                    int total;
+                    for (total=0;total<Globales.LogCentralActivo.size();total++){
+                        if ((Globales.LogCentralActivo.get(total)==null)||(Globales.LogCentralActivo.get(total).mensaje.equals(""))){
+                            break;
+                        }
+                    }
+                    Object[][] infoColaCentral = new Object [total][6];
                     List<Registro> l = Globales.LogCentralActivo;
                     for (int i=0;i<l.size();i++){
                         //System.out.println("Registro #"+i+" de la bitacora de la Cola Central");
@@ -461,6 +467,7 @@ public class Pantalla_principal extends javax.swing.JFrame {
     private void consolaTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consolaTextActionPerformed
         //Escuchar la entrada del usuario
         String entrada = new String();
+        outputText.setText("");
         try {
             //Obtener la entrada del usuario quitandole los >>> 
             entrada = consolaText.getText();
@@ -581,7 +588,7 @@ public class Pantalla_principal extends javax.swing.JFrame {
                                 outputText.setText("create_mailbox(NombreDelProcesoCreador,NombreDelBuzón). Crea un buzón.");
                             }
                             else{*/
-                                outputText.setText("create_mailbox(NombreDelBuzón). Crea un buzón.");
+                                outputText.setText("create_mailbox(NombreDelBuzón). Crea un buzón.\nEl nombre del buzón será por defecto MB + el nombre que ingrese.\nPor ejemplo, si ingresa create_mailbox(buzon), el buzón tendrá el nombre: MBbuzon.");
                             //}
                         }
                         else{
@@ -591,7 +598,7 @@ public class Pantalla_principal extends javax.swing.JFrame {
                     case "connect_mailbox":
                         if (!(Globales.DireccionamientoDirecto)){
                             if (!(Globales.IndirectoEstatico)){
-                                outputText.setText("connect_mailbox(NombreDelProcesoAConectar,NombreDelBuzón). Conectar el proceso en referencia a cierto buzón.");
+                                outputText.setText("connect_mailbox(NombreDelProcesoAConectar,NombreDelBuzón). Conectar el proceso en referencia a cierto buzón.\nConsejo: presione F2 para observar los nombres correctos de los buzones antes de ejecutar este comando.");
                             }
                             else{
                                 outputText.setText("Advertencia: No se puede ejecutar este comando en el direccionamiento indirecto estático.");

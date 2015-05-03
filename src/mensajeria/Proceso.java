@@ -60,7 +60,9 @@ public class Proceso {
         //System.out.println("Conectado en proceso --> mb");
         this.conectado = true;
         System.out.println("me conecte");
-        Globales.PantPrincipal.outputText.append("\nProceso: "+this.nombre+", se ha conectado al buzón: "+this.mailbox_conectado);
+        if (Globales.PantPrincipal != null){
+            Globales.PantPrincipal.outputText.append("\nProceso: "+this.nombre+", se ha conectado al buzón: "+this.mailbox_conectado);
+        }
     }
     
     void desconectar(){
@@ -497,6 +499,7 @@ public class Proceso {
                         this.bitacora.agregar_final(NewReg2);
                         Globales.LogCentral.add(NewReg2);
                         Globales.ColaCentral.BuscarYQuitar(msj);
+                        MB.bitacora.agregar_final(NewReg2);
                         msj.leer();
                         this.receiving();
                         this.desbloquear();
@@ -533,6 +536,7 @@ public class Proceso {
                             this.bitacora.agregar_final(NewReg2);
                             Globales.LogCentral.add(NewReg2);
                             Globales.ColaCentral.BuscarYQuitar(msj);
+                            MB.bitacora.agregar_final(NewReg2);
                             msj.leer();
                             this.receiving();
                             this.running();
@@ -571,6 +575,7 @@ public class Proceso {
                                 this.bitacora.agregar_final(NewReg2);
                                 Globales.LogCentral.add(NewReg2);
                                 Globales.ColaCentral.BuscarYQuitar(msj);
+                                MB.bitacora.agregar_final(NewReg2);
                                 msj.leer();
                                 this.receiving();
                                 this.running();
@@ -616,6 +621,7 @@ public class Proceso {
                         this.bitacora.agregar_final(NewReg2);
                         Globales.LogCentral.add(NewReg2);
                         Globales.ColaCentral.BuscarYQuitar(msj);
+                        MB.bitacora.agregar_final(NewReg2);
                         msj.leer();
                         this.receiving();
                         this.desbloquear();
@@ -651,6 +657,7 @@ public class Proceso {
                             this.bitacora.agregar_final(NewReg2);
                             Globales.LogCentral.add(NewReg2);
                             Globales.ColaCentral.BuscarYQuitar(msj);
+                            MB.bitacora.agregar_final(NewReg2);
                             msj.leer();
                             this.receiving();
                             this.running();
@@ -688,6 +695,7 @@ public class Proceso {
                                 this.bitacora.agregar_final(NewReg2);
                                 Globales.LogCentral.add(NewReg2);
                                 Globales.ColaCentral.BuscarYQuitar(msj);
+                                MB.bitacora.agregar_final(NewReg2);
                                 msj.leer();
                                 this.receiving();
                                 this.running();
@@ -741,6 +749,7 @@ public class Proceso {
                         this.bitacora.agregar_final(NewReg2);
                         Globales.LogCentral.add(NewReg2);
                         Globales.ColaCentral.BuscarYQuitar(msj);
+                        Globales.buscarMB(this.mailbox_conectado).bitacora.agregar_final(NewReg2);
                         msj.leer();
                         this.receiving();
                         this.running();
@@ -787,6 +796,7 @@ public class Proceso {
                         this.bitacora.agregar_final(NewReg2);
                         Globales.LogCentral.add(NewReg2);
                         Globales.ColaCentral.BuscarYQuitar(msj);
+                        Globales.buscarMB(this.mailbox_conectado).bitacora.agregar_final(NewReg2);
                         msj.leer();
                         this.receiving();
                         this.running();
