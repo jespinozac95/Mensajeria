@@ -17,6 +17,7 @@ public class Cola {
         this.lista=lista; 
     }
     
+    
     public boolean estoyVacio(){
         if (this.lista.size()==0){
             return true;
@@ -58,6 +59,10 @@ public class Cola {
             return null; 
         }
         
+    }
+    
+    void BuscarYQuitar( Mensaje msj){
+        System.out.println("falta contenido de esto "+msj.contenido);
     }
     
     //Obtiene Fifo de forma explícita7

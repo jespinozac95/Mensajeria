@@ -475,7 +475,7 @@ public class Proceso {
     
     
     void receiveI(){
-        //System.out.println("(╯°□°）╯︵ ┻━┻)");
+        System.out.println("(╯°□°）╯︵ ┻━┻)");
         this.running();
         Mensaje msj;
         if (Globales.Receive.equals("Blocking")){
@@ -553,43 +553,7 @@ public class Proceso {
             }
             else{
                 if (Globales.Receive.equals("Prueba de llegada")){
-                    if (this.conectado==true){
-                        Mailbox MB =Globales.buscarMB(this.mailbox_conectado);
-                        this.bloquear();
-                        if (MB.contenido.estoyVacio()==false){
-                            if (Globales.FIFO==true){
-                                msj= MB.contenido.obtener_mensaje();
-                                MB.contenido.eliminar_inicio();
-                            }
-                            else{
-                                msj= MB.contenido.devolver_mayor_prioridad();
-                            }
-                            if (msj==null){
-                                this.bloquear("no me han llegado mensajes.");
-                                this.running();
-                                this.receiveD();
-                            }
-                            else{
-                                msj.recibir();
-                                Registro NewReg2 = new Registro("receive()",msj.origen.nombre,Boolean.toString(Globales.buscarPro(this.nombre).Bloqueado),this.nombre,msj.contenido);
-                                this.bitacora.agregar_final(NewReg2);
-                                Globales.LogCentral.add(NewReg2);
-                                Globales.ColaCentral.BuscarYQuitar(msj);
-                                MB.bitacora.agregar_final(NewReg2);
-                                msj.leer();
-                                this.receiving();
-                                this.running();
-                            }
-                        }
-                        else{
-                            this.bloquear("no me han llegado mensajes.");       
-                            this.running();
-                            this.receiveD();
-                        }
-                    }
-                    else{
-                        this.error();
-                    }
+                    receiveIAUX();
                 }
             }
         }
@@ -674,42 +638,7 @@ public class Proceso {
             }
             else{
                 if (Globales.Receive.equals("Prueba de llegada")){
-                    if (this.conectado==true){
-                        Mailbox MB =Globales.buscarMB(this.mailbox_conectado);
-                        this.bloquear();
-                        if (MB.contenido.estoyVacio()==false){
-                            if (Globales.FIFO==true){
-                                msj= MB.contenido.obtener_mensaje_explicito(NombreProcesoOrigen);
-                            }
-                            else{
-                                msj= MB.contenido.devolver_mayor_prioridad_explícito(NombreProcesoOrigen);
-                            }
-                            if (msj==null){
-                                this.bloquear("no me han llegado mensajes.");
-                                this.running();
-                                this.receiveD();
-                            }
-                            else{
-                                msj.recibir();
-                                Registro NewReg2 = new Registro("receive()",msj.origen.nombre,Boolean.toString(Globales.buscarPro(this.nombre).Bloqueado),this.nombre,msj.contenido);
-                                this.bitacora.agregar_final(NewReg2);
-                                Globales.LogCentral.add(NewReg2);
-                                Globales.ColaCentral.BuscarYQuitar(msj);
-                                MB.bitacora.agregar_final(NewReg2);
-                                msj.leer();
-                                this.receiving();
-                                this.running();
-                            }
-                        }
-                        else{
-                            this.bloquear("no me han llegado mensajes.");       
-                            this.running();
-                            this.receiveD();
-                        }
-                    }
-                    else{
-                        this.error();
-                    }
+                    receiveIAUX(NombreProcesoOrigen);
                 }
             }
         }
@@ -729,40 +658,44 @@ public class Proceso {
                 this.running();
             }
             else{
-                    if (this.cola.estoyVacio()==false){
-                        if (Globales.FIFO==true){
-                             msj= this.cola.obtener_mensaje();
-                             this.cola.eliminar_inicio();
-                             //System.out.println("aca estoy *******************3");
+                    if (this.conectado==true){
+                        Mailbox MB =Globales.buscarMB(this.mailbox_conectado);
+                        this.bloquear();
+                        if (MB.contenido.estoyVacio()==false){
+                            if (Globales.FIFO==true){
+                                msj= MB.contenido.obtener_mensaje();
+                                MB.contenido.eliminar_inicio();
+                            }
+                            else{
+                                msj= MB.contenido.devolver_mayor_prioridad();
+                            }
+                            if (msj==null){
+                                this.bloquear("no me han llegado mensajes.");
+                                this.running();
+                                this.receiveD();
+                            }
+                            else{
+                                msj.recibir();
+                                Registro NewReg2 = new Registro("receive()",msj.origen.nombre,Boolean.toString(Globales.buscarPro(this.nombre).Bloqueado),this.nombre,msj.contenido);
+                                this.bitacora.agregar_final(NewReg2);
+                                Globales.LogCentral.add(NewReg2);
+                                Globales.ColaCentral.BuscarYQuitar(msj);
+                                MB.bitacora.agregar_final(NewReg2);
+                                msj.leer();
+                                this.receiving();
+                                this.running();
+                                break;
+                            }
                         }
-                    else{
-                        msj= this.cola.devolver_mayor_prioridad();
-                    }
-                    if (msj==null){
-                        this.bloquear("no me han llegado mensajes.");
-                        this.running();
-                        this.bloquear("pero continuaré a la espera.");
+                        else{
+                            this.bloquear("Prueba de llegada, # "+Integer.toString(i+1));  
+                            this.bloquear("no me han llegado mensajes, seguiré haciendo pruebas de llegada.");       
+                            this.running();
+                        }
                     }
                     else{
-                        msj.recibir();
-                        Registro NewReg2 = new Registro("receive()",msj.origen.nombre,Boolean.toString(Globales.buscarPro(this.nombre).Bloqueado),this.nombre,msj.contenido);
-                        this.bitacora.agregar_final(NewReg2);
-                        Globales.LogCentral.add(NewReg2);
-                        Globales.ColaCentral.BuscarYQuitar(msj);
-                        Globales.buscarMB(this.mailbox_conectado).bitacora.agregar_final(NewReg2);
-                        msj.leer();
-                        this.receiving();
-                        this.running();
-                        break;
+                        this.error();
                     }
-                }
-                else{
-                    this.bloquear("Prueba de llegada, # "+Integer.toString(i+1));  
-                    this.bloquear("no me han llegado mensajes, seguiré haciendo pruebas de llegada.");       
-                    this.running();
-                    //Thread.sleep(4000);
-                    //contador++;
-                }
             }
         }
     }
@@ -777,38 +710,42 @@ public class Proceso {
                 this.running();
             }
             else{
-    
-                    if (this.cola.estoyVacio()==false){
-                        if (Globales.FIFO==true){
-                             msj= this.cola.obtener_mensaje_explicito(NombreProcesoOrigen);
+                 if (this.conectado==true){
+                        Mailbox MB =Globales.buscarMB(this.mailbox_conectado);
+                        this.bloquear();
+                        if (MB.contenido.estoyVacio()==false){
+                            if (Globales.FIFO==true){
+                                msj= MB.contenido.obtener_mensaje_explicito(NombreProcesoOrigen);
+                            }
+                            else{
+                                msj= MB.contenido.devolver_mayor_prioridad_explícito(NombreProcesoOrigen);
+                            }
+                            if (msj==null){
+                                this.bloquear("no me han llegado mensajes.");
+                                this.running();
+                            }
+                            else{
+                                msj.recibir();
+                                Registro NewReg2 = new Registro("receive()",msj.origen.nombre,Boolean.toString(Globales.buscarPro(this.nombre).Bloqueado),this.nombre,msj.contenido);
+                                this.bitacora.agregar_final(NewReg2);
+                                Globales.LogCentral.add(NewReg2);
+                                Globales.ColaCentral.BuscarYQuitar(msj);
+                                MB.bitacora.agregar_final(NewReg2);
+                                msj.leer();
+                                this.receiving();
+                                this.running();
+                                break;
+                            }
                         }
-                    else{
-                        msj= this.cola.devolver_mayor_prioridad_explícito(NombreProcesoOrigen);
-                    }
-                    if (msj==null){
-                        this.bloquear("no me han llegado mensajes.");
-                        this.running();
-                        this.bloquear("pero continuaré a la espera.");
+                        else{
+                            this.bloquear("Prueba de llegada, # "+Integer.toString(i+1));  
+                            this.bloquear("no me han llegado mensajes, seguiré haciendo pruebas de llegada.");       
+                            this.running();
+                        }
                     }
                     else{
-                        msj.recibir();
-                        Registro NewReg2 = new Registro("receive()",msj.origen.nombre,Boolean.toString(Globales.buscarPro(this.nombre).Bloqueado),this.nombre,msj.contenido);
-                        this.bitacora.agregar_final(NewReg2);
-                        Globales.LogCentral.add(NewReg2);
-                        Globales.ColaCentral.BuscarYQuitar(msj);
-                        Globales.buscarMB(this.mailbox_conectado).bitacora.agregar_final(NewReg2);
-                        msj.leer();
-                        this.receiving();
-                        this.running();
-                        //System.out.println("aca estoy *******************2.9");
-                        break;
+                        this.error();
                     }
-                }
-                else{
-                    this.bloquear("Prueba de llegada, # "+Integer.toString(i+1));  
-                    this.bloquear("no me han llegado mensajes, seguiré haciendo pruebas de llegada.");    
-                    //Thread.sleep(4000);
-                }
             }
             }
     }
